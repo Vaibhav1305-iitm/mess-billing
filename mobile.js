@@ -157,6 +157,46 @@ if (drawerOverlay) {
     drawerOverlay.addEventListener('click', window.closeDrawer);
 }
 
+// --- Swipe Gesture to Open/Close Drawer ---
+(function initSwipeGesture() {
+    let touchStartX = 0;
+    let touchStartY = 0;
+    let touchEndX = 0;
+    let touchEndY = 0;
+    const SWIPE_THRESHOLD = 50; // Minimum swipe distance
+    const EDGE_WIDTH = 30; // Left edge detection width (px)
+
+    document.addEventListener('touchstart', function (e) {
+        touchStartX = e.changedTouches[0].screenX;
+        touchStartY = e.changedTouches[0].screenY;
+    }, { passive: true });
+
+    document.addEventListener('touchend', function (e) {
+        touchEndX = e.changedTouches[0].screenX;
+        touchEndY = e.changedTouches[0].screenY;
+        handleSwipe();
+    }, { passive: true });
+
+    function handleSwipe() {
+        const diffX = touchEndX - touchStartX;
+        const diffY = Math.abs(touchEndY - touchStartY);
+        const navDrawer = document.getElementById('nav-drawer');
+        const isDrawerOpen = navDrawer && navDrawer.classList.contains('open');
+
+        // Only process horizontal swipes (diffX > diffY)
+        if (Math.abs(diffX) > diffY && Math.abs(diffX) > SWIPE_THRESHOLD) {
+            // Swipe RIGHT from left edge → Open drawer
+            if (diffX > 0 && touchStartX < EDGE_WIDTH && !isDrawerOpen) {
+                window.toggleDrawer();
+            }
+            // Swipe LEFT anywhere when drawer is open → Close drawer
+            else if (diffX < 0 && isDrawerOpen) {
+                window.closeDrawer();
+            }
+        }
+    }
+})();
+
 // Initial navigation logic removed in favor of consolidated logic at bottom of file
 
 // FAB Handler
@@ -247,7 +287,12 @@ window.openAddEntryModal = function () {
         dateInput.valueAsDate = new Date();
         dateInput.disabled = false; // Enable for new entry
     }
+    document.getElementById('new-morning').value = 0;
+    document.getElementById('new-evening').value = 0;
     document.querySelector('#entry-modal h3').textContent = 'New Entry';
+    // Hide delete button for new entries
+    const deleteBtn = document.getElementById('delete-entry-btn');
+    if (deleteBtn) deleteBtn.style.display = 'none';
     document.getElementById('entry-modal').classList.add('open');
 };
 
@@ -1940,15 +1985,18 @@ window.openEditEntryModal = function (date) {
     document.getElementById('new-evening').value = entry.evening;
 
     document.querySelector('#entry-modal h3').textContent = 'Edit Entry';
+    // Show delete button for existing entries
+    const deleteBtn = document.getElementById('delete-entry-btn');
+    if (deleteBtn) deleteBtn.style.display = 'inline-flex';
     document.getElementById('entry-modal').classList.add('open');
 };
 
 // --- Bill Printing & HTML ---
 
-window.getBillHTML = function (monthStr, entries, mTotal, eTotal, gTotal) {
-    const [y, m] = monthStr.split('-');
-    const dateObj = new Date(parseInt(y), parseInt(m) - 1);
-    const monthName = dateObj.toLocaleDateString('en-US', { month: 'long', year: 'numeric' });
+window.getBillHTML = function (periodLabel, entries, mTotal, eTotal, gTotal) {
+    // periodLabel can be "December 2025" or "1 Jan 2026 to 9 Jan 2026"
+    // Use it directly as the period display
+    const monthName = periodLabel;
 
     // 1. Sort Ascending
     entries.sort((a, b) => new Date(a.date) - new Date(b.date));
@@ -2034,16 +2082,39 @@ window.printBill = function () {
     win.print();
 };
 
-window.exportBillExcel = function () {
-    const month = document.getElementById('bill-month-select').value;
-    if (!month) return;
+window.exportBillExcel = async function () {
+    const filterType = document.getElementById('bill-filter-type')?.value || 'month';
+    let entries = [];
+    let periodLabel = '';
 
-    // Filter & Sort
-    const entries = state.entries
-        .filter(e => e.date.startsWith(month))
-        .sort((a, b) => new Date(a.date) - new Date(b.date));
+    if (filterType === 'month') {
+        const month = document.getElementById('bill-month-select').value;
+        if (!month || month.includes('No Data')) return alert('Select a month with data');
+
+        entries = state.entries
+            .filter(e => e.date && e.date.startsWith(month))
+            .map(e => ({ ...e }));
+
+        const [y, mo] = month.split('-');
+        periodLabel = new Date(y, mo - 1).toLocaleDateString('en-US', { month: 'long', year: 'numeric' });
+    } else {
+        // Custom date range
+        const startDate = document.getElementById('bill-start-date').value;
+        const endDate = document.getElementById('bill-end-date').value;
+
+        if (!startDate || !endDate) return alert('Please select both start and end dates');
+
+        entries = state.entries
+            .filter(e => e.date && e.date >= startDate && e.date <= endDate)
+            .map(e => ({ ...e }));
+
+        periodLabel = `${startDate} to ${endDate}`;
+    }
 
     if (entries.length === 0) return alert('No data to export');
+
+    // Sort by date ascending
+    entries.sort((a, b) => new Date(a.date) - new Date(b.date));
 
     // Date Formatter: dd/MMM/yyyy
     const fmt = (dStr) => {
@@ -2054,30 +2125,50 @@ window.exportBillExcel = function () {
         return `${dd}/${mmm}/${yyyy}`;
     };
 
-    // Calculate Totals
-    let mSum = 0, eSum = 0, tSum = 0, amtSum = 0;
+    showLoader('Calculating amounts...');
 
-    let csv = 'Date,Morning,Evening,Total,Amount\n';
+    try {
+        // Calculate amounts using pricing rules
+        let mSum = 0, eSum = 0, tSum = 0, amtSum = 0;
 
-    entries.forEach(e => {
-        const dDisplay = fmt(e.date);
-        mSum += (e.morning || 0);
-        eSum += (e.evening || 0);
-        tSum += (e.total || 0);
-        amtSum += (e.amount || 0);
+        for (const e of entries) {
+            // Get correct pricing for this date
+            const rates = await getPricingRate(e.date);
+            const calculatedAmount = (e.morning * rates.morning) + (e.evening * rates.evening);
+            e.amount = calculatedAmount;
 
-        csv += `${dDisplay},${e.morning},${e.evening},${e.total},${e.amount}\n`;
-    });
+            mSum += (e.morning || 0);
+            eSum += (e.evening || 0);
+            tSum += (e.total || 0);
+            amtSum += calculatedAmount;
+        }
 
-    // Footer Row
-    csv += `TOTAL,${mSum},${eSum},${tSum},${amtSum}\n`;
+        // Build CSV
+        let csv = 'Date,Day,Morning,Evening,Total,Amount\n';
 
-    const blob = new Blob([csv], { type: 'text/csv' });
-    const url = URL.createObjectURL(blob);
-    const link = document.createElement("a");
-    link.href = url;
-    link.download = `Bill_${month}.csv`;
-    link.click();
+        entries.forEach(e => {
+            const dDisplay = fmt(e.date);
+            const dayName = new Date(e.date).toLocaleDateString('en-US', { weekday: 'short' });
+            csv += `${dDisplay},${dayName},${e.morning},${e.evening},${e.total},${e.amount}\n`;
+        });
+
+        // Footer Row
+        csv += `TOTAL,,${mSum},${eSum},${tSum},${amtSum}\n`;
+
+        const blob = new Blob([csv], { type: 'text/csv' });
+        const url = URL.createObjectURL(blob);
+        const link = document.createElement("a");
+        link.href = url;
+        link.download = `Bill_${periodLabel.replace(/\s/g, '_')}.csv`;
+        link.click();
+
+        hideLoader();
+        showToast('📊 Excel exported!', 'success');
+    } catch (err) {
+        hideLoader();
+        console.error(err);
+        alert('Export failed: ' + err.message);
+    }
 };
 
 
