@@ -1,0 +1,2789 @@
+{
+  "version": "1.0",
+  "timestamp": "2026-01-07T05:35:16.752Z",
+  "data": {
+    "tiffin_entries": [
+      {
+        "date": "2026-01-02",
+        "day": "Friday",
+        "morning": 0,
+        "evening": 27,
+        "total": 27,
+        "month": "2026-01",
+        "year": 2026,
+        "amount": 1242,
+        "createdAt": "2026-01-02T12:48:56.000Z",
+        "updatedAt": "2026-01-02T12:48:56.000Z"
+      },
+      {
+        "date": "2025-12-31",
+        "day": "Wednesday",
+        "morning": 43,
+        "evening": 32,
+        "total": 75,
+        "month": "2025-12",
+        "year": 2025,
+        "amount": 3450,
+        "createdAt": "2025-12-31T07:09:02.000Z",
+        "updatedAt": "2025-12-31T07:09:02.000Z"
+      },
+      {
+        "date": "2025-12-12",
+        "day": "Friday",
+        "morning": 44,
+        "evening": 45,
+        "total": 89,
+        "month": "2025-12",
+        "year": 2025,
+        "amount": 4094,
+        "createdAt": "2025-12-30T12:10:16.000Z",
+        "updatedAt": "2025-12-30T12:40:17.000Z"
+      },
+      {
+        "date": "2025-12-04",
+        "day": "Thursday",
+        "morning": 41,
+        "evening": 40,
+        "total": 81,
+        "month": "2025-12",
+        "year": 2025,
+        "amount": 3726,
+        "createdAt": "2025-12-30T12:39:16.000Z",
+        "updatedAt": "2025-12-30T12:39:16.000Z"
+      },
+      {
+        "date": "2025-12-30",
+        "day": "Tuesday",
+        "morning": 43,
+        "evening": 43,
+        "total": 86,
+        "month": "2025-12",
+        "year": 2025,
+        "amount": 3956,
+        "createdAt": "2025-12-30T12:20:10.000Z",
+        "updatedAt": "2025-12-30T12:20:10.000Z"
+      },
+      {
+        "date": "2025-12-29",
+        "day": "Monday",
+        "morning": 44,
+        "evening": 42,
+        "total": 86,
+        "month": "2025-12",
+        "year": 2025,
+        "amount": 3956,
+        "createdAt": "2025-12-30T12:17:37.000Z",
+        "updatedAt": "2025-12-30T12:17:37.000Z"
+      },
+      {
+        "date": "2025-12-28",
+        "day": "Sunday",
+        "morning": 41,
+        "evening": 42,
+        "total": 83,
+        "month": "2025-12",
+        "year": 2025,
+        "amount": 3818,
+        "createdAt": "2025-12-30T12:17:25.000Z",
+        "updatedAt": "2025-12-30T12:17:25.000Z"
+      },
+      {
+        "date": "2025-12-27",
+        "day": "Saturday",
+        "morning": 42,
+        "evening": 41,
+        "total": 83,
+        "month": "2025-12",
+        "year": 2025,
+        "amount": 3818,
+        "createdAt": "2025-12-30T12:16:46.000Z",
+        "updatedAt": "2025-12-30T12:16:46.000Z"
+      },
+      {
+        "date": "2025-12-26",
+        "day": "Friday",
+        "morning": 46,
+        "evening": 42,
+        "total": 88,
+        "month": "2025-12",
+        "year": 2025,
+        "amount": 4048,
+        "createdAt": "2025-12-30T12:16:29.000Z",
+        "updatedAt": "2025-12-30T12:16:29.000Z"
+      },
+      {
+        "date": "2025-12-25",
+        "day": "Thursday",
+        "morning": 52,
+        "evening": 45,
+        "total": 97,
+        "month": "2025-12",
+        "year": 2025,
+        "amount": 4462,
+        "createdAt": "2025-12-30T12:16:01.000Z",
+        "updatedAt": "2025-12-30T12:16:01.000Z"
+      },
+      {
+        "date": "2025-12-24",
+        "day": "Wednesday",
+        "morning": 49,
+        "evening": 51,
+        "total": 100,
+        "month": "2025-12",
+        "year": 2025,
+        "amount": 4600,
+        "createdAt": "2025-12-30T12:15:49.000Z",
+        "updatedAt": "2025-12-30T12:15:49.000Z"
+      },
+      {
+        "date": "2025-12-23",
+        "day": "Tuesday",
+        "morning": 49,
+        "evening": 50,
+        "total": 99,
+        "month": "2025-12",
+        "year": 2025,
+        "amount": 4554,
+        "createdAt": "2025-12-30T12:15:32.000Z",
+        "updatedAt": "2025-12-30T12:15:32.000Z"
+      },
+      {
+        "date": "2025-12-22",
+        "day": "Monday",
+        "morning": 50,
+        "evening": 50,
+        "total": 100,
+        "month": "2025-12",
+        "year": 2025,
+        "amount": 4600,
+        "createdAt": "2025-12-30T12:14:47.000Z",
+        "updatedAt": "2025-12-30T12:14:47.000Z"
+      },
+      {
+        "date": "2025-12-21",
+        "day": "Sunday",
+        "morning": 48,
+        "evening": 52,
+        "total": 100,
+        "month": "2025-12",
+        "year": 2025,
+        "amount": 4600,
+        "createdAt": "2025-12-30T12:14:11.000Z",
+        "updatedAt": "2025-12-30T12:14:11.000Z"
+      },
+      {
+        "date": "2025-12-20",
+        "day": "Saturday",
+        "morning": 49,
+        "evening": 48,
+        "total": 97,
+        "month": "2025-12",
+        "year": 2025,
+        "amount": 4462,
+        "createdAt": "2025-12-30T12:13:53.000Z",
+        "updatedAt": "2025-12-30T12:13:53.000Z"
+      },
+      {
+        "date": "2025-12-19",
+        "day": "Friday",
+        "morning": 56,
+        "evening": 48,
+        "total": 104,
+        "month": "2025-12",
+        "year": 2025,
+        "amount": 4784,
+        "createdAt": "2025-12-30T12:12:57.000Z",
+        "updatedAt": "2025-12-30T12:12:57.000Z"
+      },
+      {
+        "date": "2025-12-18",
+        "day": "Thursday",
+        "morning": 54,
+        "evening": 52,
+        "total": 106,
+        "month": "2025-12",
+        "year": 2025,
+        "amount": 4876,
+        "createdAt": "2025-12-30T12:12:37.000Z",
+        "updatedAt": "2025-12-30T12:12:37.000Z"
+      },
+      {
+        "date": "2025-12-17",
+        "day": "Wednesday",
+        "morning": 45,
+        "evening": 53,
+        "total": 98,
+        "month": "2025-12",
+        "year": 2025,
+        "amount": 4508,
+        "createdAt": "2025-12-30T12:12:26.000Z",
+        "updatedAt": "2025-12-30T12:12:26.000Z"
+      },
+      {
+        "date": "2025-12-16",
+        "day": "Tuesday",
+        "morning": 44,
+        "evening": 44,
+        "total": 88,
+        "month": "2025-12",
+        "year": 2025,
+        "amount": 4048,
+        "createdAt": "2025-12-30T12:11:50.000Z",
+        "updatedAt": "2025-12-30T12:11:50.000Z"
+      },
+      {
+        "date": "2025-12-15",
+        "day": "Monday",
+        "morning": 43,
+        "evening": 41,
+        "total": 84,
+        "month": "2025-12",
+        "year": 2025,
+        "amount": 3864,
+        "createdAt": "2025-12-30T12:11:28.000Z",
+        "updatedAt": "2025-12-30T12:11:28.000Z"
+      },
+      {
+        "date": "2025-12-14",
+        "day": "Sunday",
+        "morning": 41,
+        "evening": 41,
+        "total": 82,
+        "month": "2025-12",
+        "year": 2025,
+        "amount": 3772,
+        "createdAt": "2025-12-30T12:11:14.000Z",
+        "updatedAt": "2025-12-30T12:11:14.000Z"
+      },
+      {
+        "date": "2025-12-13",
+        "day": "Saturday",
+        "morning": 43,
+        "evening": 41,
+        "total": 84,
+        "month": "2025-12",
+        "year": 2025,
+        "amount": 3864,
+        "createdAt": "2025-12-30T12:10:37.000Z",
+        "updatedAt": "2025-12-30T12:10:37.000Z"
+      },
+      {
+        "date": "2025-12-11",
+        "day": "Thursday",
+        "morning": 44,
+        "evening": 44,
+        "total": 88,
+        "month": "2025-12",
+        "year": 2025,
+        "amount": 4048,
+        "createdAt": "2025-12-30T12:09:51.000Z",
+        "updatedAt": "2025-12-30T12:09:51.000Z"
+      },
+      {
+        "date": "2025-12-10",
+        "day": "Wednesday",
+        "morning": 45,
+        "evening": 43,
+        "total": 88,
+        "month": "2025-12",
+        "year": 2025,
+        "amount": 4048,
+        "createdAt": "2025-12-30T12:09:29.000Z",
+        "updatedAt": "2025-12-30T12:09:29.000Z"
+      },
+      {
+        "date": "2025-12-09",
+        "day": "Tuesday",
+        "morning": 43,
+        "evening": 43,
+        "total": 86,
+        "month": "2025-12",
+        "year": 2025,
+        "amount": 3956,
+        "createdAt": "2025-12-30T12:09:13.000Z",
+        "updatedAt": "2025-12-30T12:09:13.000Z"
+      },
+      {
+        "date": "2025-12-08",
+        "day": "Monday",
+        "morning": 40,
+        "evening": 41,
+        "total": 81,
+        "month": "2025-12",
+        "year": 2025,
+        "amount": 3726,
+        "createdAt": "2025-12-30T12:08:56.000Z",
+        "updatedAt": "2025-12-30T12:08:56.000Z"
+      },
+      {
+        "date": "2025-12-07",
+        "day": "Sunday",
+        "morning": 37,
+        "evening": 35,
+        "total": 72,
+        "month": "2025-12",
+        "year": 2025,
+        "amount": 3312,
+        "createdAt": "2025-12-30T12:08:25.000Z",
+        "updatedAt": "2025-12-30T12:08:25.000Z"
+      },
+      {
+        "date": "2025-12-06",
+        "day": "Saturday",
+        "morning": 38,
+        "evening": 37,
+        "total": 75,
+        "month": "2025-12",
+        "year": 2025,
+        "amount": 3450,
+        "createdAt": "2025-12-30T12:08:06.000Z",
+        "updatedAt": "2025-12-30T12:08:06.000Z"
+      },
+      {
+        "date": "2025-12-05",
+        "day": "Friday",
+        "morning": 40,
+        "evening": 39,
+        "total": 79,
+        "month": "2025-12",
+        "year": 2025,
+        "amount": 3634,
+        "createdAt": "2025-12-30T12:07:40.000Z",
+        "updatedAt": "2025-12-30T12:07:40.000Z"
+      },
+      {
+        "date": "2025-12-03",
+        "day": "Wednesday",
+        "morning": 44,
+        "evening": 40,
+        "total": 84,
+        "month": "2025-12",
+        "year": 2025,
+        "amount": 3864,
+        "createdAt": "2025-12-30T12:07:23.000Z",
+        "updatedAt": "2025-12-30T12:07:23.000Z"
+      },
+      {
+        "date": "2025-12-02",
+        "day": "Tuesday",
+        "morning": 39,
+        "evening": 43,
+        "total": 82,
+        "month": "2025-12",
+        "year": 2025,
+        "amount": 3772,
+        "createdAt": "2025-12-30T12:07:11.000Z",
+        "updatedAt": "2025-12-30T12:07:11.000Z"
+      },
+      {
+        "date": "2025-12-01",
+        "day": "Monday",
+        "morning": 31,
+        "evening": 36,
+        "total": 67,
+        "month": "2025-12",
+        "year": 2025,
+        "amount": 3082,
+        "createdAt": "2025-12-30T12:06:51.000Z",
+        "updatedAt": "2025-12-30T12:06:51.000Z"
+      },
+      {
+        "date": "2025-11-30",
+        "day": "Sunday",
+        "morning": 31,
+        "evening": 27,
+        "total": 58,
+        "month": "2025-11",
+        "year": 2025,
+        "amount": 2668,
+        "createdAt": "2025-11-30T06:51:52.000Z",
+        "updatedAt": "2025-11-30T07:25:36.000Z"
+      },
+      {
+        "date": "2025-11-29",
+        "day": "Saturday",
+        "morning": 35,
+        "evening": 32,
+        "total": 67,
+        "month": "2025-11",
+        "year": 2025,
+        "amount": 3082,
+        "createdAt": "2025-11-30T06:51:22.000Z",
+        "updatedAt": "2025-11-30T06:51:22.000Z"
+      },
+      {
+        "date": "2025-11-28",
+        "day": "Friday",
+        "morning": 39,
+        "evening": 35,
+        "total": 74,
+        "month": "2025-11",
+        "year": 2025,
+        "amount": 3404,
+        "createdAt": "2025-11-30T06:49:46.000Z",
+        "updatedAt": "2025-11-30T06:50:28.000Z"
+      },
+      {
+        "date": "2025-11-27",
+        "day": "Thursday",
+        "morning": 42,
+        "evening": 40,
+        "total": 82,
+        "month": "2025-11",
+        "year": 2025,
+        "amount": 3772,
+        "createdAt": "2025-11-30T06:49:09.000Z",
+        "updatedAt": "2025-11-30T06:49:24.000Z"
+      },
+      {
+        "date": "2025-11-17",
+        "day": "Monday",
+        "morning": 44,
+        "evening": 47,
+        "total": 91,
+        "month": "2025-11",
+        "year": 2025,
+        "amount": 4186,
+        "createdAt": "2025-11-26T13:09:36.000Z",
+        "updatedAt": "2025-11-26T13:12:16.000Z"
+      },
+      {
+        "date": "2025-11-26",
+        "day": "Wednesday",
+        "morning": 42,
+        "evening": 41,
+        "total": 83,
+        "month": "2025-11",
+        "year": 2025,
+        "amount": 3818,
+        "createdAt": "2025-11-26T13:11:15.000Z",
+        "updatedAt": "2025-11-26T13:11:15.000Z"
+      },
+      {
+        "date": "2025-11-25",
+        "day": "Tuesday",
+        "morning": 37,
+        "evening": 38,
+        "total": 75,
+        "month": "2025-11",
+        "year": 2025,
+        "amount": 3450,
+        "createdAt": "2025-11-26T13:11:00.000Z",
+        "updatedAt": "2025-11-26T13:11:00.000Z"
+      },
+      {
+        "date": "2025-11-24",
+        "day": "Monday",
+        "morning": 36,
+        "evening": 37,
+        "total": 73,
+        "month": "2025-11",
+        "year": 2025,
+        "amount": 3358,
+        "createdAt": "2025-11-26T13:10:52.000Z",
+        "updatedAt": "2025-11-26T13:10:52.000Z"
+      },
+      {
+        "date": "2025-11-23",
+        "day": "Sunday",
+        "morning": 34,
+        "evening": 35,
+        "total": 69,
+        "month": "2025-11",
+        "year": 2025,
+        "amount": 3174,
+        "createdAt": "2025-11-26T13:10:44.000Z",
+        "updatedAt": "2025-11-26T13:10:44.000Z"
+      },
+      {
+        "date": "2025-11-22",
+        "day": "Saturday",
+        "morning": 37,
+        "evening": 36,
+        "total": 73,
+        "month": "2025-11",
+        "year": 2025,
+        "amount": 3358,
+        "createdAt": "2025-11-26T13:10:32.000Z",
+        "updatedAt": "2025-11-26T13:10:32.000Z"
+      },
+      {
+        "date": "2025-11-21",
+        "day": "Friday",
+        "morning": 49,
+        "evening": 42,
+        "total": 91,
+        "month": "2025-11",
+        "year": 2025,
+        "amount": 4186,
+        "createdAt": "2025-11-26T13:10:22.000Z",
+        "updatedAt": "2025-11-26T13:10:22.000Z"
+      },
+      {
+        "date": "2025-11-20",
+        "day": "Thursday",
+        "morning": 52,
+        "evening": 51,
+        "total": 103,
+        "month": "2025-11",
+        "year": 2025,
+        "amount": 4738,
+        "createdAt": "2025-11-26T13:10:09.000Z",
+        "updatedAt": "2025-11-26T13:10:09.000Z"
+      },
+      {
+        "date": "2025-11-19",
+        "day": "Wednesday",
+        "morning": 53,
+        "evening": 53,
+        "total": 106,
+        "month": "2025-11",
+        "year": 2025,
+        "amount": 4876,
+        "createdAt": "2025-11-26T13:10:00.000Z",
+        "updatedAt": "2025-11-26T13:10:00.000Z"
+      },
+      {
+        "date": "2025-11-18",
+        "day": "Tuesday",
+        "morning": 48,
+        "evening": 53,
+        "total": 101,
+        "month": "2025-11",
+        "year": 2025,
+        "amount": 4646,
+        "createdAt": "2025-11-26T13:09:52.000Z",
+        "updatedAt": "2025-11-26T13:09:52.000Z"
+      },
+      {
+        "date": "2025-11-16",
+        "day": "Sunday",
+        "morning": 43,
+        "evening": 44,
+        "total": 87,
+        "month": "2025-11",
+        "year": 2025,
+        "amount": 4002,
+        "createdAt": "2025-11-26T13:08:54.000Z",
+        "updatedAt": "2025-11-26T13:08:54.000Z"
+      },
+      {
+        "date": "2025-11-15",
+        "day": "Saturday",
+        "morning": 44,
+        "evening": 43,
+        "total": 87,
+        "month": "2025-11",
+        "year": 2025,
+        "amount": 4002,
+        "createdAt": "2025-11-26T13:08:46.000Z",
+        "updatedAt": "2025-11-26T13:08:46.000Z"
+      },
+      {
+        "date": "2025-11-14",
+        "day": "Friday",
+        "morning": 43,
+        "evening": 43,
+        "total": 86,
+        "month": "2025-11",
+        "year": 2025,
+        "amount": 3956,
+        "createdAt": "2025-11-26T13:08:36.000Z",
+        "updatedAt": "2025-11-26T13:08:36.000Z"
+      },
+      {
+        "date": "2025-11-13",
+        "day": "Thursday",
+        "morning": 44,
+        "evening": 42,
+        "total": 86,
+        "month": "2025-11",
+        "year": 2025,
+        "amount": 3956,
+        "createdAt": "2025-11-26T13:08:27.000Z",
+        "updatedAt": "2025-11-26T13:08:27.000Z"
+      },
+      {
+        "date": "2025-11-12",
+        "day": "Wednesday",
+        "morning": 48,
+        "evening": 44,
+        "total": 92,
+        "month": "2025-11",
+        "year": 2025,
+        "amount": 4232,
+        "createdAt": "2025-11-26T13:08:17.000Z",
+        "updatedAt": "2025-11-26T13:08:17.000Z"
+      },
+      {
+        "date": "2025-11-11",
+        "day": "Tuesday",
+        "morning": 46,
+        "evening": 47,
+        "total": 93,
+        "month": "2025-11",
+        "year": 2025,
+        "amount": 4278,
+        "createdAt": "2025-11-26T13:07:59.000Z",
+        "updatedAt": "2025-11-26T13:07:59.000Z"
+      },
+      {
+        "date": "2025-11-10",
+        "day": "Monday",
+        "morning": 48,
+        "evening": 47,
+        "total": 95,
+        "month": "2025-11",
+        "year": 2025,
+        "amount": 4370,
+        "createdAt": "2025-11-26T13:07:45.000Z",
+        "updatedAt": "2025-11-26T13:07:45.000Z"
+      },
+      {
+        "date": "2025-11-09",
+        "day": "Sunday",
+        "morning": 46,
+        "evening": 48,
+        "total": 94,
+        "month": "2025-11",
+        "year": 2025,
+        "amount": 4324,
+        "createdAt": "2025-11-26T13:07:31.000Z",
+        "updatedAt": "2025-11-26T13:07:31.000Z"
+      },
+      {
+        "date": "2025-11-08",
+        "day": "Saturday",
+        "morning": 46,
+        "evening": 47,
+        "total": 93,
+        "month": "2025-11",
+        "year": 2025,
+        "amount": 4278,
+        "createdAt": "2025-11-26T13:05:49.000Z",
+        "updatedAt": "2025-11-26T13:05:49.000Z"
+      },
+      {
+        "date": "2025-11-07",
+        "day": "Friday",
+        "morning": 47,
+        "evening": 46,
+        "total": 93,
+        "month": "2025-11",
+        "year": 2025,
+        "amount": 4278,
+        "createdAt": "2025-11-26T13:05:34.000Z",
+        "updatedAt": "2025-11-26T13:05:34.000Z"
+      },
+      {
+        "date": "2025-11-06",
+        "day": "Thursday",
+        "morning": 47,
+        "evening": 46,
+        "total": 93,
+        "month": "2025-11",
+        "year": 2025,
+        "amount": 4278,
+        "createdAt": "2025-11-26T13:05:09.000Z",
+        "updatedAt": "2025-11-26T13:05:09.000Z"
+      },
+      {
+        "date": "2025-11-05",
+        "day": "Wednesday",
+        "morning": 47,
+        "evening": 46,
+        "total": 93,
+        "month": "2025-11",
+        "year": 2025,
+        "amount": 4278,
+        "createdAt": "2025-11-26T13:04:56.000Z",
+        "updatedAt": "2025-11-26T13:04:56.000Z"
+      },
+      {
+        "date": "2025-11-04",
+        "day": "Tuesday",
+        "morning": 44,
+        "evening": 44,
+        "total": 88,
+        "month": "2025-11",
+        "year": 2025,
+        "amount": 4048,
+        "createdAt": "2025-11-26T13:04:40.000Z",
+        "updatedAt": "2025-11-26T13:04:40.000Z"
+      },
+      {
+        "date": "2025-11-03",
+        "day": "Monday",
+        "morning": 42,
+        "evening": 43,
+        "total": 85,
+        "month": "2025-11",
+        "year": 2025,
+        "amount": 3910,
+        "createdAt": "2025-11-03T11:46:37.000Z",
+        "updatedAt": "2025-11-26T13:04:25.000Z"
+      },
+      {
+        "date": "2025-11-02",
+        "day": "Sunday",
+        "morning": 36,
+        "evening": 41,
+        "total": 77,
+        "month": "2025-11",
+        "year": 2025,
+        "amount": 3542,
+        "createdAt": "2025-11-26T13:03:38.000Z",
+        "updatedAt": "2025-11-26T13:03:38.000Z"
+      },
+      {
+        "date": "2025-10-31",
+        "day": "Friday",
+        "morning": 35,
+        "evening": 35,
+        "total": 70,
+        "month": "2025-10",
+        "year": 2025,
+        "amount": 0,
+        "createdAt": "2025-11-03T11:48:30.000Z",
+        "updatedAt": "2025-11-03T11:48:30.000Z"
+      },
+      {
+        "date": "2025-10-30",
+        "day": "Thursday",
+        "morning": 32,
+        "evening": 34,
+        "total": 66,
+        "month": "2025-10",
+        "year": 2025,
+        "amount": 0,
+        "createdAt": "2025-11-03T11:48:14.000Z",
+        "updatedAt": "2025-11-03T11:48:14.000Z"
+      },
+      {
+        "date": "2025-10-29",
+        "day": "Wednesday",
+        "morning": 30,
+        "evening": 32,
+        "total": 62,
+        "month": "2025-10",
+        "year": 2025,
+        "amount": 0,
+        "createdAt": "2025-11-03T11:47:59.000Z",
+        "updatedAt": "2025-11-03T11:47:59.000Z"
+      },
+      {
+        "date": "2025-10-28",
+        "day": "Tuesday",
+        "morning": 22,
+        "evening": 30,
+        "total": 52,
+        "month": "2025-10",
+        "year": 2025,
+        "amount": 0,
+        "createdAt": "2025-11-03T11:47:18.000Z",
+        "updatedAt": "2025-11-03T11:47:18.000Z"
+      },
+      {
+        "date": "2025-10-27",
+        "day": "Monday",
+        "morning": 18,
+        "evening": 20,
+        "total": 38,
+        "month": "2025-10",
+        "year": 2025,
+        "amount": 0,
+        "createdAt": "2025-11-03T11:47:01.000Z",
+        "updatedAt": "2025-11-03T11:47:01.000Z"
+      },
+      {
+        "date": "2025-10-26",
+        "day": "Sunday",
+        "morning": 0,
+        "evening": 0,
+        "total": 0,
+        "month": "2025-10",
+        "year": 2025,
+        "amount": 0,
+        "createdAt": "2025-11-03T11:46:45.000Z",
+        "updatedAt": "2025-11-03T11:46:45.000Z"
+      },
+      {
+        "date": "2025-10-25",
+        "day": "Saturday",
+        "morning": 0,
+        "evening": 0,
+        "total": 0,
+        "month": "2025-10",
+        "year": 2025,
+        "amount": 0,
+        "createdAt": "2025-11-03T11:46:36.000Z",
+        "updatedAt": "2025-11-03T11:46:36.000Z"
+      },
+      {
+        "date": "2025-10-24",
+        "day": "Friday",
+        "morning": 0,
+        "evening": 0,
+        "total": 0,
+        "month": "2025-10",
+        "year": 2025,
+        "amount": 0,
+        "createdAt": "2025-11-03T11:46:31.000Z",
+        "updatedAt": "2025-11-03T11:46:31.000Z"
+      },
+      {
+        "date": "2025-10-23",
+        "day": "Thursday",
+        "morning": 0,
+        "evening": 0,
+        "total": 0,
+        "month": "2025-10",
+        "year": 2025,
+        "amount": 0,
+        "createdAt": "2025-11-03T11:46:24.000Z",
+        "updatedAt": "2025-11-03T11:46:24.000Z"
+      },
+      {
+        "date": "2025-10-22",
+        "day": "Wednesday",
+        "morning": 0,
+        "evening": 0,
+        "total": 0,
+        "month": "2025-10",
+        "year": 2025,
+        "amount": 0,
+        "createdAt": "2025-11-03T11:46:14.000Z",
+        "updatedAt": "2025-11-03T11:46:14.000Z"
+      },
+      {
+        "date": "2025-10-21",
+        "day": "Tuesday",
+        "morning": 0,
+        "evening": 0,
+        "total": 0,
+        "month": "2025-10",
+        "year": 2025,
+        "amount": 0,
+        "createdAt": "2025-11-03T11:46:08.000Z",
+        "updatedAt": "2025-11-03T11:46:08.000Z"
+      },
+      {
+        "date": "2025-10-20",
+        "day": "Monday",
+        "morning": 0,
+        "evening": 0,
+        "total": 0,
+        "month": "2025-10",
+        "year": 2025,
+        "amount": 0,
+        "createdAt": "2025-11-03T11:46:02.000Z",
+        "updatedAt": "2025-11-03T11:46:02.000Z"
+      },
+      {
+        "date": "2025-10-19",
+        "day": "Sunday",
+        "morning": 0,
+        "evening": 0,
+        "total": 0,
+        "month": "2025-10",
+        "year": 2025,
+        "amount": 0,
+        "createdAt": "2025-11-03T11:45:54.000Z",
+        "updatedAt": "2025-11-03T11:45:54.000Z"
+      },
+      {
+        "date": "2025-10-18",
+        "day": "Saturday",
+        "morning": 18,
+        "evening": 0,
+        "total": 18,
+        "month": "2025-10",
+        "year": 2025,
+        "amount": 0,
+        "createdAt": "2025-11-03T11:45:47.000Z",
+        "updatedAt": "2025-11-03T11:45:47.000Z"
+      },
+      {
+        "date": "2025-10-17",
+        "day": "Friday",
+        "morning": 36,
+        "evening": 22,
+        "total": 58,
+        "month": "2025-10",
+        "year": 2025,
+        "amount": 0,
+        "createdAt": "2025-11-03T11:45:23.000Z",
+        "updatedAt": "2025-11-03T11:45:23.000Z"
+      },
+      {
+        "date": "2025-10-16",
+        "day": "Thursday",
+        "morning": 40,
+        "evening": 38,
+        "total": 78,
+        "month": "2025-10",
+        "year": 2025,
+        "amount": 0,
+        "createdAt": "2025-11-03T11:44:58.000Z",
+        "updatedAt": "2025-11-03T11:44:58.000Z"
+      },
+      {
+        "date": "2025-10-15",
+        "day": "Wednesday",
+        "morning": 46,
+        "evening": 39,
+        "total": 85,
+        "month": "2025-10",
+        "year": 2025,
+        "amount": 0,
+        "createdAt": "2025-11-03T11:44:43.000Z",
+        "updatedAt": "2025-11-03T11:44:43.000Z"
+      },
+      {
+        "date": "2025-10-14",
+        "day": "Tuesday",
+        "morning": 48,
+        "evening": 46,
+        "total": 94,
+        "month": "2025-10",
+        "year": 2025,
+        "amount": 0,
+        "createdAt": "2025-11-03T11:44:26.000Z",
+        "updatedAt": "2025-11-03T11:44:26.000Z"
+      },
+      {
+        "date": "2025-10-13",
+        "day": "Monday",
+        "morning": 47,
+        "evening": 47,
+        "total": 94,
+        "month": "2025-10",
+        "year": 2025,
+        "amount": 0,
+        "createdAt": "2025-11-01T09:10:13.000Z",
+        "updatedAt": "2025-11-03T11:44:03.000Z"
+      },
+      {
+        "date": "2025-11-01",
+        "day": "Saturday",
+        "morning": 36,
+        "evening": 35,
+        "total": 71,
+        "month": "2025-11",
+        "year": 2025,
+        "amount": 0,
+        "createdAt": "2025-11-01T09:19:32.000Z",
+        "updatedAt": "2025-11-01T09:19:32.000Z"
+      },
+      {
+        "date": "2025-10-12",
+        "day": "Sunday",
+        "morning": 48,
+        "evening": 48,
+        "total": 96,
+        "month": "2025-10",
+        "year": 2025,
+        "amount": 0,
+        "createdAt": "2025-11-01T09:10:13.000Z",
+        "updatedAt": "2025-11-01T09:10:13.000Z"
+      },
+      {
+        "date": "2025-10-11",
+        "day": "Saturday",
+        "morning": 49,
+        "evening": 48,
+        "total": 97,
+        "month": "2025-10",
+        "year": 2025,
+        "amount": 0,
+        "createdAt": "2025-11-01T09:10:13.000Z",
+        "updatedAt": "2025-11-01T09:10:13.000Z"
+      },
+      {
+        "date": "2025-10-10",
+        "day": "Friday",
+        "morning": 42,
+        "evening": 48,
+        "total": 90,
+        "month": "2025-10",
+        "year": 2025,
+        "amount": 0,
+        "createdAt": "2025-11-01T09:10:13.000Z",
+        "updatedAt": "2025-11-01T09:10:13.000Z"
+      },
+      {
+        "date": "2025-10-09",
+        "day": "Thursday",
+        "morning": 42,
+        "evening": 41,
+        "total": 83,
+        "month": "2025-10",
+        "year": 2025,
+        "amount": 0,
+        "createdAt": "2025-11-01T09:10:13.000Z",
+        "updatedAt": "2025-11-01T09:10:13.000Z"
+      },
+      {
+        "date": "2025-10-08",
+        "day": "Wednesday",
+        "morning": 43,
+        "evening": 41,
+        "total": 84,
+        "month": "2025-10",
+        "year": 2025,
+        "amount": 0,
+        "createdAt": "2025-11-01T09:10:13.000Z",
+        "updatedAt": "2025-11-01T09:10:13.000Z"
+      },
+      {
+        "date": "2025-10-07",
+        "day": "Tuesday",
+        "morning": 43,
+        "evening": 35,
+        "total": 78,
+        "month": "2025-10",
+        "year": 2025,
+        "amount": 0,
+        "createdAt": "2025-11-01T09:10:13.000Z",
+        "updatedAt": "2025-11-01T09:10:13.000Z"
+      },
+      {
+        "date": "2025-10-06",
+        "day": "Monday",
+        "morning": 38,
+        "evening": 42,
+        "total": 80,
+        "month": "2025-10",
+        "year": 2025,
+        "amount": 0,
+        "createdAt": "2025-11-01T09:10:13.000Z",
+        "updatedAt": "2025-11-01T09:10:13.000Z"
+      },
+      {
+        "date": "2025-10-05",
+        "day": "Sunday",
+        "morning": 26,
+        "evening": 34,
+        "total": 60,
+        "month": "2025-10",
+        "year": 2025,
+        "amount": 0,
+        "createdAt": "2025-11-01T09:10:13.000Z",
+        "updatedAt": "2025-11-01T09:10:13.000Z"
+      },
+      {
+        "date": "2025-10-04",
+        "day": "Saturday",
+        "morning": 25,
+        "evening": 25,
+        "total": 50,
+        "month": "2025-10",
+        "year": 2025,
+        "amount": 0,
+        "createdAt": "2025-11-01T09:10:13.000Z",
+        "updatedAt": "2025-11-01T09:10:13.000Z"
+      },
+      {
+        "date": "2025-10-03",
+        "day": "Friday",
+        "morning": 23,
+        "evening": 24,
+        "total": 47,
+        "month": "2025-10",
+        "year": 2025,
+        "amount": 0,
+        "createdAt": "2025-11-01T09:10:13.000Z",
+        "updatedAt": "2025-11-01T09:10:13.000Z"
+      },
+      {
+        "date": "2025-10-02",
+        "day": "Thursday",
+        "morning": 23,
+        "evening": 22,
+        "total": 45,
+        "month": "2025-10",
+        "year": 2025,
+        "amount": 0,
+        "createdAt": "2025-11-01T09:10:13.000Z",
+        "updatedAt": "2025-11-01T09:10:13.000Z"
+      },
+      {
+        "date": "2025-10-01",
+        "day": "Wednesday",
+        "morning": 43,
+        "evening": 27,
+        "total": 70,
+        "month": "2025-10",
+        "year": 2025,
+        "amount": 0,
+        "createdAt": "2025-11-01T09:10:13.000Z",
+        "updatedAt": "2025-11-01T09:10:13.000Z"
+      },
+      {
+        "date": "2025-09-30",
+        "day": "Tuesday",
+        "morning": 44,
+        "evening": 42,
+        "total": 86,
+        "month": "2025-09",
+        "year": 2025,
+        "amount": 0,
+        "createdAt": "2025-11-01T09:10:13.000Z",
+        "updatedAt": "2025-11-01T09:10:13.000Z"
+      },
+      {
+        "date": "2025-09-29",
+        "day": "Monday",
+        "morning": 44,
+        "evening": 44,
+        "total": 88,
+        "month": "2025-09",
+        "year": 2025,
+        "amount": 0,
+        "createdAt": "2025-11-01T09:10:13.000Z",
+        "updatedAt": "2025-11-01T09:10:13.000Z"
+      },
+      {
+        "date": "2025-09-28",
+        "day": "Sunday",
+        "morning": 42,
+        "evening": 42,
+        "total": 84,
+        "month": "2025-09",
+        "year": 2025,
+        "amount": 0,
+        "createdAt": "2025-11-01T09:10:13.000Z",
+        "updatedAt": "2025-11-01T09:10:13.000Z"
+      },
+      {
+        "date": "2025-09-27",
+        "day": "Saturday",
+        "morning": 45,
+        "evening": 42,
+        "total": 87,
+        "month": "2025-09",
+        "year": 2025,
+        "amount": 0,
+        "createdAt": "2025-11-01T09:10:13.000Z",
+        "updatedAt": "2025-11-01T09:10:13.000Z"
+      },
+      {
+        "date": "2025-09-26",
+        "day": "Friday",
+        "morning": 45,
+        "evening": 44,
+        "total": 89,
+        "month": "2025-09",
+        "year": 2025,
+        "amount": 0,
+        "createdAt": "2025-11-01T09:10:13.000Z",
+        "updatedAt": "2025-11-01T09:10:13.000Z"
+      },
+      {
+        "date": "2025-09-25",
+        "day": "Thursday",
+        "morning": 43,
+        "evening": 44,
+        "total": 87,
+        "month": "2025-09",
+        "year": 2025,
+        "amount": 0,
+        "createdAt": "2025-11-01T09:10:13.000Z",
+        "updatedAt": "2025-11-01T09:10:13.000Z"
+      },
+      {
+        "date": "2025-09-24",
+        "day": "Wednesday",
+        "morning": 42,
+        "evening": 43,
+        "total": 85,
+        "month": "2025-09",
+        "year": 2025,
+        "amount": 0,
+        "createdAt": "2025-11-01T09:10:13.000Z",
+        "updatedAt": "2025-11-01T09:10:13.000Z"
+      },
+      {
+        "date": "2025-09-23",
+        "day": "Tuesday",
+        "morning": 29,
+        "evening": 35,
+        "total": 64,
+        "month": "2025-09",
+        "year": 2025,
+        "amount": 0,
+        "createdAt": "2025-11-01T09:10:13.000Z",
+        "updatedAt": "2025-11-01T09:10:13.000Z"
+      },
+      {
+        "date": "2025-09-22",
+        "day": "Monday",
+        "morning": 27,
+        "evening": 28,
+        "total": 55,
+        "month": "2025-09",
+        "year": 2025,
+        "amount": 0,
+        "createdAt": "2025-11-01T09:10:13.000Z",
+        "updatedAt": "2025-11-01T09:10:13.000Z"
+      },
+      {
+        "date": "2025-09-21",
+        "day": "Sunday",
+        "morning": 27,
+        "evening": 26,
+        "total": 53,
+        "month": "2025-09",
+        "year": 2025,
+        "amount": 0,
+        "createdAt": "2025-11-01T09:10:13.000Z",
+        "updatedAt": "2025-11-01T09:10:13.000Z"
+      },
+      {
+        "date": "2025-09-20",
+        "day": "Saturday",
+        "morning": 33,
+        "evening": 27,
+        "total": 60,
+        "month": "2025-09",
+        "year": 2025,
+        "amount": 0,
+        "createdAt": "2025-11-01T09:10:13.000Z",
+        "updatedAt": "2025-11-01T09:10:13.000Z"
+      },
+      {
+        "date": "2025-09-19",
+        "day": "Friday",
+        "morning": 38,
+        "evening": 33,
+        "total": 71,
+        "month": "2025-09",
+        "year": 2025,
+        "amount": 0,
+        "createdAt": "2025-11-01T09:10:13.000Z",
+        "updatedAt": "2025-11-01T09:10:13.000Z"
+      },
+      {
+        "date": "2025-09-18",
+        "day": "Thursday",
+        "morning": 37,
+        "evening": 38,
+        "total": 75,
+        "month": "2025-09",
+        "year": 2025,
+        "amount": 0,
+        "createdAt": "2025-11-01T09:10:13.000Z",
+        "updatedAt": "2025-11-01T09:10:13.000Z"
+      },
+      {
+        "date": "2025-09-17",
+        "day": "Wednesday",
+        "morning": 37,
+        "evening": 36,
+        "total": 73,
+        "month": "2025-09",
+        "year": 2025,
+        "amount": 0,
+        "createdAt": "2025-11-01T09:10:13.000Z",
+        "updatedAt": "2025-11-01T09:10:13.000Z"
+      },
+      {
+        "date": "2025-09-16",
+        "day": "Tuesday",
+        "morning": 38,
+        "evening": 37,
+        "total": 75,
+        "month": "2025-09",
+        "year": 2025,
+        "amount": 0,
+        "createdAt": "2025-11-01T09:10:13.000Z",
+        "updatedAt": "2025-11-01T09:10:13.000Z"
+      },
+      {
+        "date": "2025-09-15",
+        "day": "Monday",
+        "morning": 29,
+        "evening": 39,
+        "total": 68,
+        "month": "2025-09",
+        "year": 2025,
+        "amount": 0,
+        "createdAt": "2025-11-01T09:10:13.000Z",
+        "updatedAt": "2025-11-01T09:10:13.000Z"
+      },
+      {
+        "date": "2025-09-14",
+        "day": "Sunday",
+        "morning": 27,
+        "evening": 28,
+        "total": 55,
+        "month": "2025-09",
+        "year": 2025,
+        "amount": 0,
+        "createdAt": "2025-11-01T09:10:13.000Z",
+        "updatedAt": "2025-11-01T09:10:13.000Z"
+      },
+      {
+        "date": "2025-09-13",
+        "day": "Saturday",
+        "morning": 27,
+        "evening": 26,
+        "total": 53,
+        "month": "2025-09",
+        "year": 2025,
+        "amount": 0,
+        "createdAt": "2025-11-01T09:10:13.000Z",
+        "updatedAt": "2025-11-01T09:10:13.000Z"
+      },
+      {
+        "date": "2025-09-12",
+        "day": "Friday",
+        "morning": 33,
+        "evening": 30,
+        "total": 63,
+        "month": "2025-09",
+        "year": 2025,
+        "amount": 0,
+        "createdAt": "2025-11-01T09:10:13.000Z",
+        "updatedAt": "2025-11-01T09:10:13.000Z"
+      },
+      {
+        "date": "2025-09-11",
+        "day": "Thursday",
+        "morning": 35,
+        "evening": 33,
+        "total": 68,
+        "month": "2025-09",
+        "year": 2025,
+        "amount": 0,
+        "createdAt": "2025-11-01T09:10:13.000Z",
+        "updatedAt": "2025-11-01T09:10:13.000Z"
+      },
+      {
+        "date": "2025-09-10",
+        "day": "Wednesday",
+        "morning": 33,
+        "evening": 36,
+        "total": 69,
+        "month": "2025-09",
+        "year": 2025,
+        "amount": 0,
+        "createdAt": "2025-11-01T09:10:13.000Z",
+        "updatedAt": "2025-11-01T09:10:13.000Z"
+      },
+      {
+        "date": "2025-09-09",
+        "day": "Tuesday",
+        "morning": 25,
+        "evening": 32,
+        "total": 57,
+        "month": "2025-09",
+        "year": 2025,
+        "amount": 0,
+        "createdAt": "2025-11-01T09:10:13.000Z",
+        "updatedAt": "2025-11-01T09:10:13.000Z"
+      },
+      {
+        "date": "2025-09-08",
+        "day": "Monday",
+        "morning": 15,
+        "evening": 23,
+        "total": 38,
+        "month": "2025-09",
+        "year": 2025,
+        "amount": 0,
+        "createdAt": "2025-11-01T09:10:13.000Z",
+        "updatedAt": "2025-11-01T09:10:13.000Z"
+      },
+      {
+        "date": "2025-09-07",
+        "day": "Sunday",
+        "morning": 8,
+        "evening": 9,
+        "total": 17,
+        "month": "2025-09",
+        "year": 2025,
+        "amount": 0,
+        "createdAt": "2025-11-01T09:10:13.000Z",
+        "updatedAt": "2025-11-01T09:10:13.000Z"
+      },
+      {
+        "date": "2025-09-06",
+        "day": "Saturday",
+        "morning": 8,
+        "evening": 8,
+        "total": 16,
+        "month": "2025-09",
+        "year": 2025,
+        "amount": 0,
+        "createdAt": "2025-11-01T09:10:13.000Z",
+        "updatedAt": "2025-11-01T09:10:13.000Z"
+      },
+      {
+        "date": "2025-09-05",
+        "day": "Friday",
+        "morning": 7,
+        "evening": 7,
+        "total": 14,
+        "month": "2025-09",
+        "year": 2025,
+        "amount": 0,
+        "createdAt": "2025-11-01T09:10:13.000Z",
+        "updatedAt": "2025-11-01T09:10:13.000Z"
+      },
+      {
+        "date": "2025-09-04",
+        "day": "Thursday",
+        "morning": 11,
+        "evening": 8,
+        "total": 19,
+        "month": "2025-09",
+        "year": 2025,
+        "amount": 0,
+        "createdAt": "2025-11-01T09:10:13.000Z",
+        "updatedAt": "2025-11-01T09:10:13.000Z"
+      },
+      {
+        "date": "2025-09-03",
+        "day": "Wednesday",
+        "morning": 10,
+        "evening": 10,
+        "total": 20,
+        "month": "2025-09",
+        "year": 2025,
+        "amount": 0,
+        "createdAt": "2025-11-01T09:10:13.000Z",
+        "updatedAt": "2025-11-01T09:10:13.000Z"
+      },
+      {
+        "date": "2025-09-02",
+        "day": "Tuesday",
+        "morning": 10,
+        "evening": 10,
+        "total": 20,
+        "month": "2025-09",
+        "year": 2025,
+        "amount": 0,
+        "createdAt": "2025-11-01T09:10:13.000Z",
+        "updatedAt": "2025-11-01T09:10:13.000Z"
+      },
+      {
+        "date": "2025-09-01",
+        "day": "Monday",
+        "morning": 10,
+        "evening": 10,
+        "total": 20,
+        "month": "2025-09",
+        "year": 2025,
+        "amount": 0,
+        "createdAt": "2025-11-01T09:10:13.000Z",
+        "updatedAt": "2025-11-01T09:10:13.000Z"
+      },
+      {
+        "date": "2025-08-31",
+        "day": "Sunday",
+        "morning": 9,
+        "evening": 10,
+        "total": 19,
+        "month": "2025-08",
+        "year": 2025,
+        "amount": 0,
+        "createdAt": "2025-11-01T09:10:13.000Z",
+        "updatedAt": "2025-11-01T09:10:13.000Z"
+      },
+      {
+        "date": "2025-08-30",
+        "day": "Saturday",
+        "morning": 10,
+        "evening": 9,
+        "total": 19,
+        "month": "2025-08",
+        "year": 2025,
+        "amount": 0,
+        "createdAt": "2025-11-01T09:10:13.000Z",
+        "updatedAt": "2025-11-01T09:10:13.000Z"
+      },
+      {
+        "date": "2025-08-29",
+        "day": "Friday",
+        "morning": 10,
+        "evening": 9,
+        "total": 19,
+        "month": "2025-08",
+        "year": 2025,
+        "amount": 0,
+        "createdAt": "2025-11-01T09:10:13.000Z",
+        "updatedAt": "2025-11-01T09:10:13.000Z"
+      },
+      {
+        "date": "2025-08-28",
+        "day": "Thursday",
+        "morning": 9,
+        "evening": 9,
+        "total": 18,
+        "month": "2025-08",
+        "year": 2025,
+        "amount": 0,
+        "createdAt": "2025-11-01T09:10:13.000Z",
+        "updatedAt": "2025-11-01T09:10:13.000Z"
+      },
+      {
+        "date": "2025-08-27",
+        "day": "Wednesday",
+        "morning": 9,
+        "evening": 8,
+        "total": 17,
+        "month": "2025-08",
+        "year": 2025,
+        "amount": 0,
+        "createdAt": "2025-11-01T09:10:13.000Z",
+        "updatedAt": "2025-11-01T09:10:13.000Z"
+      },
+      {
+        "date": "2025-08-26",
+        "day": "Tuesday",
+        "morning": 9,
+        "evening": 8,
+        "total": 17,
+        "month": "2025-08",
+        "year": 2025,
+        "amount": 0,
+        "createdAt": "2025-11-01T09:10:13.000Z",
+        "updatedAt": "2025-11-01T09:10:13.000Z"
+      },
+      {
+        "date": "2025-08-25",
+        "day": "Monday",
+        "morning": 10,
+        "evening": 9,
+        "total": 19,
+        "month": "2025-08",
+        "year": 2025,
+        "amount": 0,
+        "createdAt": "2025-11-01T09:10:13.000Z",
+        "updatedAt": "2025-11-01T09:10:13.000Z"
+      },
+      {
+        "date": "2025-08-24",
+        "day": "Sunday",
+        "morning": 8,
+        "evening": 8,
+        "total": 16,
+        "month": "2025-08",
+        "year": 2025,
+        "amount": 0,
+        "createdAt": "2025-11-01T09:10:13.000Z",
+        "updatedAt": "2025-11-01T09:10:13.000Z"
+      },
+      {
+        "date": "2025-08-23",
+        "day": "Saturday",
+        "morning": 8,
+        "evening": 8,
+        "total": 16,
+        "month": "2025-08",
+        "year": 2025,
+        "amount": 0,
+        "createdAt": "2025-11-01T09:10:13.000Z",
+        "updatedAt": "2025-11-01T09:10:13.000Z"
+      },
+      {
+        "date": "2025-08-22",
+        "day": "Friday",
+        "morning": 9,
+        "evening": 8,
+        "total": 17,
+        "month": "2025-08",
+        "year": 2025,
+        "amount": 0,
+        "createdAt": "2025-11-01T09:10:13.000Z",
+        "updatedAt": "2025-11-01T09:10:13.000Z"
+      },
+      {
+        "date": "2025-08-21",
+        "day": "Thursday",
+        "morning": 8,
+        "evening": 8,
+        "total": 16,
+        "month": "2025-08",
+        "year": 2025,
+        "amount": 0,
+        "createdAt": "2025-11-01T09:10:13.000Z",
+        "updatedAt": "2025-11-01T09:10:13.000Z"
+      },
+      {
+        "date": "2025-08-20",
+        "day": "Wednesday",
+        "morning": 9,
+        "evening": 8,
+        "total": 17,
+        "month": "2025-08",
+        "year": 2025,
+        "amount": 0,
+        "createdAt": "2025-11-01T09:10:13.000Z",
+        "updatedAt": "2025-11-01T09:10:13.000Z"
+      },
+      {
+        "date": "2025-08-19",
+        "day": "Tuesday",
+        "morning": 10,
+        "evening": 8,
+        "total": 18,
+        "month": "2025-08",
+        "year": 2025,
+        "amount": 0,
+        "createdAt": "2025-11-01T09:10:13.000Z",
+        "updatedAt": "2025-11-01T09:10:13.000Z"
+      },
+      {
+        "date": "2025-08-18",
+        "day": "Monday",
+        "morning": 9,
+        "evening": 10,
+        "total": 19,
+        "month": "2025-08",
+        "year": 2025,
+        "amount": 0,
+        "createdAt": "2025-11-01T09:10:13.000Z",
+        "updatedAt": "2025-11-01T09:10:13.000Z"
+      },
+      {
+        "date": "2025-08-17",
+        "day": "Sunday",
+        "morning": 8,
+        "evening": 9,
+        "total": 17,
+        "month": "2025-08",
+        "year": 2025,
+        "amount": 0,
+        "createdAt": "2025-11-01T09:10:13.000Z",
+        "updatedAt": "2025-11-01T09:10:13.000Z"
+      },
+      {
+        "date": "2025-08-16",
+        "day": "Saturday",
+        "morning": 8,
+        "evening": 8,
+        "total": 16,
+        "month": "2025-08",
+        "year": 2025,
+        "amount": 0,
+        "createdAt": "2025-11-01T09:10:13.000Z",
+        "updatedAt": "2025-11-01T09:10:13.000Z"
+      },
+      {
+        "date": "2025-08-15",
+        "day": "Friday",
+        "morning": 9,
+        "evening": 8,
+        "total": 17,
+        "month": "2025-08",
+        "year": 2025,
+        "amount": 0,
+        "createdAt": "2025-11-01T09:10:13.000Z",
+        "updatedAt": "2025-11-01T09:10:13.000Z"
+      },
+      {
+        "date": "2025-08-14",
+        "day": "Thursday",
+        "morning": 9,
+        "evening": 9,
+        "total": 18,
+        "month": "2025-08",
+        "year": 2025,
+        "amount": 0,
+        "createdAt": "2025-11-01T09:10:13.000Z",
+        "updatedAt": "2025-11-01T09:10:13.000Z"
+      },
+      {
+        "date": "2025-08-13",
+        "day": "Wednesday",
+        "morning": 11,
+        "evening": 11,
+        "total": 22,
+        "month": "2025-08",
+        "year": 2025,
+        "amount": 0,
+        "createdAt": "2025-11-01T09:10:13.000Z",
+        "updatedAt": "2025-11-01T09:10:13.000Z"
+      },
+      {
+        "date": "2025-08-12",
+        "day": "Tuesday",
+        "morning": 8,
+        "evening": 9,
+        "total": 17,
+        "month": "2025-08",
+        "year": 2025,
+        "amount": 0,
+        "createdAt": "2025-11-01T09:10:13.000Z",
+        "updatedAt": "2025-11-01T09:10:13.000Z"
+      },
+      {
+        "date": "2025-08-11",
+        "day": "Monday",
+        "morning": 6,
+        "evening": 9,
+        "total": 15,
+        "month": "2025-08",
+        "year": 2025,
+        "amount": 0,
+        "createdAt": "2025-11-01T09:10:13.000Z",
+        "updatedAt": "2025-11-01T09:10:13.000Z"
+      },
+      {
+        "date": "2025-08-10",
+        "day": "Sunday",
+        "morning": 6,
+        "evening": 6,
+        "total": 12,
+        "month": "2025-08",
+        "year": 2025,
+        "amount": 0,
+        "createdAt": "2025-11-01T09:10:13.000Z",
+        "updatedAt": "2025-11-01T09:10:13.000Z"
+      },
+      {
+        "date": "2025-08-09",
+        "day": "Saturday",
+        "morning": 4,
+        "evening": 4,
+        "total": 8,
+        "month": "2025-08",
+        "year": 2025,
+        "amount": 0,
+        "createdAt": "2025-11-01T09:10:13.000Z",
+        "updatedAt": "2025-11-01T09:10:13.000Z"
+      },
+      {
+        "date": "2025-08-08",
+        "day": "Friday",
+        "morning": 9,
+        "evening": 8,
+        "total": 17,
+        "month": "2025-08",
+        "year": 2025,
+        "amount": 0,
+        "createdAt": "2025-11-01T09:10:13.000Z",
+        "updatedAt": "2025-11-01T09:10:13.000Z"
+      },
+      {
+        "date": "2025-08-07",
+        "day": "Thursday",
+        "morning": 7,
+        "evening": 7,
+        "total": 14,
+        "month": "2025-08",
+        "year": 2025,
+        "amount": 0,
+        "createdAt": "2025-11-01T09:10:13.000Z",
+        "updatedAt": "2025-11-01T09:10:13.000Z"
+      },
+      {
+        "date": "2025-08-06",
+        "day": "Wednesday",
+        "morning": 6,
+        "evening": 8,
+        "total": 14,
+        "month": "2025-08",
+        "year": 2025,
+        "amount": 0,
+        "createdAt": "2025-11-01T09:10:13.000Z",
+        "updatedAt": "2025-11-01T09:10:13.000Z"
+      },
+      {
+        "date": "2025-08-05",
+        "day": "Tuesday",
+        "morning": 5,
+        "evening": 6,
+        "total": 11,
+        "month": "2025-08",
+        "year": 2025,
+        "amount": 0,
+        "createdAt": "2025-11-01T09:10:13.000Z",
+        "updatedAt": "2025-11-01T09:10:13.000Z"
+      }
+    ],
+    "pricing_rules": [
+      {
+        "id": 2,
+        "startDate": "2025-10-01",
+        "endDate": null,
+        "morningRate": 46,
+        "eveningRate": 46,
+        "description": "October 2025 onwards",
+        "createdAt": "2025-11-01T09:10:13.000Z"
+      },
+      {
+        "id": 1,
+        "startDate": "2025-08-01",
+        "endDate": "2025-09-30",
+        "morningRate": 38,
+        "eveningRate": 38,
+        "description": "August-September 2025",
+        "createdAt": "2025-11-01T09:10:13.000Z"
+      }
+    ],
+    "deleted_entries": [
+      {
+        "id": 14,
+        "original_id": 236,
+        "date": "2025-12-01",
+        "day": "Monday",
+        "morning": 35,
+        "evening": 39,
+        "total": 74,
+        "deleted_at": "2025-12-12T04:51:27.000Z",
+        "originalData": {
+          "date": "2025-12-01",
+          "day": "Monday",
+          "morning": 35,
+          "evening": 39,
+          "total": 74
+        },
+        "deletedAt": "2025-12-12T04:51:27.000Z"
+      },
+      {
+        "id": 13,
+        "original_id": 235,
+        "date": "2025-12-01",
+        "day": "Monday",
+        "morning": 0,
+        "evening": 0,
+        "total": 0,
+        "deleted_at": "2025-12-01T12:45:39.000Z",
+        "originalData": {
+          "date": "2025-12-01",
+          "day": "Monday",
+          "morning": 0,
+          "evening": 0,
+          "total": 0
+        },
+        "deletedAt": "2025-12-01T12:45:39.000Z"
+      },
+      {
+        "id": 12,
+        "original_id": 230,
+        "date": "2025-12-01",
+        "day": "Monday",
+        "morning": 0,
+        "evening": 0,
+        "total": 0,
+        "deleted_at": "2025-11-26T19:08:54.000Z",
+        "originalData": {
+          "date": "2025-12-01",
+          "day": "Monday",
+          "morning": 0,
+          "evening": 0,
+          "total": 0
+        },
+        "deletedAt": "2025-11-26T19:08:54.000Z"
+      },
+      {
+        "id": 11,
+        "original_id": 205,
+        "date": "2025-11-19",
+        "day": "Wednesday",
+        "morning": 44,
+        "evening": 0,
+        "total": 44,
+        "deleted_at": "2025-11-19T01:59:45.000Z",
+        "originalData": {
+          "date": "2025-11-19",
+          "day": "Wednesday",
+          "morning": 44,
+          "evening": 0,
+          "total": 44
+        },
+        "deletedAt": "2025-11-19T01:59:45.000Z"
+      },
+      {
+        "id": 10,
+        "original_id": 99,
+        "date": "2025-11-05",
+        "day": "Wednesday",
+        "morning": 11,
+        "evening": 13,
+        "total": 24,
+        "deleted_at": "2025-11-05T15:04:21.000Z",
+        "originalData": {
+          "date": "2025-11-05",
+          "day": "Wednesday",
+          "morning": 11,
+          "evening": 13,
+          "total": 24
+        },
+        "deletedAt": "2025-11-05T15:04:21.000Z"
+      },
+      {
+        "id": 9,
+        "original_id": 2,
+        "date": "2025-08-05",
+        "day": "Tuesday",
+        "morning": 5,
+        "evening": 6,
+        "total": 11,
+        "deleted_at": "2025-11-05T15:03:11.000Z",
+        "originalData": {
+          "date": "2025-08-05",
+          "day": "Tuesday",
+          "morning": 5,
+          "evening": 6,
+          "total": 11
+        },
+        "deletedAt": "2025-11-05T15:03:11.000Z"
+      },
+      {
+        "id": 8,
+        "original_id": 97,
+        "date": "2025-11-03",
+        "day": "Monday",
+        "morning": 1,
+        "evening": 10,
+        "total": 11,
+        "deleted_at": "2025-11-04T02:24:47.000Z",
+        "originalData": {
+          "date": "2025-11-03",
+          "day": "Monday",
+          "morning": 1,
+          "evening": 10,
+          "total": 11
+        },
+        "deletedAt": "2025-11-04T02:24:47.000Z"
+      },
+      {
+        "id": 7,
+        "original_id": 98,
+        "date": "2025-08-01",
+        "day": "Friday",
+        "morning": 1,
+        "evening": 30,
+        "total": 31,
+        "deleted_at": "2025-11-04T02:24:33.000Z",
+        "originalData": {
+          "date": "2025-08-01",
+          "day": "Friday",
+          "morning": 1,
+          "evening": 30,
+          "total": 31
+        },
+        "deletedAt": "2025-11-04T02:24:33.000Z"
+      },
+      {
+        "id": 6,
+        "original_id": 92,
+        "date": "2025-11-02",
+        "day": "Sunday",
+        "morning": 35,
+        "evening": 35,
+        "total": 70,
+        "deleted_at": "2025-11-03T16:02:52.000Z",
+        "originalData": {
+          "date": "2025-11-02",
+          "day": "Sunday",
+          "morning": 35,
+          "evening": 35,
+          "total": 70
+        },
+        "deletedAt": "2025-11-03T16:02:52.000Z"
+      },
+      {
+        "id": 5,
+        "original_id": 91,
+        "date": "2025-11-03",
+        "day": "Monday",
+        "morning": 0,
+        "evening": 0,
+        "total": 0,
+        "deleted_at": "2025-11-03T16:02:45.000Z",
+        "originalData": {
+          "date": "2025-11-03",
+          "day": "Monday",
+          "morning": 0,
+          "evening": 0,
+          "total": 0
+        },
+        "deletedAt": "2025-11-03T16:02:45.000Z"
+      },
+      {
+        "id": 4,
+        "original_id": 93,
+        "date": "2025-11-04",
+        "day": "Tuesday",
+        "morning": 0,
+        "evening": 0,
+        "total": 0,
+        "deleted_at": "2025-11-03T16:02:39.000Z",
+        "originalData": {
+          "date": "2025-11-04",
+          "day": "Tuesday",
+          "morning": 0,
+          "evening": 0,
+          "total": 0
+        },
+        "deletedAt": "2025-11-03T16:02:39.000Z"
+      },
+      {
+        "id": 3,
+        "original_id": 95,
+        "date": "2025-07-22",
+        "day": "Tuesday",
+        "morning": 23,
+        "evening": 9,
+        "total": 32,
+        "deleted_at": "2025-11-03T16:02:24.000Z",
+        "originalData": {
+          "date": "2025-07-22",
+          "day": "Tuesday",
+          "morning": 23,
+          "evening": 9,
+          "total": 32
+        },
+        "deletedAt": "2025-11-03T16:02:24.000Z"
+      },
+      {
+        "id": 2,
+        "original_id": 94,
+        "date": "2025-07-29",
+        "day": "Tuesday",
+        "morning": 9,
+        "evening": 9,
+        "total": 18,
+        "deleted_at": "2025-11-03T16:02:21.000Z",
+        "originalData": {
+          "date": "2025-07-29",
+          "day": "Tuesday",
+          "morning": 9,
+          "evening": 9,
+          "total": 18
+        },
+        "deletedAt": "2025-11-03T16:02:21.000Z"
+      },
+      {
+        "id": 1,
+        "original_id": 96,
+        "date": "2025-06-03",
+        "day": "Tuesday",
+        "morning": 12,
+        "evening": 23,
+        "total": 35,
+        "deleted_at": "2025-11-03T16:02:03.000Z",
+        "originalData": {
+          "date": "2025-06-03",
+          "day": "Tuesday",
+          "morning": 12,
+          "evening": 23,
+          "total": 35
+        },
+        "deletedAt": "2025-11-03T16:02:03.000Z"
+      }
+    ],
+    "settings": {
+      "messName": "कल्याणराव जाधव मुलांचे वसतिगृह , अहील्यानगर",
+      "lastBackup": null,
+      "dataInitialized": false
+    },
+    "audit_log": [
+      {
+        "id": 104,
+        "timestamp": "2025-12-31T12:39:02.000Z",
+        "action": "Create",
+        "details": "New entry added for 2025-12-31",
+        "type": "create"
+      },
+      {
+        "id": 103,
+        "timestamp": "2025-12-30T18:10:17.000Z",
+        "action": "Update",
+        "details": "Entry updated for 2025-12-12",
+        "type": "update"
+      },
+      {
+        "id": 102,
+        "timestamp": "2025-12-30T18:09:16.000Z",
+        "action": "Create",
+        "details": "New entry added for 2025-12-04",
+        "type": "create"
+      },
+      {
+        "id": 101,
+        "timestamp": "2025-12-30T17:50:10.000Z",
+        "action": "Create",
+        "details": "New entry added for 2025-12-30",
+        "type": "create"
+      },
+      {
+        "id": 100,
+        "timestamp": "2025-12-30T17:47:37.000Z",
+        "action": "Create",
+        "details": "New entry added for 2025-12-29",
+        "type": "create"
+      },
+      {
+        "id": 99,
+        "timestamp": "2025-12-30T17:47:25.000Z",
+        "action": "Create",
+        "details": "New entry added for 2025-12-28",
+        "type": "create"
+      },
+      {
+        "id": 98,
+        "timestamp": "2025-12-30T17:46:46.000Z",
+        "action": "Create",
+        "details": "New entry added for 2025-12-27",
+        "type": "create"
+      },
+      {
+        "id": 97,
+        "timestamp": "2025-12-30T17:46:29.000Z",
+        "action": "Create",
+        "details": "New entry added for 2025-12-26",
+        "type": "create"
+      },
+      {
+        "id": 96,
+        "timestamp": "2025-12-30T17:46:01.000Z",
+        "action": "Create",
+        "details": "New entry added for 2025-12-25",
+        "type": "create"
+      },
+      {
+        "id": 95,
+        "timestamp": "2025-12-30T17:45:49.000Z",
+        "action": "Create",
+        "details": "New entry added for 2025-12-24",
+        "type": "create"
+      },
+      {
+        "id": 94,
+        "timestamp": "2025-12-30T17:45:32.000Z",
+        "action": "Create",
+        "details": "New entry added for 2025-12-23",
+        "type": "create"
+      },
+      {
+        "id": 93,
+        "timestamp": "2025-12-30T17:44:47.000Z",
+        "action": "Create",
+        "details": "New entry added for 2025-12-22",
+        "type": "create"
+      },
+      {
+        "id": 92,
+        "timestamp": "2025-12-30T17:44:11.000Z",
+        "action": "Create",
+        "details": "New entry added for 2025-12-21",
+        "type": "create"
+      },
+      {
+        "id": 91,
+        "timestamp": "2025-12-30T17:43:53.000Z",
+        "action": "Create",
+        "details": "New entry added for 2025-12-20",
+        "type": "create"
+      },
+      {
+        "id": 90,
+        "timestamp": "2025-12-30T17:42:57.000Z",
+        "action": "Create",
+        "details": "New entry added for 2025-12-19",
+        "type": "create"
+      },
+      {
+        "id": 89,
+        "timestamp": "2025-12-30T17:42:37.000Z",
+        "action": "Create",
+        "details": "New entry added for 2025-12-18",
+        "type": "create"
+      },
+      {
+        "id": 88,
+        "timestamp": "2025-12-30T17:42:26.000Z",
+        "action": "Create",
+        "details": "New entry added for 2025-12-17",
+        "type": "create"
+      },
+      {
+        "id": 87,
+        "timestamp": "2025-12-30T17:41:50.000Z",
+        "action": "Create",
+        "details": "New entry added for 2025-12-16",
+        "type": "create"
+      },
+      {
+        "id": 86,
+        "timestamp": "2025-12-30T17:41:28.000Z",
+        "action": "Create",
+        "details": "New entry added for 2025-12-15",
+        "type": "create"
+      },
+      {
+        "id": 85,
+        "timestamp": "2025-12-30T17:41:14.000Z",
+        "action": "Create",
+        "details": "New entry added for 2025-12-14",
+        "type": "create"
+      },
+      {
+        "id": 84,
+        "timestamp": "2025-12-30T17:40:37.000Z",
+        "action": "Create",
+        "details": "New entry added for 2025-12-13",
+        "type": "create"
+      },
+      {
+        "id": 83,
+        "timestamp": "2025-12-30T17:40:16.000Z",
+        "action": "Create",
+        "details": "New entry added for 2025-12-12",
+        "type": "create"
+      },
+      {
+        "id": 82,
+        "timestamp": "2025-12-30T17:39:51.000Z",
+        "action": "Create",
+        "details": "New entry added for 2025-12-11",
+        "type": "create"
+      },
+      {
+        "id": 81,
+        "timestamp": "2025-12-30T17:39:29.000Z",
+        "action": "Create",
+        "details": "New entry added for 2025-12-10",
+        "type": "create"
+      },
+      {
+        "id": 80,
+        "timestamp": "2025-12-30T17:39:13.000Z",
+        "action": "Create",
+        "details": "New entry added for 2025-12-09",
+        "type": "create"
+      },
+      {
+        "id": 79,
+        "timestamp": "2025-12-30T17:38:56.000Z",
+        "action": "Create",
+        "details": "New entry added for 2025-12-08",
+        "type": "create"
+      },
+      {
+        "id": 78,
+        "timestamp": "2025-12-30T17:38:25.000Z",
+        "action": "Create",
+        "details": "New entry added for 2025-12-07",
+        "type": "create"
+      },
+      {
+        "id": 77,
+        "timestamp": "2025-12-30T17:38:06.000Z",
+        "action": "Create",
+        "details": "New entry added for 2025-12-06",
+        "type": "create"
+      },
+      {
+        "id": 76,
+        "timestamp": "2025-12-30T17:37:40.000Z",
+        "action": "Create",
+        "details": "New entry added for 2025-12-05",
+        "type": "create"
+      },
+      {
+        "id": 75,
+        "timestamp": "2025-12-30T17:37:23.000Z",
+        "action": "Create",
+        "details": "New entry added for 2025-12-03",
+        "type": "create"
+      },
+      {
+        "id": 74,
+        "timestamp": "2025-12-30T17:37:11.000Z",
+        "action": "Create",
+        "details": "New entry added for 2025-12-02",
+        "type": "create"
+      },
+      {
+        "id": 73,
+        "timestamp": "2025-12-30T17:36:51.000Z",
+        "action": "Create",
+        "details": "New entry added for 2025-12-01",
+        "type": "create"
+      },
+      {
+        "id": 72,
+        "timestamp": "2025-12-15T18:08:28.000Z",
+        "action": "Delete",
+        "details": "Pricing rule deleted: ID 3",
+        "type": "delete"
+      },
+      {
+        "id": 71,
+        "timestamp": "2025-12-15T18:08:23.000Z",
+        "action": "Update",
+        "details": "Pricing rule updated: ID 3",
+        "type": "update"
+      },
+      {
+        "id": 70,
+        "timestamp": "2025-12-15T18:08:15.000Z",
+        "action": "Update",
+        "details": "Pricing rule updated: ID 3",
+        "type": "update"
+      },
+      {
+        "id": 69,
+        "timestamp": "2025-12-15T18:07:51.000Z",
+        "action": "Update",
+        "details": "Pricing rule updated: ID 3",
+        "type": "update"
+      },
+      {
+        "id": 68,
+        "timestamp": "2025-12-15T18:07:42.000Z",
+        "action": "Update",
+        "details": "Pricing rule updated: ID 3",
+        "type": "update"
+      },
+      {
+        "id": 67,
+        "timestamp": "2025-12-15T18:07:31.000Z",
+        "action": "Update",
+        "details": "Pricing rule updated: ID 3",
+        "type": "update"
+      },
+      {
+        "id": 66,
+        "timestamp": "2025-12-15T18:07:14.000Z",
+        "action": "Create",
+        "details": "Pricing rule added: 2025-12-15 - ongoing",
+        "type": "create"
+      },
+      {
+        "id": 65,
+        "timestamp": "2025-12-12T04:51:27.000Z",
+        "action": "Delete",
+        "details": "Entry deleted for 2025-12-01",
+        "type": "delete"
+      },
+      {
+        "id": 64,
+        "timestamp": "2025-12-02T07:50:05.000Z",
+        "action": "Create",
+        "details": "New entry added for 2025-12-01",
+        "type": "create"
+      },
+      {
+        "id": 63,
+        "timestamp": "2025-12-01T12:45:39.000Z",
+        "action": "Delete",
+        "details": "Entry deleted for 2025-12-01",
+        "type": "delete"
+      },
+      {
+        "id": 62,
+        "timestamp": "2025-12-01T11:48:05.000Z",
+        "action": "Create",
+        "details": "New entry added for 2025-12-01",
+        "type": "create"
+      },
+      {
+        "id": 61,
+        "timestamp": "2025-11-30T12:55:36.000Z",
+        "action": "Update",
+        "details": "Entry updated for 2025-11-30",
+        "type": "update"
+      },
+      {
+        "id": 60,
+        "timestamp": "2025-11-30T12:52:21.000Z",
+        "action": "Update",
+        "details": "Entry updated for 2025-11-30",
+        "type": "update"
+      },
+      {
+        "id": 59,
+        "timestamp": "2025-11-30T12:21:52.000Z",
+        "action": "Create",
+        "details": "New entry added for 2025-11-30",
+        "type": "create"
+      },
+      {
+        "id": 58,
+        "timestamp": "2025-11-30T12:21:22.000Z",
+        "action": "Create",
+        "details": "New entry added for 2025-11-29",
+        "type": "create"
+      },
+      {
+        "id": 57,
+        "timestamp": "2025-11-30T12:20:28.000Z",
+        "action": "Update",
+        "details": "Entry updated for 2025-11-28",
+        "type": "update"
+      },
+      {
+        "id": 56,
+        "timestamp": "2025-11-30T12:19:46.000Z",
+        "action": "Create",
+        "details": "New entry added for 2025-11-28",
+        "type": "create"
+      },
+      {
+        "id": 55,
+        "timestamp": "2025-11-30T12:19:24.000Z",
+        "action": "Update",
+        "details": "Entry updated for 2025-11-27",
+        "type": "update"
+      },
+      {
+        "id": 54,
+        "timestamp": "2025-11-30T12:19:09.000Z",
+        "action": "Create",
+        "details": "New entry added for 2025-11-27",
+        "type": "create"
+      },
+      {
+        "id": 53,
+        "timestamp": "2025-11-26T19:08:54.000Z",
+        "action": "Delete",
+        "details": "Entry deleted for 2025-12-01",
+        "type": "delete"
+      },
+      {
+        "id": 52,
+        "timestamp": "2025-11-26T19:08:33.000Z",
+        "action": "Create",
+        "details": "New entry added for 2025-12-01",
+        "type": "create"
+      },
+      {
+        "id": 51,
+        "timestamp": "2025-11-26T18:42:16.000Z",
+        "action": "Update",
+        "details": "Entry updated for 2025-11-17",
+        "type": "update"
+      },
+      {
+        "id": 50,
+        "timestamp": "2025-11-26T18:41:15.000Z",
+        "action": "Create",
+        "details": "New entry added for 2025-11-26",
+        "type": "create"
+      },
+      {
+        "id": 49,
+        "timestamp": "2025-11-26T18:41:00.000Z",
+        "action": "Create",
+        "details": "New entry added for 2025-11-25",
+        "type": "create"
+      },
+      {
+        "id": 48,
+        "timestamp": "2025-11-26T18:40:52.000Z",
+        "action": "Create",
+        "details": "New entry added for 2025-11-24",
+        "type": "create"
+      },
+      {
+        "id": 47,
+        "timestamp": "2025-11-26T18:40:44.000Z",
+        "action": "Create",
+        "details": "New entry added for 2025-11-23",
+        "type": "create"
+      },
+      {
+        "id": 46,
+        "timestamp": "2025-11-26T18:40:32.000Z",
+        "action": "Create",
+        "details": "New entry added for 2025-11-22",
+        "type": "create"
+      },
+      {
+        "id": 45,
+        "timestamp": "2025-11-26T18:40:22.000Z",
+        "action": "Create",
+        "details": "New entry added for 2025-11-21",
+        "type": "create"
+      },
+      {
+        "id": 44,
+        "timestamp": "2025-11-26T18:40:09.000Z",
+        "action": "Create",
+        "details": "New entry added for 2025-11-20",
+        "type": "create"
+      },
+      {
+        "id": 43,
+        "timestamp": "2025-11-26T18:40:00.000Z",
+        "action": "Create",
+        "details": "New entry added for 2025-11-19",
+        "type": "create"
+      },
+      {
+        "id": 42,
+        "timestamp": "2025-11-26T18:39:52.000Z",
+        "action": "Create",
+        "details": "New entry added for 2025-11-18",
+        "type": "create"
+      },
+      {
+        "id": 41,
+        "timestamp": "2025-11-26T18:39:36.000Z",
+        "action": "Create",
+        "details": "New entry added for 2025-11-17",
+        "type": "create"
+      },
+      {
+        "id": 40,
+        "timestamp": "2025-11-26T18:38:54.000Z",
+        "action": "Create",
+        "details": "New entry added for 2025-11-16",
+        "type": "create"
+      },
+      {
+        "id": 39,
+        "timestamp": "2025-11-26T18:38:46.000Z",
+        "action": "Create",
+        "details": "New entry added for 2025-11-15",
+        "type": "create"
+      },
+      {
+        "id": 38,
+        "timestamp": "2025-11-26T18:38:36.000Z",
+        "action": "Create",
+        "details": "New entry added for 2025-11-14",
+        "type": "create"
+      },
+      {
+        "id": 37,
+        "timestamp": "2025-11-26T18:38:27.000Z",
+        "action": "Create",
+        "details": "New entry added for 2025-11-13",
+        "type": "create"
+      },
+      {
+        "id": 36,
+        "timestamp": "2025-11-26T18:38:17.000Z",
+        "action": "Create",
+        "details": "New entry added for 2025-11-12",
+        "type": "create"
+      },
+      {
+        "id": 35,
+        "timestamp": "2025-11-26T18:37:59.000Z",
+        "action": "Create",
+        "details": "New entry added for 2025-11-11",
+        "type": "create"
+      },
+      {
+        "id": 34,
+        "timestamp": "2025-11-26T18:37:45.000Z",
+        "action": "Create",
+        "details": "New entry added for 2025-11-10",
+        "type": "create"
+      },
+      {
+        "id": 33,
+        "timestamp": "2025-11-26T18:37:31.000Z",
+        "action": "Create",
+        "details": "New entry added for 2025-11-09",
+        "type": "create"
+      },
+      {
+        "id": 32,
+        "timestamp": "2025-11-26T18:35:49.000Z",
+        "action": "Create",
+        "details": "New entry added for 2025-11-08",
+        "type": "create"
+      },
+      {
+        "id": 31,
+        "timestamp": "2025-11-26T18:35:34.000Z",
+        "action": "Create",
+        "details": "New entry added for 2025-11-07",
+        "type": "create"
+      },
+      {
+        "id": 30,
+        "timestamp": "2025-11-26T18:35:09.000Z",
+        "action": "Create",
+        "details": "New entry added for 2025-11-06",
+        "type": "create"
+      },
+      {
+        "id": 29,
+        "timestamp": "2025-11-26T18:34:56.000Z",
+        "action": "Create",
+        "details": "New entry added for 2025-11-05",
+        "type": "create"
+      },
+      {
+        "id": 28,
+        "timestamp": "2025-11-26T18:34:40.000Z",
+        "action": "Create",
+        "details": "New entry added for 2025-11-04",
+        "type": "create"
+      },
+      {
+        "id": 27,
+        "timestamp": "2025-11-26T18:34:25.000Z",
+        "action": "Update",
+        "details": "Entry updated for 2025-11-03",
+        "type": "update"
+      },
+      {
+        "id": 26,
+        "timestamp": "2025-11-26T18:33:39.000Z",
+        "action": "Create",
+        "details": "New entry added for 2025-11-02",
+        "type": "create"
+      },
+      {
+        "id": 25,
+        "timestamp": "2025-11-19T01:59:45.000Z",
+        "action": "Delete",
+        "details": "Entry deleted for 2025-11-19",
+        "type": "delete"
+      },
+      {
+        "id": 24,
+        "timestamp": "2025-11-18T23:40:30.000Z",
+        "action": "Create",
+        "details": "New entry added for 2025-11-19",
+        "type": "create"
+      },
+      {
+        "id": 23,
+        "timestamp": "2025-11-18T21:06:10.000Z",
+        "action": "Create",
+        "details": "New entry added for 2025-11-18",
+        "type": "create"
+      },
+      {
+        "id": 22,
+        "timestamp": "2025-11-07T23:04:39.000Z",
+        "action": "Create",
+        "details": "New entry added for 2025-11-08",
+        "type": "create"
+      },
+      {
+        "id": 21,
+        "timestamp": "2025-11-07T22:29:14.000Z",
+        "action": "Update",
+        "details": "Pricing rule updated: ID 2",
+        "type": "update"
+      },
+      {
+        "id": 20,
+        "timestamp": "2025-11-05T15:04:21.000Z",
+        "action": "Delete",
+        "details": "Entry deleted for 2025-11-05",
+        "type": "delete"
+      },
+      {
+        "id": 19,
+        "timestamp": "2025-11-05T15:03:11.000Z",
+        "action": "Delete",
+        "details": "Entry deleted for 2025-08-05",
+        "type": "delete"
+      },
+      {
+        "id": 18,
+        "timestamp": "2025-11-05T15:02:17.000Z",
+        "action": "Create",
+        "details": "New entry added for 2025-11-05",
+        "type": "create"
+      },
+      {
+        "id": 17,
+        "timestamp": "2025-11-04T02:24:47.000Z",
+        "action": "Delete",
+        "details": "Entry deleted for 2025-11-03",
+        "type": "delete"
+      },
+      {
+        "id": 16,
+        "timestamp": "2025-11-04T02:24:33.000Z",
+        "action": "Delete",
+        "details": "Entry deleted for 2025-08-01",
+        "type": "delete"
+      },
+      {
+        "id": 15,
+        "timestamp": "2025-11-03T16:21:25.000Z",
+        "action": "Create",
+        "details": "New entry added for 2025-08-01",
+        "type": "create"
+      },
+      {
+        "id": 14,
+        "timestamp": "2025-11-03T16:16:51.000Z",
+        "action": "Update",
+        "details": "Entry updated for 2025-11-03",
+        "type": "update"
+      },
+      {
+        "id": 13,
+        "timestamp": "2025-11-03T16:16:17.000Z",
+        "action": "Create",
+        "details": "New entry added for 2025-11-03",
+        "type": "create"
+      },
+      {
+        "id": 12,
+        "timestamp": "2025-11-03T16:02:52.000Z",
+        "action": "Delete",
+        "details": "Entry deleted for 2025-11-02",
+        "type": "delete"
+      },
+      {
+        "id": 11,
+        "timestamp": "2025-11-03T16:02:45.000Z",
+        "action": "Delete",
+        "details": "Entry deleted for 2025-11-03",
+        "type": "delete"
+      },
+      {
+        "id": 10,
+        "timestamp": "2025-11-03T16:02:39.000Z",
+        "action": "Delete",
+        "details": "Entry deleted for 2025-11-04",
+        "type": "delete"
+      },
+      {
+        "id": 9,
+        "timestamp": "2025-11-03T16:02:25.000Z",
+        "action": "Delete",
+        "details": "Entry deleted for 2025-07-22",
+        "type": "delete"
+      },
+      {
+        "id": 8,
+        "timestamp": "2025-11-03T16:02:21.000Z",
+        "action": "Delete",
+        "details": "Entry deleted for 2025-07-29",
+        "type": "delete"
+      },
+      {
+        "id": 7,
+        "timestamp": "2025-11-03T16:02:03.000Z",
+        "action": "Delete",
+        "details": "Entry deleted for 2025-06-03",
+        "type": "delete"
+      },
+      {
+        "id": 6,
+        "timestamp": "2025-11-03T16:01:49.000Z",
+        "action": "Create",
+        "details": "New entry added for 2025-06-03",
+        "type": "create"
+      },
+      {
+        "id": 106,
+        "action": "System",
+        "details": "Application ready",
+        "type": "system",
+        "timestamp": "2026-01-07T04:10:33.211Z"
+      }
+    ]
+  }
+}
