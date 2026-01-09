@@ -164,7 +164,7 @@ if (drawerOverlay) {
     let touchEndX = 0;
     let touchEndY = 0;
     const SWIPE_THRESHOLD = 50; // Minimum swipe distance
-    const EDGE_WIDTH = 30; // Left edge detection width (px)
+    const EDGE_WIDTH = window.innerWidth / 2; // Half screen width for easy swipe
 
     document.addEventListener('touchstart', function (e) {
         touchStartX = e.changedTouches[0].screenX;
@@ -324,22 +324,46 @@ if (savedTheme === 'dark') {
 
 window.toggleTheme = function () {
     if (state.theme === 'light') {
-        document.documentElement.style.setProperty('--md-sys-color-background', '#111111');
-        document.documentElement.style.setProperty('--md-sys-color-on-background', '#e3e3e3');
-        document.documentElement.style.setProperty('--md-sys-color-surface', '#111111');
-        document.documentElement.style.setProperty('--md-sys-color-surface-container', '#1e1f20');
-        document.documentElement.style.setProperty('--md-sys-color-on-surface', '#e3e3e3');
-        document.documentElement.style.setProperty('--gmail-search-bg', '#2e3135');
-        document.documentElement.style.setProperty('--gmail-search-text', '#e3e3e3');
-        state.theme = 'dark';
-        localStorage.setItem('mess_theme_mode', 'dark');
+        applyDarkTheme();
     } else {
-        document.documentElement.style = ''; // Reset inline styles to default CSS (Light)
-        state.theme = 'light';
-        localStorage.setItem('mess_theme_mode', 'light');
+        applyLightTheme();
     }
     closeDrawer();
 };
+
+function applyDarkTheme() {
+    document.documentElement.style.setProperty('--md-sys-color-background', '#111111');
+    document.documentElement.style.setProperty('--md-sys-color-on-background', '#e3e3e3');
+    document.documentElement.style.setProperty('--md-sys-color-surface', '#111111');
+    document.documentElement.style.setProperty('--md-sys-color-surface-container', '#1e1f20');
+    document.documentElement.style.setProperty('--md-sys-color-on-surface', '#e3e3e3');
+    document.documentElement.style.setProperty('--gmail-search-bg', '#2e3135');
+    document.documentElement.style.setProperty('--gmail-search-text', '#e3e3e3');
+    state.theme = 'dark';
+    localStorage.setItem('mess_theme_mode', 'dark');
+}
+
+function applyLightTheme() {
+    document.documentElement.style.setProperty('--md-sys-color-background', '#ffffff');
+    document.documentElement.style.setProperty('--md-sys-color-on-background', '#1c1b1f');
+    document.documentElement.style.setProperty('--md-sys-color-surface', '#ffffff');
+    document.documentElement.style.setProperty('--md-sys-color-surface-container', '#f3f3f3');
+    document.documentElement.style.setProperty('--md-sys-color-on-surface', '#1c1b1f');
+    document.documentElement.style.setProperty('--gmail-search-bg', '#edf2fc');
+    document.documentElement.style.setProperty('--gmail-search-text', '#1c1b1f');
+    state.theme = 'light';
+    localStorage.setItem('mess_theme_mode', 'light');
+}
+
+// Restore theme from localStorage on page load
+(function restoreTheme() {
+    const savedTheme = localStorage.getItem('mess_theme_mode');
+    if (savedTheme === 'dark') {
+        applyDarkTheme();
+    } else if (savedTheme === 'light') {
+        applyLightTheme();
+    }
+})();
 
 
 
