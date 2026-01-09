@@ -332,25 +332,57 @@ window.toggleTheme = function () {
 };
 
 function applyDarkTheme() {
-    document.documentElement.style.setProperty('--md-sys-color-background', '#111111');
-    document.documentElement.style.setProperty('--md-sys-color-on-background', '#e3e3e3');
-    document.documentElement.style.setProperty('--md-sys-color-surface', '#111111');
-    document.documentElement.style.setProperty('--md-sys-color-surface-container', '#1e1f20');
-    document.documentElement.style.setProperty('--md-sys-color-on-surface', '#e3e3e3');
-    document.documentElement.style.setProperty('--gmail-search-bg', '#2e3135');
-    document.documentElement.style.setProperty('--gmail-search-text', '#e3e3e3');
+    const root = document.documentElement;
+    // Dark Mode - Cyber/Teal Theme (matching your app's current dark look)
+    root.style.setProperty('--md-sys-color-primary', '#00e5ff');
+    root.style.setProperty('--md-sys-color-on-primary', '#000000');
+    root.style.setProperty('--md-sys-color-primary-container', '#004b57');
+    root.style.setProperty('--md-sys-color-on-primary-container', '#9ef0ff');
+
+    root.style.setProperty('--md-sys-color-secondary', '#64ffda');
+    root.style.setProperty('--md-sys-color-secondary-container', '#004d40');
+    root.style.setProperty('--md-sys-color-on-secondary-container', '#a7ffeb');
+
+    root.style.setProperty('--md-sys-color-background', '#121212');
+    root.style.setProperty('--md-sys-color-on-background', '#ffffff');
+    root.style.setProperty('--md-sys-color-surface', '#121212');
+    root.style.setProperty('--md-sys-color-surface-container', '#1e1e1e');
+    root.style.setProperty('--md-sys-color-on-surface', '#ffffff');
+    root.style.setProperty('--md-sys-color-surface-variant', '#2d2d2d');
+    root.style.setProperty('--md-sys-color-on-surface-variant', '#b0b0b0');
+    root.style.setProperty('--md-sys-color-outline', '#444444');
+
+    root.style.setProperty('--gmail-search-bg', '#2b2b2b');
+    root.style.setProperty('--gmail-search-text', '#ffffff');
+
     state.theme = 'dark';
     localStorage.setItem('mess_theme_mode', 'dark');
 }
 
 function applyLightTheme() {
-    document.documentElement.style.setProperty('--md-sys-color-background', '#ffffff');
-    document.documentElement.style.setProperty('--md-sys-color-on-background', '#1c1b1f');
-    document.documentElement.style.setProperty('--md-sys-color-surface', '#ffffff');
-    document.documentElement.style.setProperty('--md-sys-color-surface-container', '#f3f3f3');
-    document.documentElement.style.setProperty('--md-sys-color-on-surface', '#1c1b1f');
-    document.documentElement.style.setProperty('--gmail-search-bg', '#edf2fc');
-    document.documentElement.style.setProperty('--gmail-search-text', '#1c1b1f');
+    const root = document.documentElement;
+    // Light Mode - Clean Blue Theme (Gmail-like)
+    root.style.setProperty('--md-sys-color-primary', '#0b57d0');
+    root.style.setProperty('--md-sys-color-on-primary', '#ffffff');
+    root.style.setProperty('--md-sys-color-primary-container', '#d3e3fd');
+    root.style.setProperty('--md-sys-color-on-primary-container', '#041e49');
+
+    root.style.setProperty('--md-sys-color-secondary', '#00639b');
+    root.style.setProperty('--md-sys-color-secondary-container', '#c2e7ff');
+    root.style.setProperty('--md-sys-color-on-secondary-container', '#001d32');
+
+    root.style.setProperty('--md-sys-color-background', '#ffffff');
+    root.style.setProperty('--md-sys-color-on-background', '#1f1f1f');
+    root.style.setProperty('--md-sys-color-surface', '#f9f9f9');
+    root.style.setProperty('--md-sys-color-surface-container', '#ffffff');
+    root.style.setProperty('--md-sys-color-on-surface', '#1f1f1f');
+    root.style.setProperty('--md-sys-color-surface-variant', '#e1e3e1');
+    root.style.setProperty('--md-sys-color-on-surface-variant', '#444746');
+    root.style.setProperty('--md-sys-color-outline', '#747775');
+
+    root.style.setProperty('--gmail-search-bg', '#eaf1fb');
+    root.style.setProperty('--gmail-search-text', '#1f1f1f');
+
     state.theme = 'light';
     localStorage.setItem('mess_theme_mode', 'light');
 }
@@ -363,6 +395,7 @@ function applyLightTheme() {
     } else if (savedTheme === 'light') {
         applyLightTheme();
     }
+    // If no saved theme, use system preference or default (CSS handles this)
 })();
 
 
