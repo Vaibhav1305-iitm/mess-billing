@@ -1,11 +1,11 @@
 {
-  "name": "Mess Billing",
-  "short_name": "MessBill",
-  "description": "Track your mess/tiffin entries and generate bills",
+  "name": "MessFlow",
+  "short_name": "MessFlow",
+  "description": "Hostel Mess Billing System - Track tiffins and generate bills",
   "start_url": "/mobile.html",
   "display": "standalone",
-  "background_color": "#1565C0",
-  "theme_color": "#1565C0",
+  "background_color": "#F2F2F7",
+  "theme_color": "#007AFF",
   "orientation": "portrait",
   "scope": "/",
   "icons": [

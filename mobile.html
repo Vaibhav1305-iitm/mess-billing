@@ -3,37 +3,79 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Mess Billing</title>
+    <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>MessFlow</title>
+
+    <!-- iOS Design System CSS -->
     <link rel="stylesheet" href="mobile.css">
 
-    <!-- Icons & Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link
-        href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500;700&family=Roboto:wght@400;500&display=swap"
-        rel="stylesheet">
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        'sf': ['-apple-system', 'BlinkMacSystemFont', 'SF Pro Display', 'SF Pro Text', 'Helvetica Neue', 'Arial', 'sans-serif'],
+                    },
+                    colors: {
+                        'ios-blue': '#007AFF',
+                        'ios-green': '#34C759',
+                        'ios-red': '#FF3B30',
+                        'ios-orange': '#FF9500',
+                        'ios-purple': '#AF52DE',
+                        'ios-gray': '#8E8E93',
+                        'ios-bg': '#F2F2F7',
+                    }
+                }
+            }
+        }
+    </script>
+
+    <!-- SF Symbols Style Icons -->
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0..1,0"
         rel="stylesheet">
-
-    <!-- Supabase SDK -->
-    <!-- Supabase SDK Removed: Using Local API -->
 
     <!-- Chart.js -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
     <!-- PWA Manifest -->
     <link rel="manifest" href="manifest.json">
-    <meta name="theme-color" content="#1565C0">
+    <meta name="theme-color" content="#007AFF">
 
-    <!-- PWA / iOS Support -->
+    <!-- iOS PWA Support -->
     <link rel="apple-touch-icon" href="icon-192.png">
     <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <meta name="apple-mobile-web-app-title" content="MessBill">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="MessFlow">
 
     <!-- Favicon -->
     <link rel="icon" type="image/png" sizes="32x32" href="icon-192.png">
+
+    <!-- iOS Specific Styles -->
+    <style>
+        /* Smooth scrolling for iOS */
+        * {
+            -webkit-overflow-scrolling: touch;
+        }
+
+        /* Prevent pull-to-refresh */
+        body {
+            overscroll-behavior-y: contain;
+        }
+
+        /* iOS safe areas */
+        @supports (padding: env(safe-area-inset-top)) {
+            .top-bar {
+                padding-top: calc(12px + env(safe-area-inset-top));
+            }
+
+            .bottom-nav {
+                padding-bottom: env(safe-area-inset-bottom);
+            }
+        }
+    </style>
 </head>
 
 <body>
@@ -46,8 +88,8 @@
         <!-- Navigation Drawer -->
         <nav class="nav-drawer" id="nav-drawer">
             <div class="drawer-header">
-                <span class="material-symbols-outlined" style="font-size: 28px;">restaurant_menu</span>
-                Mess Billing
+                <span class="material-symbols-outlined">restaurant_menu</span>
+                <span style="font-size: 22px; font-weight: 700; letter-spacing: -0.5px;">MessFlow</span>
             </div>
 
             <a href="#" class="drawer-item active" onclick="navigate('home')">
@@ -613,29 +655,29 @@
 
     <!-- INSTANT CACHE LOADER - Pre-loads data from localStorage for super fast startup -->
     <script>
-        (function () {
-            window.MESS_CACHE = {
-                ENTRIES_KEY: 'mess_entries_v2',
-                PRICING_KEY: 'mess_pricing_v2',
-                entries: [],
-                pricing: [],
-                loaded: false
-            };
-            try {
-                var e = localStorage.getItem(window.MESS_CACHE.ENTRIES_KEY);
-                var p = localStorage.getItem(window.MESS_CACHE.PRICING_KEY);
-                if (e) { window.MESS_CACHE.entries = JSON.parse(e); window.MESS_CACHE.loaded = true; }
-                if (p) { window.MESS_CACHE.pricing = JSON.parse(p); }
-                console.log(' PRE-LOADED:', window.MESS_CACHE.entries.length, 'entries from cache!');
-            } catch (err) { console.warn('Cache pre-load failed'); }
-
-            window.saveToCache = function (entries, pricing) {
+            (function () {
+                window.MESS_CACHE = {
+                    ENTRIES_KEY: 'mess_entries_v2',
+                    PRICING_KEY: 'mess_pricing_v2',
+                    entries: [],
+                    pricing: [],
+                    loaded: false
+                };
                 try {
-                    if (entries) localStorage.setItem(window.MESS_CACHE.ENTRIES_KEY, JSON.stringify(entries));
-                    if (pricing) localStorage.setItem(window.MESS_CACHE.PRICING_KEY, JSON.stringify(pricing));
-                } catch (ex) { }
-            };
-        })();
+                    var e = localStorage.getItem(window.MESS_CACHE.ENTRIES_KEY);
+                    var p = localStorage.getItem(window.MESS_CACHE.PRICING_KEY);
+                    if (e) { window.MESS_CACHE.entries = JSON.parse(e); window.MESS_CACHE.loaded = true; }
+                    if (p) { window.MESS_CACHE.pricing = JSON.parse(p); }
+                    console.log(' PRE-LOADED:', window.MESS_CACHE.entries.length, 'entries from cache!');
+                } catch (err) { console.warn('Cache pre-load failed'); }
+
+                window.saveToCache = function (entries, pricing) {
+                    try {
+                        if (entries) localStorage.setItem(window.MESS_CACHE.ENTRIES_KEY, JSON.stringify(entries));
+                        if (pricing) localStorage.setItem(window.MESS_CACHE.PRICING_KEY, JSON.stringify(pricing));
+                    } catch (ex) { }
+                };
+            })();
     </script>
 
     <!-- Main App Script -->
