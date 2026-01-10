@@ -2007,6 +2007,11 @@ window.createEntryCard = function (entry) {
     const dateObj = new Date(entry.date);
     const dayName = dateObj.toLocaleDateString('en-US', { weekday: 'short' });
     const dateNum = dateObj.getDate();
+    const monthName = dateObj.toLocaleDateString('en-US', { month: 'short' });
+    const year = dateObj.getFullYear();
+
+    // Full date format: Sat, 10-Jan-2026
+    const fullDateDisplay = `${dayName}, ${dateNum}-${monthName}-${year}`;
 
     // Amount is either pre-calculated or estimated
     // If amount is 0/null but total > 0, it might be an imported one or needing calc.
@@ -2021,7 +2026,7 @@ window.createEntryCard = function (entry) {
         <div class="mail-content">
             <div class="mail-header">
                 <span class="mail-sender ${isToday ? 'highlight' : ''}">
-                    ${dayName}, ${dateNum}
+                    ${fullDateDisplay}
                 </span>
                 <span class="mail-time">₹${amt}</span>
             </div>
