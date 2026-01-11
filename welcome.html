@@ -29,35 +29,35 @@
             --ios-text: #1C1C1E;
             --ios-text-secondary: #8E8E93;
             --ios-fill: rgba(120, 120, 128, 0.12);
+            --ios-red: #FF3B30;
             --radius-lg: 12px;
             --radius-xl: 16px;
         }
 
+        html,
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'SF Pro Text', 'Helvetica Neue', Arial, sans-serif;
-            background: linear-gradient(135deg, var(--ios-blue) 0%, var(--ios-purple) 100%);
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 20px;
-            color: var(--ios-text);
+            height: 100%;
+            width: 100%;
         }
 
-        .welcome-container {
-            width: 100%;
-            max-width: 420px;
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'SF Pro Text', 'Helvetica Neue', Arial, sans-serif;
             background: var(--ios-card);
-            border-radius: 24px;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
-            overflow: hidden;
+            min-height: 100vh;
+            min-height: 100dvh;
+            display: flex;
+            flex-direction: column;
+            color: var(--ios-text);
+            overflow-x: hidden;
         }
 
         .welcome-header {
             background: linear-gradient(135deg, var(--ios-blue) 0%, var(--ios-purple) 100%);
             color: white;
             text-align: center;
-            padding: 40px 24px 32px;
+            padding: 60px 24px 40px;
+            padding-top: calc(60px + env(safe-area-inset-top, 0px));
+            flex-shrink: 0;
         }
 
         .welcome-icon {
@@ -78,19 +78,28 @@
         }
 
         .welcome-header h1 {
-            font-size: 28px;
+            font-size: 32px;
             font-weight: 700;
             margin-bottom: 8px;
             letter-spacing: -0.5px;
         }
 
         .welcome-header p {
-            font-size: 16px;
+            font-size: 17px;
             opacity: 0.9;
         }
 
         .welcome-form {
-            padding: 28px 24px 32px;
+            flex: 1;
+            padding: 32px 24px;
+            padding-bottom: calc(32px + env(safe-area-inset-bottom, 20px));
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .form-fields {
+            flex: 1;
         }
 
         .input-group {
@@ -108,7 +117,7 @@
         }
 
         .input-group label .required {
-            color: #FF3B30;
+            color: var(--ios-red);
         }
 
         .ios-input {
@@ -133,6 +142,22 @@
             color: var(--ios-text-secondary);
         }
 
+        .ios-input.error {
+            background: rgba(255, 59, 48, 0.1);
+            box-shadow: 0 0 0 2px rgba(255, 59, 48, 0.3);
+        }
+
+        .error-message {
+            color: var(--ios-red);
+            font-size: 13px;
+            margin-top: 6px;
+            display: none;
+        }
+
+        .error-message.show {
+            display: block;
+        }
+
         .btn-submit {
             width: 100%;
             padding: 18px;
@@ -148,9 +173,10 @@
             align-items: center;
             justify-content: center;
             gap: 10px;
-            margin-top: 8px;
+            margin-top: 16px;
             box-shadow: 0 8px 24px rgba(0, 122, 255, 0.3);
             transition: all 0.3s ease;
+            flex-shrink: 0;
         }
 
         .btn-submit:active {
@@ -181,28 +207,20 @@
                 transform: rotate(360deg);
             }
         }
-
-        /* Safe areas for iOS */
-        @supports (padding: env(safe-area-inset-top)) {
-            body {
-                padding-top: calc(20px + env(safe-area-inset-top));
-                padding-bottom: calc(20px + env(safe-area-inset-bottom));
-            }
-        }
     </style>
 </head>
 
 <body>
-    <div class="welcome-container">
-        <div class="welcome-header">
-            <div class="welcome-icon">
-                <span class="material-symbols-outlined">restaurant</span>
-            </div>
-            <h1>Welcome to MessFlow!</h1>
-            <p>Let's set up your profile to get started</p>
+    <div class="welcome-header">
+        <div class="welcome-icon">
+            <span class="material-symbols-outlined">restaurant</span>
         </div>
+        <h1>Welcome to MessFlow!</h1>
+        <p>Let's set up your profile to get started</p>
+    </div>
 
-        <form class="welcome-form" id="welcome-form" onsubmit="handleSubmit(event)">
+    <form class="welcome-form" id="welcome-form" onsubmit="handleSubmit(event)">
+        <div class="form-fields">
             <div class="input-group">
                 <label>Full Name <span class="required">*</span></label>
                 <input type="text" id="user-name" class="ios-input" placeholder="Enter your full name" required>
@@ -211,6 +229,7 @@
             <div class="input-group">
                 <label>Phone Number <span class="required">*</span></label>
                 <input type="tel" id="user-phone" class="ios-input" placeholder="Enter phone number" required>
+                <div class="error-message" id="phone-error">This phone number is already registered</div>
             </div>
 
             <div class="input-group">
@@ -227,13 +246,13 @@
                 <label>Email ID</label>
                 <input type="email" id="user-email" class="ios-input" placeholder="Enter email address">
             </div>
+        </div>
 
-            <button type="submit" class="btn-submit" id="submit-btn">
-                <span class="material-symbols-outlined">arrow_forward</span>
-                <span id="btn-text">Get Started</span>
-            </button>
-        </form>
-    </div>
+        <button type="submit" class="btn-submit" id="submit-btn">
+            <span class="material-symbols-outlined">arrow_forward</span>
+            <span id="btn-text">Get Started</span>
+        </button>
+    </form>
 
     <script>
         // Google Apps Script URL
@@ -254,6 +273,18 @@
             return deviceId;
         }
 
+        // Check if phone number already registered
+        async function checkPhoneUnique(phone) {
+            try {
+                const response = await fetch(`${GOOGLE_APPS_SCRIPT_URL}?path=users&action=checkPhone&phone=${encodeURIComponent(phone)}`);
+                const result = await response.json();
+                return !result.exists; // true if unique, false if already exists
+            } catch (err) {
+                console.warn('Phone check failed, allowing registration:', err);
+                return true; // Allow if check fails
+            }
+        }
+
         // Handle form submission
         async function handleSubmit(e) {
             e.preventDefault();
@@ -263,6 +294,12 @@
             const city = document.getElementById('user-city').value.trim();
             const pincode = document.getElementById('user-pincode').value.trim();
             const email = document.getElementById('user-email').value.trim();
+            const phoneInput = document.getElementById('user-phone');
+            const phoneError = document.getElementById('phone-error');
+
+            // Reset error state
+            phoneInput.classList.remove('error');
+            phoneError.classList.remove('show');
 
             if (!name || !phone) {
                 alert('Please enter your name and phone number');
@@ -270,10 +307,24 @@
             }
 
             const submitBtn = document.getElementById('submit-btn');
-            const btnText = document.getElementById('btn-text');
 
             // Show loading state
             submitBtn.disabled = true;
+            submitBtn.innerHTML = '<div class="spinner"></div> Checking...';
+
+            // Check if phone is unique
+            const isPhoneUnique = await checkPhoneUnique(phone);
+
+            if (!isPhoneUnique) {
+                // Phone already registered
+                phoneInput.classList.add('error');
+                phoneError.classList.add('show');
+                submitBtn.disabled = false;
+                submitBtn.innerHTML = '<span class="material-symbols-outlined">arrow_forward</span><span>Get Started</span>';
+                return;
+            }
+
+            // Continue with registration
             submitBtn.innerHTML = '<div class="spinner"></div> Saving...';
 
             const profile = {

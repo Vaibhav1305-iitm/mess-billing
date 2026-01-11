@@ -208,6 +208,76 @@ window.updateProfileDisplay = function (profile) {
     }
 };
 
+// --- Modal Close Functions ---
+window.closeModal = function () {
+    // Close all open modals
+    document.querySelectorAll('.modal.open').forEach(modal => {
+        modal.classList.remove('open');
+    });
+};
+
+// Initialize modal backdrop click and swipe gestures
+function initModalGestures() {
+    const modals = document.querySelectorAll('.modal');
+
+    modals.forEach(modal => {
+        // Click on backdrop (outside modal-content) closes modal
+        modal.addEventListener('click', function (e) {
+            if (e.target === modal) {
+                closeModal();
+            }
+        });
+
+        // Swipe down to close
+        let startY = 0;
+        let currentY = 0;
+        let isDragging = false;
+        const modalContent = modal.querySelector('.modal-content, .ios-bottom-sheet');
+
+        if (modalContent) {
+            modalContent.addEventListener('touchstart', function (e) {
+                startY = e.touches[0].clientY;
+                isDragging = true;
+            }, { passive: true });
+
+            modalContent.addEventListener('touchmove', function (e) {
+                if (!isDragging) return;
+                currentY = e.touches[0].clientY;
+                const diff = currentY - startY;
+
+                // Only allow dragging down
+                if (diff > 0 && diff < 200) {
+                    modalContent.style.transform = `translateY(${diff}px)`;
+                    modalContent.style.opacity = 1 - (diff / 300);
+                }
+            }, { passive: true });
+
+            modalContent.addEventListener('touchend', function (e) {
+                if (!isDragging) return;
+                isDragging = false;
+
+                const diff = currentY - startY;
+
+                // If dragged more than 100px, close the modal
+                if (diff > 100) {
+                    closeModal();
+                }
+
+                // Reset transform
+                modalContent.style.transform = '';
+                modalContent.style.opacity = '';
+                startY = 0;
+                currentY = 0;
+            });
+        }
+    });
+}
+
+// Initialize gestures after DOM load
+document.addEventListener('DOMContentLoaded', function () {
+    setTimeout(initModalGestures, 500);
+});
+
 
 
 // --- Toast Notification System ---
