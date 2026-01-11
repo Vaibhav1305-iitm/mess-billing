@@ -31,6 +31,184 @@ function loadFromCache() {
 }
 console.log(' INSTANT CACHE enabled!');
 
+// --- iOS Stepper Controls ---
+window.stepValue = function (inputId, delta) {
+    const input = document.getElementById(inputId);
+    if (!input) return;
+
+    let value = parseInt(input.value) || 0;
+    value = Math.max(0, value + delta); // Prevent negative values
+    input.value = value;
+
+    // Update total preview
+    updateEntryTotalPreview();
+
+    // Haptic feedback simulation (visual feedback)
+    input.style.transform = 'scale(1.1)';
+    setTimeout(() => input.style.transform = 'scale(1)', 100);
+};
+
+// Update entry total preview
+window.updateEntryTotalPreview = function () {
+    const morning = parseInt(document.getElementById('new-morning')?.value) || 0;
+    const evening = parseInt(document.getElementById('new-evening')?.value) || 0;
+    const total = morning + evening;
+
+    const preview = document.getElementById('entry-total-preview');
+    if (preview) {
+        preview.textContent = `${total} Tiffin${total !== 1 ? 's' : ''}`;
+    }
+};
+
+// --- Profile Management & Onboarding ---
+const PROFILE_CACHE_KEY = 'mess_user_profile';
+const ONBOARDED_KEY = 'mess_user_onboarded';
+
+// Check first-time user on load
+window.checkFirstTimeUser = function () {
+    const isOnboarded = localStorage.getItem(ONBOARDED_KEY);
+    if (!isOnboarded) {
+        // Show welcome modal for first-time users
+        document.getElementById('welcome-modal').classList.add('open');
+    }
+};
+
+// Complete onboarding (save from welcome modal)
+window.completeOnboarding = async function () {
+    const name = document.getElementById('welcome-name').value.trim();
+    const phone = document.getElementById('welcome-phone').value.trim();
+    const city = document.getElementById('welcome-city').value.trim();
+    const pincode = document.getElementById('welcome-pincode').value.trim();
+    const email = document.getElementById('welcome-email').value.trim();
+
+    if (!name) {
+        alert('Please enter your name');
+        return;
+    }
+    if (!phone) {
+        alert('Please enter your phone number');
+        return;
+    }
+
+    const profile = { name, phone, city, pincode, email, deviceId: getDeviceId() };
+
+    // Save locally
+    localStorage.setItem(PROFILE_CACHE_KEY, JSON.stringify(profile));
+    localStorage.setItem(ONBOARDED_KEY, 'true');
+    updateProfileDisplay(profile);
+
+    // Close welcome modal
+    document.getElementById('welcome-modal').classList.remove('open');
+    showToast('🎉 Welcome to MessFlow!', 'success');
+
+    // Sync to Google Sheets (Users sheet)
+    try {
+        await fetch(`${GOOGLE_APPS_SCRIPT_URL}?path=users&action=save`, {
+            method: 'POST',
+            body: JSON.stringify(profile)
+        });
+        console.log('User registered in Google Sheets');
+    } catch (err) {
+        console.warn('User registration failed (saved locally):', err);
+    }
+};
+
+// Generate unique device ID
+function getDeviceId() {
+    let deviceId = localStorage.getItem('mess_device_id');
+    if (!deviceId) {
+        deviceId = 'DEV-' + Date.now() + '-' + Math.random().toString(36).substr(2, 9);
+        localStorage.setItem('mess_device_id', deviceId);
+    }
+    return deviceId;
+}
+
+// Open profile modal (edit mode)
+window.openProfileModal = function () {
+    const profile = JSON.parse(localStorage.getItem(PROFILE_CACHE_KEY)) || {};
+
+    document.getElementById('edit-profile-name').value = profile.name || '';
+    document.getElementById('edit-profile-phone').value = profile.phone || '';
+    document.getElementById('edit-profile-city').value = profile.city || '';
+    document.getElementById('edit-profile-pincode').value = profile.pincode || '';
+    document.getElementById('edit-profile-email').value = profile.email || '';
+
+    document.getElementById('profile-modal').classList.add('open');
+    closeDrawer();
+};
+
+// Save profile (update mode)
+window.saveProfile = async function () {
+    const name = document.getElementById('edit-profile-name').value.trim();
+    const phone = document.getElementById('edit-profile-phone').value.trim();
+    const city = document.getElementById('edit-profile-city').value.trim();
+    const pincode = document.getElementById('edit-profile-pincode').value.trim();
+    const email = document.getElementById('edit-profile-email').value.trim();
+
+    if (!name) {
+        alert('Please enter your name');
+        return;
+    }
+
+    const profile = { name, phone, city, pincode, email, deviceId: getDeviceId() };
+
+    // Save locally immediately
+    localStorage.setItem(PROFILE_CACHE_KEY, JSON.stringify(profile));
+    updateProfileDisplay(profile);
+
+    closeModal();
+    showToast('✅ Profile updated!', 'success');
+
+    // Sync to Google Sheets (Users sheet)
+    try {
+        await fetch(`${GOOGLE_APPS_SCRIPT_URL}?path=users&action=save`, {
+            method: 'POST',
+            body: JSON.stringify(profile)
+        });
+        console.log('Profile synced to cloud');
+    } catch (err) {
+        console.warn('Profile cloud sync failed (saved locally):', err);
+    }
+};
+
+// Load profile from localStorage
+window.loadProfile = function () {
+    const cached = localStorage.getItem(PROFILE_CACHE_KEY);
+    if (cached) {
+        updateProfileDisplay(JSON.parse(cached));
+    }
+
+    // Check first-time user after a small delay (let UI load first)
+    setTimeout(checkFirstTimeUser, 500);
+};
+
+// Update profile display in drawer and top avatar
+window.updateProfileDisplay = function (profile) {
+    const avatarEl = document.getElementById('profile-avatar');
+    const nameEl = document.getElementById('profile-name');
+    const phoneEl = document.getElementById('profile-phone');
+    const topAvatarEl = document.getElementById('user-avatar');
+
+    if (profile && profile.name) {
+        // Create initials from name (max 2 chars)
+        const nameParts = profile.name.split(' ').filter(p => p.length > 0);
+        const initials = nameParts.length >= 2
+            ? (nameParts[0][0] + nameParts[1][0]).toUpperCase()
+            : profile.name.substring(0, 2).toUpperCase();
+
+        if (avatarEl) avatarEl.textContent = initials;
+        if (topAvatarEl) topAvatarEl.textContent = initials;
+        if (nameEl) nameEl.textContent = profile.name;
+        if (phoneEl) phoneEl.textContent = profile.phone || 'Tap to edit';
+    } else {
+        if (avatarEl) avatarEl.textContent = 'AD';
+        if (topAvatarEl) topAvatarEl.textContent = 'AD';
+        if (nameEl) nameEl.textContent = 'Tap to set up';
+        if (phoneEl) phoneEl.textContent = 'Add your details';
+    }
+};
+
+
 
 // --- Toast Notification System ---
 function showToast(message, type = 'success') {
@@ -289,6 +467,10 @@ window.openAddEntryModal = function () {
     }
     document.getElementById('new-morning').value = 0;
     document.getElementById('new-evening').value = 0;
+
+    // Update total preview to show 0 Tiffins
+    updateEntryTotalPreview();
+
     document.querySelector('#entry-modal h3').textContent = 'New Entry';
     // Hide delete button for new entries
     const deleteBtn = document.getElementById('delete-entry-btn');
@@ -2046,6 +2228,9 @@ window.openEditEntryModal = function (date) {
     document.getElementById('new-morning').value = entry.morning;
     document.getElementById('new-evening').value = entry.evening;
 
+    // Update total preview immediately after setting values
+    updateEntryTotalPreview();
+
     document.querySelector('#entry-modal h3').textContent = 'Edit Entry';
     // Show delete button for existing entries
     const deleteBtn = document.getElementById('delete-entry-btn');
@@ -2295,6 +2480,9 @@ window.addEventListener('DOMContentLoaded', () => {
             state.pricingRules = JSON.parse(cachedP);
         }
     } catch (e) { console.warn('Cache error:', e); }
+
+    // Load user profile
+    loadProfile();
 
     // Background sync with Google Sheets (non-blocking)
     setTimeout(() => {

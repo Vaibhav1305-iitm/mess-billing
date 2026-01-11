@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, viewport-fit=cover, maximum-scale=1.0, user-scalable=no">
+    <meta name="theme-color" content="#007AFF">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <title>Welcome to MessFlow</title>
+
+    <!-- Google Material Symbols -->
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --ios-blue: #007AFF;
+            --ios-purple: #5856D6;
+            --ios-bg: #F2F2F7;
+            --ios-card: #FFFFFF;
+            --ios-text: #1C1C1E;
+            --ios-text-secondary: #8E8E93;
+            --ios-fill: rgba(120, 120, 128, 0.12);
+            --radius-lg: 12px;
+            --radius-xl: 16px;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'SF Pro Text', 'Helvetica Neue', Arial, sans-serif;
+            background: linear-gradient(135deg, var(--ios-blue) 0%, var(--ios-purple) 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            color: var(--ios-text);
+        }
+
+        .welcome-container {
+            width: 100%;
+            max-width: 420px;
+            background: var(--ios-card);
+            border-radius: 24px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+        }
+
+        .welcome-header {
+            background: linear-gradient(135deg, var(--ios-blue) 0%, var(--ios-purple) 100%);
+            color: white;
+            text-align: center;
+            padding: 40px 24px 32px;
+        }
+
+        .welcome-icon {
+            width: 80px;
+            height: 80px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            backdrop-filter: blur(10px);
+        }
+
+        .welcome-icon .material-symbols-outlined {
+            font-size: 44px;
+            color: white;
+        }
+
+        .welcome-header h1 {
+            font-size: 28px;
+            font-weight: 700;
+            margin-bottom: 8px;
+            letter-spacing: -0.5px;
+        }
+
+        .welcome-header p {
+            font-size: 16px;
+            opacity: 0.9;
+        }
+
+        .welcome-form {
+            padding: 28px 24px 32px;
+        }
+
+        .input-group {
+            margin-bottom: 20px;
+        }
+
+        .input-group label {
+            display: block;
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--ios-text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
+            margin-bottom: 8px;
+        }
+
+        .input-group label .required {
+            color: #FF3B30;
+        }
+
+        .ios-input {
+            width: 100%;
+            padding: 16px;
+            background: var(--ios-fill);
+            border: none;
+            border-radius: var(--radius-lg);
+            font-size: 17px;
+            font-family: inherit;
+            color: var(--ios-text);
+            outline: none;
+            transition: all 0.2s ease;
+        }
+
+        .ios-input:focus {
+            background: rgba(0, 122, 255, 0.1);
+            box-shadow: 0 0 0 3px rgba(0, 122, 255, 0.2);
+        }
+
+        .ios-input::placeholder {
+            color: var(--ios-text-secondary);
+        }
+
+        .btn-submit {
+            width: 100%;
+            padding: 18px;
+            background: linear-gradient(135deg, var(--ios-blue) 0%, var(--ios-purple) 100%);
+            color: white;
+            border: none;
+            border-radius: var(--radius-xl);
+            font-size: 18px;
+            font-weight: 600;
+            font-family: inherit;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 8px;
+            box-shadow: 0 8px 24px rgba(0, 122, 255, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .btn-submit:active {
+            transform: scale(0.98);
+        }
+
+        .btn-submit:disabled {
+            opacity: 0.7;
+            cursor: not-allowed;
+        }
+
+        .btn-submit .material-symbols-outlined {
+            font-size: 22px;
+        }
+
+        /* Loading Spinner */
+        .spinner {
+            width: 22px;
+            height: 22px;
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            border-top-color: white;
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        /* Safe areas for iOS */
+        @supports (padding: env(safe-area-inset-top)) {
+            body {
+                padding-top: calc(20px + env(safe-area-inset-top));
+                padding-bottom: calc(20px + env(safe-area-inset-bottom));
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="welcome-container">
+        <div class="welcome-header">
+            <div class="welcome-icon">
+                <span class="material-symbols-outlined">restaurant</span>
+            </div>
+            <h1>Welcome to MessFlow!</h1>
+            <p>Let's set up your profile to get started</p>
+        </div>
+
+        <form class="welcome-form" id="welcome-form" onsubmit="handleSubmit(event)">
+            <div class="input-group">
+                <label>Full Name <span class="required">*</span></label>
+                <input type="text" id="user-name" class="ios-input" placeholder="Enter your full name" required>
+            </div>
+
+            <div class="input-group">
+                <label>Phone Number <span class="required">*</span></label>
+                <input type="tel" id="user-phone" class="ios-input" placeholder="Enter phone number" required>
+            </div>
+
+            <div class="input-group">
+                <label>City</label>
+                <input type="text" id="user-city" class="ios-input" placeholder="Enter your city">
+            </div>
+
+            <div class="input-group">
+                <label>Pincode</label>
+                <input type="text" id="user-pincode" class="ios-input" placeholder="Enter pincode" maxlength="6">
+            </div>
+
+            <div class="input-group">
+                <label>Email ID</label>
+                <input type="email" id="user-email" class="ios-input" placeholder="Enter email address">
+            </div>
+
+            <button type="submit" class="btn-submit" id="submit-btn">
+                <span class="material-symbols-outlined">arrow_forward</span>
+                <span id="btn-text">Get Started</span>
+            </button>
+        </form>
+    </div>
+
+    <script>
+        // Google Apps Script URL
+        const GOOGLE_APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzy_wCcOs8OWP6WatebpNevewzLC9f80PEdOiTLt6VfHSkS98KlQQydItBRJey-6wjfgQ/exec';
+
+        // Check if already onboarded - redirect to main app
+        if (localStorage.getItem('mess_user_onboarded')) {
+            window.location.replace('mobile.html');
+        }
+
+        // Generate unique device ID
+        function getDeviceId() {
+            let deviceId = localStorage.getItem('mess_device_id');
+            if (!deviceId) {
+                deviceId = 'DEV-' + Date.now() + '-' + Math.random().toString(36).substr(2, 9);
+                localStorage.setItem('mess_device_id', deviceId);
+            }
+            return deviceId;
+        }
+
+        // Handle form submission
+        async function handleSubmit(e) {
+            e.preventDefault();
+
+            const name = document.getElementById('user-name').value.trim();
+            const phone = document.getElementById('user-phone').value.trim();
+            const city = document.getElementById('user-city').value.trim();
+            const pincode = document.getElementById('user-pincode').value.trim();
+            const email = document.getElementById('user-email').value.trim();
+
+            if (!name || !phone) {
+                alert('Please enter your name and phone number');
+                return;
+            }
+
+            const submitBtn = document.getElementById('submit-btn');
+            const btnText = document.getElementById('btn-text');
+
+            // Show loading state
+            submitBtn.disabled = true;
+            submitBtn.innerHTML = '<div class="spinner"></div> Saving...';
+
+            const profile = {
+                name,
+                phone,
+                city,
+                pincode,
+                email,
+                deviceId: getDeviceId(),
+                registeredAt: new Date().toISOString()
+            };
+
+            // Save to localStorage
+            localStorage.setItem('mess_user_profile', JSON.stringify(profile));
+            localStorage.setItem('mess_user_onboarded', 'true');
+
+            // Sync to Google Sheets
+            try {
+                await fetch(`${GOOGLE_APPS_SCRIPT_URL}?path=users&action=save`, {
+                    method: 'POST',
+                    body: JSON.stringify(profile)
+                });
+                console.log('✅ User registered in Google Sheets');
+            } catch (err) {
+                console.warn('Cloud sync failed (saved locally):', err);
+            }
+
+            // Redirect to main app
+            submitBtn.innerHTML = '<span class="material-symbols-outlined">check</span> Success!';
+
+            setTimeout(() => {
+                window.location.replace('mobile.html');
+            }, 800);
+        }
+    </script>
+</body>
+
+</html>

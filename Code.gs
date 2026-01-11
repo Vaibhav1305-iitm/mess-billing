@@ -1,290 +1,385 @@
-// ========================================
-// MESS BILLING - GOOGLE APPS SCRIPT BACKEND
-// ========================================
-// 🔧 YOUR SPREADSHEET ID - ALREADY CONFIGURED!
-const SPREADSHEET_ID = '1XM2Q1gQTPg9yp7N5Vv4aMbcvHViGkD7EN7Urwu-uw7Q';
-// Sheet names (will be created automatically)
-const ENTRIES_SHEET_NAME = 'Entries';
-const PRICING_SHEET_NAME = 'Pricing';
+// ===========================================
+// MessFlow - Complete Google Apps Script Backend
+// ===========================================
 
-// ========================================
-// MAIN HTTP HANDLER
-// ========================================
+// Your Google Spreadsheet ID (replace with your own)
+const SPREADSHEET_ID = 'YOUR_SPREADSHEET_ID_HERE';
+
+// ===========================================
+// CORS Headers for all responses
+// ===========================================
+function createCorsResponse(data) {
+  return ContentService
+    .createTextOutput(JSON.stringify(data))
+    .setMimeType(ContentService.MimeType.JSON);
+}
+
+// ===========================================
+// Handle GET Requests
+// ===========================================
 function doGet(e) {
+  const path = e.parameter.path;
+  const action = e.parameter.action;
+  
   try {
-    const path = e.parameter.path || '';
-    const action = e.parameter.action || 'get';
-    
-    if (path === 'entries') {
+    // Handle Entries
+    if (path === 'entries' && action === 'get') {
       return getEntries();
-    } else if (path === 'pricing') {
+    }
+    
+    // Handle Pricing
+    if (path === 'pricing' && action === 'get') {
       return getPricingRules();
-    } else if (path === 'status') {
-      return createJsonResponse({ status: 'ok', message: 'Server running!' });
     }
     
-    return createJsonResponse({ error: 'Invalid path' });
+    // Handle Users
+    if (path === 'users' && action === 'get') {
+      const deviceId = e.parameter.deviceId;
+      return getUser(deviceId);
+    }
+    
+    return createCorsResponse({ error: 'Invalid path or action' });
+    
   } catch (error) {
-    return createJsonResponse({ error: error.toString() });
+    return createCorsResponse({ error: error.message });
   }
 }
 
+// ===========================================
+// Handle POST Requests
+// ===========================================
 function doPost(e) {
+  const path = e.parameter.path;
+  const action = e.parameter.action;
+  
+  let data = {};
   try {
-    const path = e.parameter.path || '';
-    const action = e.parameter.action || '';
-    const data = JSON.parse(e.postData.contents);
-    
+    data = JSON.parse(e.postData.contents);
+  } catch (err) {
+    return createCorsResponse({ error: 'Invalid JSON data' });
+  }
+  
+  try {
+    // Handle Entries
     if (path === 'entries') {
-      if (action === 'add') return addEntry(data);
-      if (action === 'delete') return deleteEntry(data);
-    } else if (path === 'pricing') {
-      if (action === 'add') return addPricingRule(data);
-      if (action === 'update') return updatePricingRule(data);
-      if (action === 'delete') return deletePricingRule(data);
+      if (action === 'add') {
+        return addEntry(data);
+      }
+      if (action === 'delete') {
+        return deleteEntry(data);
+      }
     }
     
-    return createJsonResponse({ error: 'Invalid path or action' });
+    // Handle Pricing
+    if (path === 'pricing') {
+      if (action === 'add' || action === 'update') {
+        return savePricingRule(data);
+      }
+      if (action === 'delete') {
+        return deletePricingRule(data);
+      }
+    }
+    
+    // Handle Users
+    if (path === 'users') {
+      if (action === 'save') {
+        return saveUser(data);
+      }
+    }
+    
+    return createCorsResponse({ error: 'Invalid path or action' });
+    
   } catch (error) {
-    return createJsonResponse({ error: error.toString() });
+    return createCorsResponse({ error: error.message });
   }
 }
 
-// ========================================
-// HELPER: Format Date to YYYY-MM-DD string
-// ========================================
-function formatDateToString(value) {
-  if (!value) return '';
-  
-  // If it's already a string in correct format
-  if (typeof value === 'string') {
-    // Check if it's YYYY-MM-DD format
-    if (/^\d{4}-\d{2}-\d{2}$/.test(value)) {
-      return value;
-    }
-    // Try to parse it
-    const parsed = new Date(value);
-    if (!isNaN(parsed.getTime())) {
-      return Utilities.formatDate(parsed, Session.getScriptTimeZone(), 'yyyy-MM-dd');
-    }
-    return value;
-  }
-  
-  // If it's a Date object
-  if (value instanceof Date) {
-    return Utilities.formatDate(value, Session.getScriptTimeZone(), 'yyyy-MM-dd');
-  }
-  
-  return String(value);
-}
-
-// ========================================
+// ===========================================
 // ENTRIES FUNCTIONS
-// ========================================
+// ===========================================
+
 function getEntries() {
-  const sheet = getSheet(ENTRIES_SHEET_NAME);
+  const ss = SpreadsheetApp.openById(SPREADSHEET_ID);
+  let sheet = ss.getSheetByName('Entries');
+  
+  if (!sheet) {
+    // Create sheet with headers if doesn't exist
+    sheet = ss.insertSheet('Entries');
+    sheet.getRange(1, 1, 1, 6).setValues([['Date', 'Morning', 'Evening', 'Total', 'Amount', 'ID']]);
+    sheet.setFrozenRows(1);
+    return createCorsResponse([]);
+  }
+  
   const data = sheet.getDataRange().getValues();
-  
-  if (data.length <= 1) return createJsonResponse([]);
-  
   const headers = data[0];
   const entries = [];
   
   for (let i = 1; i < data.length; i++) {
     const row = data[i];
-    // Skip empty rows
-    if (!row[0]) continue;
-    
-    const entry = {};
-    for (let j = 0; j < headers.length; j++) {
-      let value = row[j];
-      const header = String(headers[j]).toLowerCase();
-      
-      // Format dates properly
-      if (header === 'date' || header === 'start_date' || header === 'end_date') {
-        value = formatDateToString(value);
-      }
-      // Ensure month is string format YYYY-MM
-      else if (header === 'month') {
-        if (value instanceof Date) {
-          value = Utilities.formatDate(value, Session.getScriptTimeZone(), 'yyyy-MM');
-        } else if (value) {
-          value = String(value);
-        }
-      }
-      // Ensure numbers for numeric fields
-      else if (header === 'morning' || header === 'evening' || header === 'total' || header === 'year' || header === 'amount') {
-        value = Number(value) || 0;
-      }
-      
-      entry[headers[j]] = value;
+    if (row[0]) { // Has date
+      entries.push({
+        date: row[0],
+        morning: row[1] || 0,
+        evening: row[2] || 0,
+        total: row[3] || 0,
+        amount: row[4] || 0,
+        id: row[5] || row[0]
+      });
     }
-    entries.push(entry);
   }
   
-  return createJsonResponse(entries);
+  return createCorsResponse(entries);
 }
 
 function addEntry(data) {
-  const sheet = getSheet(ENTRIES_SHEET_NAME);
-  const existingData = sheet.getDataRange().getValues();
+  const ss = SpreadsheetApp.openById(SPREADSHEET_ID);
+  let sheet = ss.getSheetByName('Entries');
   
-  // Format incoming date
-  const dateStr = formatDateToString(data.date);
+  if (!sheet) {
+    sheet = ss.insertSheet('Entries');
+    sheet.getRange(1, 1, 1, 6).setValues([['Date', 'Morning', 'Evening', 'Total', 'Amount', 'ID']]);
+    sheet.setFrozenRows(1);
+  }
   
-  // Update if date exists
-  for (let i = 1; i < existingData.length; i++) {
-    const rowDate = formatDateToString(existingData[i][0]);
-    if (rowDate === dateStr) {
-      sheet.getRange(i + 1, 1, 1, 8).setValues([[
-        dateStr, data.day || '', data.morning || 0, data.evening || 0,
-        data.total || 0, data.month || '', data.year || '', data.amount || 0
-      ]]);
-      return createJsonResponse({ success: true, message: 'Entry updated' });
+  const date = data.date;
+  const morning = data.morning || 0;
+  const evening = data.evening || 0;
+  const total = morning + evening;
+  const amount = data.amount || 0;
+  const id = data.id || date;
+  
+  // Check if entry with same date exists
+  const allData = sheet.getDataRange().getValues();
+  let existingRow = -1;
+  
+  for (let i = 1; i < allData.length; i++) {
+    if (allData[i][0] === date) {
+      existingRow = i + 1;
+      break;
     }
   }
   
-  // Add new entry
-  sheet.appendRow([
-    dateStr, data.day || '', data.morning || 0, data.evening || 0,
-    data.total || 0, data.month || '', data.year || '', data.amount || 0
-  ]);
+  const rowData = [date, morning, evening, total, amount, id];
   
-  return createJsonResponse({ success: true, message: 'Entry added' });
+  if (existingRow > 0) {
+    // Update existing
+    sheet.getRange(existingRow, 1, 1, 6).setValues([rowData]);
+  } else {
+    // Add new
+    sheet.appendRow(rowData);
+  }
+  
+  return createCorsResponse({ success: true, message: 'Entry saved' });
 }
 
 function deleteEntry(data) {
-  const sheet = getSheet(ENTRIES_SHEET_NAME);
-  const dataRange = sheet.getDataRange().getValues();
-  const targetDate = formatDateToString(data.date);
+  const ss = SpreadsheetApp.openById(SPREADSHEET_ID);
+  const sheet = ss.getSheetByName('Entries');
   
-  for (let i = 1; i < dataRange.length; i++) {
-    const rowDate = formatDateToString(dataRange[i][0]);
-    if (rowDate === targetDate) {
+  if (!sheet) {
+    return createCorsResponse({ success: false, error: 'Entries sheet not found' });
+  }
+  
+  const date = data.date;
+  const allData = sheet.getDataRange().getValues();
+  
+  for (let i = 1; i < allData.length; i++) {
+    if (allData[i][0] === date) {
       sheet.deleteRow(i + 1);
-      return createJsonResponse({ success: true, message: 'Entry deleted' });
+      return createCorsResponse({ success: true, message: 'Entry deleted' });
     }
   }
   
-  return createJsonResponse({ error: 'Entry not found' });
+  return createCorsResponse({ success: false, error: 'Entry not found' });
 }
 
-// ========================================
-// PRICING RULES FUNCTIONS
-// ========================================
+// ===========================================
+// PRICING FUNCTIONS
+// ===========================================
+
 function getPricingRules() {
-  const sheet = getSheet(PRICING_SHEET_NAME);
+  const ss = SpreadsheetApp.openById(SPREADSHEET_ID);
+  let sheet = ss.getSheetByName('Pricing');
+  
+  if (!sheet) {
+    sheet = ss.insertSheet('Pricing');
+    sheet.getRange(1, 1, 1, 5).setValues([['ID', 'Start Date', 'End Date', 'Morning Rate', 'Evening Rate']]);
+    sheet.setFrozenRows(1);
+    return createCorsResponse([]);
+  }
+  
   const data = sheet.getDataRange().getValues();
-  
-  if (data.length <= 1) return createJsonResponse([]);
-  
-  const headers = data[0];
   const rules = [];
   
   for (let i = 1; i < data.length; i++) {
     const row = data[i];
-    if (!row[0] && row[0] !== 0) continue; // Skip empty rows
-    
-    const rule = {};
-    for (let j = 0; j < headers.length; j++) {
-      let value = row[j];
-      const header = String(headers[j]).toLowerCase();
-      
-      // Format dates properly
-      if (header === 'start_date' || header === 'end_date') {
-        value = formatDateToString(value);
-      }
-      
-      rule[headers[j]] = value;
-    }
-    rules.push(rule);
-  }
-  
-  return createJsonResponse(rules);
-}
-
-function addPricingRule(data) {
-  const sheet = getSheet(PRICING_SHEET_NAME);
-  const lastRow = sheet.getLastRow();
-  const newId = lastRow > 1 ? parseInt(sheet.getRange(lastRow, 1).getValue()) + 1 : 1;
-  
-  sheet.appendRow([
-    newId, 
-    formatDateToString(data.start_date), 
-    formatDateToString(data.end_date) || '',
-    data.morning_rate || 46, 
-    data.evening_rate || 46
-  ]);
-  
-  return createJsonResponse({ success: true, id: newId });
-}
-
-function updatePricingRule(data) {
-  const sheet = getSheet(PRICING_SHEET_NAME);
-  const dataRange = sheet.getDataRange().getValues();
-  
-  for (let i = 1; i < dataRange.length; i++) {
-    if (dataRange[i][0] == data.id) {
-      sheet.getRange(i + 1, 1, 1, 5).setValues([[
-        data.id, 
-        formatDateToString(data.start_date), 
-        formatDateToString(data.end_date) || '',
-        data.morning_rate || 46, 
-        data.evening_rate || 46
-      ]]);
-      return createJsonResponse({ success: true });
+    if (row[0]) {
+      rules.push({
+        id: row[0],
+        start_date: row[1],
+        end_date: row[2] || null,
+        morning_rate: row[3] || 0,
+        evening_rate: row[4] || 0
+      });
     }
   }
   
-  return createJsonResponse({ error: 'Rule not found' });
+  return createCorsResponse(rules);
+}
+
+function savePricingRule(data) {
+  const ss = SpreadsheetApp.openById(SPREADSHEET_ID);
+  let sheet = ss.getSheetByName('Pricing');
+  
+  if (!sheet) {
+    sheet = ss.insertSheet('Pricing');
+    sheet.getRange(1, 1, 1, 5).setValues([['ID', 'Start Date', 'End Date', 'Morning Rate', 'Evening Rate']]);
+    sheet.setFrozenRows(1);
+  }
+  
+  const id = data.id || 'RULE-' + Date.now();
+  const startDate = data.start_date;
+  const endDate = data.end_date || '';
+  const morningRate = data.morning_rate || 0;
+  const eveningRate = data.evening_rate || 0;
+  
+  // Check if rule exists
+  const allData = sheet.getDataRange().getValues();
+  let existingRow = -1;
+  
+  for (let i = 1; i < allData.length; i++) {
+    if (allData[i][0] == id) {
+      existingRow = i + 1;
+      break;
+    }
+  }
+  
+  const rowData = [id, startDate, endDate, morningRate, eveningRate];
+  
+  if (existingRow > 0) {
+    sheet.getRange(existingRow, 1, 1, 5).setValues([rowData]);
+  } else {
+    sheet.appendRow(rowData);
+  }
+  
+  return createCorsResponse({ success: true, id: id, message: 'Pricing rule saved' });
 }
 
 function deletePricingRule(data) {
-  const sheet = getSheet(PRICING_SHEET_NAME);
-  const dataRange = sheet.getDataRange().getValues();
+  const ss = SpreadsheetApp.openById(SPREADSHEET_ID);
+  const sheet = ss.getSheetByName('Pricing');
   
-  for (let i = 1; i < dataRange.length; i++) {
-    if (dataRange[i][0] == data.id) {
-      sheet.deleteRow(i + 1);
-      return createJsonResponse({ success: true });
-    }
-  }
-  
-  return createJsonResponse({ error: 'Rule not found' });
-}
-
-// ========================================
-// HELPER FUNCTIONS
-// ========================================
-function getSheet(sheetName) {
-  const spreadsheet = SpreadsheetApp.openById(SPREADSHEET_ID);
-  let sheet = spreadsheet.getSheetByName(sheetName);
-  
-  // AUTO CREATE SHEET if it doesn't exist!
   if (!sheet) {
-    sheet = spreadsheet.insertSheet(sheetName);
-    
-    // Add headers automatically
-    if (sheetName === ENTRIES_SHEET_NAME) {
-      sheet.appendRow(['date', 'day', 'morning', 'evening', 'total', 'month', 'year', 'amount']);
-    } else if (sheetName === PRICING_SHEET_NAME) {
-      sheet.appendRow(['id', 'start_date', 'end_date', 'morning_rate', 'evening_rate']);
-      // Add default pricing rule
-      sheet.appendRow([1, '2024-01-01', '', 46, 46]);
-    }
-    
-    // Format header row (blue background, white text, bold)
-    const headerRange = sheet.getRange(1, 1, 1, sheet.getLastColumn());
-    headerRange.setFontWeight('bold');
-    headerRange.setBackground('#4285f4');
-    headerRange.setFontColor('#ffffff');
+    return createCorsResponse({ success: false, error: 'Pricing sheet not found' });
   }
   
-  return sheet;
+  const id = data.id;
+  const allData = sheet.getDataRange().getValues();
+  
+  for (let i = 1; i < allData.length; i++) {
+    if (allData[i][0] == id) {
+      sheet.deleteRow(i + 1);
+      return createCorsResponse({ success: true, message: 'Pricing rule deleted' });
+    }
+  }
+  
+  return createCorsResponse({ success: false, error: 'Rule not found' });
 }
 
-function createJsonResponse(data) {
-  return ContentService
-    .createTextOutput(JSON.stringify(data))
-    .setMimeType(ContentService.MimeType.JSON);
+// ===========================================
+// USERS FUNCTIONS
+// ===========================================
+
+function saveUser(data) {
+  try {
+    const ss = SpreadsheetApp.openById(SPREADSHEET_ID);
+    let sheet = ss.getSheetByName('Users');
+    
+    // Create sheet if it doesn't exist
+    if (!sheet) {
+      sheet = ss.insertSheet('Users');
+      sheet.getRange(1, 1, 1, 8).setValues([[
+        'Device ID', 'Name', 'Phone', 'City', 'Pincode', 'Email', 'Registered At', 'Updated At'
+      ]]);
+      sheet.setFrozenRows(1);
+      // Set column widths
+      sheet.setColumnWidth(1, 200);
+      sheet.setColumnWidth(2, 150);
+      sheet.setColumnWidth(3, 120);
+    }
+    
+    const deviceId = data.deviceId || '';
+    const now = new Date().toISOString();
+    
+    // Check if user already exists (by deviceId)
+    const dataRange = sheet.getDataRange();
+    const values = dataRange.getValues();
+    let existingRow = -1;
+    
+    for (let i = 1; i < values.length; i++) {
+      if (values[i][0] === deviceId) {
+        existingRow = i + 1;
+        break;
+      }
+    }
+    
+    const rowData = [
+      deviceId,
+      data.name || '',
+      data.phone || '',
+      data.city || '',
+      data.pincode || '',
+      data.email || '',
+      data.registeredAt || now,
+      now
+    ];
+    
+    if (existingRow > 0) {
+      // Update existing user
+      sheet.getRange(existingRow, 1, 1, 8).setValues([rowData]);
+    } else {
+      // Add new user
+      sheet.appendRow(rowData);
+    }
+    
+    return createCorsResponse({ success: true, message: 'User saved' });
+    
+  } catch (error) {
+    return createCorsResponse({ success: false, error: error.message });
+  }
+}
+
+function getUser(deviceId) {
+  try {
+    const ss = SpreadsheetApp.openById(SPREADSHEET_ID);
+    const sheet = ss.getSheetByName('Users');
+    
+    if (!sheet) {
+      return createCorsResponse({ success: false, error: 'Users sheet not found' });
+    }
+    
+    const dataRange = sheet.getDataRange();
+    const values = dataRange.getValues();
+    
+    for (let i = 1; i < values.length; i++) {
+      if (values[i][0] === deviceId) {
+        const user = {
+          deviceId: values[i][0],
+          name: values[i][1],
+          phone: values[i][2],
+          city: values[i][3],
+          pincode: values[i][4],
+          email: values[i][5],
+          registeredAt: values[i][6],
+          updatedAt: values[i][7]
+        };
+        return createCorsResponse(user);
+      }
+    }
+    
+    return createCorsResponse({ success: false, error: 'User not found' });
+    
+  } catch (error) {
+    return createCorsResponse({ success: false, error: error.message });
+  }
 }

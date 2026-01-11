@@ -7,6 +7,13 @@
         content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <title>MessFlow</title>
 
+    <!-- First-time user redirect -->
+    <script>
+        if (!localStorage.getItem('mess_user_onboarded')) {
+            window.location.replace('welcome.html');
+        }
+    </script>
+
     <!-- iOS Design System CSS -->
     <link rel="stylesheet" href="mobile.css">
 
@@ -85,15 +92,23 @@
         <!-- Drawer Overlay -->
         <div class="drawer-overlay" id="drawer-overlay"></div>
 
-        <!-- Navigation Drawer -->
+        <!-- Navigation Drawer - iOS Slide-over -->
         <nav class="nav-drawer" id="nav-drawer">
-            <div class="drawer-header">
-                <span class="material-symbols-outlined">restaurant_menu</span>
-                <span style="font-size: 22px; font-weight: 700; letter-spacing: -0.5px;">MessFlow</span>
+            <!-- Profile Header - Clickable to Edit -->
+            <div class="drawer-profile" onclick="openProfileModal()">
+                <div class="profile-avatar" id="profile-avatar">AD</div>
+                <div class="profile-info">
+                    <div class="profile-name" id="profile-name">Tap to set up</div>
+                    <div class="profile-role" id="profile-phone">Add your details</div>
+                </div>
+                <span class="material-symbols-outlined"
+                    style="color: var(--ios-text-tertiary); margin-left: auto;">chevron_right</span>
             </div>
 
+            <div class="drawer-divider"></div>
+
             <a href="#" class="drawer-item active" onclick="navigate('home')">
-                <span class="material-symbols-outlined">inbox</span>
+                <span class="material-symbols-outlined">house</span>
                 Entries
             </a>
             <a href="#" class="drawer-item" onclick="navigate('bill')">
@@ -101,16 +116,14 @@
                 Generate Bill
             </a>
             <a href="#" class="drawer-item" onclick="navigate('pricing')">
-                <span class="material-symbols-outlined">price_change</span>
+                <span class="material-symbols-outlined">paid</span>
                 Pricing Rules
             </a>
+
             <div class="drawer-divider"></div>
-            <a href="#" class="drawer-item" onclick="toggleTheme()">
-                <span class="material-symbols-outlined">dark_mode</span>
-                Toggle Theme
-            </a>
+
             <a href="#" class="drawer-item" onclick="navigate('reports')">
-                <span class="material-symbols-outlined">analytics</span>
+                <span class="material-symbols-outlined">bar_chart</span>
                 Reports & Analytics
             </a>
             <a href="#" class="drawer-item" onclick="navigate('activity')">
@@ -120,6 +133,13 @@
             <a href="#" class="drawer-item" onclick="navigate('settings')">
                 <span class="material-symbols-outlined">settings</span>
                 Data & Settings
+            </a>
+
+            <div class="drawer-divider"></div>
+
+            <a href="#" class="drawer-item" onclick="toggleTheme()">
+                <span class="material-symbols-outlined">dark_mode</span>
+                Toggle Theme
             </a>
         </nav>
 
@@ -140,7 +160,7 @@
                     <span class="material-symbols-outlined">tune</span>
                 </button>
 
-                <div class="avatar" id="user-avatar">AD</div>
+                <div class="avatar" id="user-avatar" onclick="openProfileModal()" style="cursor: pointer;">AD</div>
             </div>
 
             <!-- Page Header (Visible on other pages) -->
@@ -476,37 +496,75 @@
             </div>
         </nav>
 
-        <!-- Add Entry Modal -->
+        <!-- Add Entry Modal - iOS Bottom Sheet -->
         <div class="modal" id="entry-modal">
-            <div class="modal-content">
+            <div class="modal-content ios-bottom-sheet">
+                <!-- iOS Drag Handle -->
+                <div class="sheet-handle"></div>
+
                 <h3 class="modal-title" id="modal-title">New Entry</h3>
 
-                <div class="input-group">
-                    <input type="date" class="m3-input" id="new-date" placeholder=" ">
-                    <label class="m3-label">Date</label>
+                <!-- Date Picker - iOS Style -->
+                <div class="ios-date-picker">
+                    <span class="material-symbols-outlined">calendar_today</span>
+                    <input type="date" class="ios-date-input" id="new-date">
                 </div>
 
-                <div class="input-group">
-                    <input type="number" class="m3-input" id="new-morning" placeholder=" " value="0" min="0">
-                    <label class="m3-label">Morning Tiffins</label>
-                </div>
-
-                <div class="input-group">
-                    <input type="number" class="m3-input" id="new-evening" placeholder=" " value="0" min="0">
-                    <label class="m3-label">Evening Tiffins</label>
-                </div>
-
-                <div class="modal-actions" style="justify-content: space-between;">
-                    <button class="btn-text btn-delete" id="delete-entry-btn" onclick="deleteEntry()"
-                        style="color: #f44336; display: none;">
-                        <span class="material-symbols-outlined"
-                            style="font-size: 18px; vertical-align: middle;">delete</span>
-                        Delete
-                    </button>
-                    <div style="display: flex; gap: 8px;">
-                        <button class="btn-text" onclick="closeModal()">Cancel</button>
-                        <button class="btn-text" onclick="saveEntry()">Save</button>
+                <!-- Morning Stepper -->
+                <div class="ios-stepper-group">
+                    <div class="stepper-label">
+                        <span class="material-symbols-outlined" style="color: #FF9500;">wb_sunny</span>
+                        <span>Morning Tiffins</span>
                     </div>
+                    <div class="ios-stepper">
+                        <button type="button" class="stepper-btn" onclick="stepValue('new-morning', -1)">
+                            <span class="material-symbols-outlined">remove</span>
+                        </button>
+                        <input type="number" class="stepper-value" id="new-morning" value="0" min="0"
+                            oninput="updateEntryTotalPreview()">
+                        <button type="button" class="stepper-btn" onclick="stepValue('new-morning', 1)">
+                            <span class="material-symbols-outlined">add</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Evening Stepper -->
+                <div class="ios-stepper-group">
+                    <div class="stepper-label">
+                        <span class="material-symbols-outlined" style="color: #5856D6;">dark_mode</span>
+                        <span>Evening Tiffins</span>
+                    </div>
+                    <div class="ios-stepper">
+                        <button type="button" class="stepper-btn" onclick="stepValue('new-evening', -1)">
+                            <span class="material-symbols-outlined">remove</span>
+                        </button>
+                        <input type="number" class="stepper-value" id="new-evening" value="0" min="0"
+                            oninput="updateEntryTotalPreview()">
+                        <button type="button" class="stepper-btn" onclick="stepValue('new-evening', 1)">
+                            <span class="material-symbols-outlined">add</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Total Preview -->
+                <div class="total-preview">
+                    <span>Total:</span>
+                    <span id="entry-total-preview">0 Tiffins</span>
+                </div>
+
+                <!-- Delete Button (hidden for new entries) -->
+                <button class="btn-delete-full" id="delete-entry-btn" onclick="deleteEntry()" style="display: none;">
+                    <span class="material-symbols-outlined">delete</span>
+                    Delete Entry
+                </button>
+
+                <!-- Action Buttons -->
+                <div class="ios-sheet-actions">
+                    <button class="btn-cancel" onclick="closeModal()">Cancel</button>
+                    <button class="btn-save-full" onclick="saveEntry()">
+                        <span class="material-symbols-outlined">check</span>
+                        Save Entry
+                    </button>
                 </div>
             </div>
         </div>
@@ -594,57 +652,108 @@
             </div>
         </div>
 
-    </div>
+        <!-- Profile Edit Modal -->
+        <div class="modal" id="profile-modal">
+            <div class="modal-content ios-bottom-sheet">
+                <div class="sheet-handle"></div>
 
-    <!-- Advanced Filter Modal -->
-    <div class="modal" id="search-filter-modal">
-        <div class="modal-content">
-            <h3 class="modal-title" style="margin-top:0; margin-bottom:12px; font-size:18px;">Search Filters</h3>
+                <h3 class="modal-title">My Profile</h3>
 
-            <!-- Filter Sections -->
-            <div class="filter-section">
-                <label>Filter By</label>
-                <div class="chip-group-select">
-                    <button class="filter-chip-option active" data-type="all"
-                        onclick="setFilterType('all')">All</button>
-                    <button class="filter-chip-option" data-type="date" onclick="setFilterType('date')">Date</button>
-                    <button class="filter-chip-option" data-type="month" onclick="setFilterType('month')">Month</button>
-                    <button class="filter-chip-option" data-type="year" onclick="setFilterType('year')">Year</button>
+                <!-- Name Input -->
+                <div class="ios-input-group">
+                    <label>Full Name</label>
+                    <input type="text" id="edit-profile-name" placeholder="Enter your name" class="ios-input">
+                </div>
+
+                <!-- Phone Input -->
+                <div class="ios-input-group">
+                    <label>Phone Number</label>
+                    <input type="tel" id="edit-profile-phone" placeholder="Enter phone number" class="ios-input">
+                </div>
+
+                <!-- City Input -->
+                <div class="ios-input-group">
+                    <label>City</label>
+                    <input type="text" id="edit-profile-city" placeholder="Enter your city" class="ios-input">
+                </div>
+
+                <!-- Pincode Input -->
+                <div class="ios-input-group">
+                    <label>Pincode</label>
+                    <input type="text" id="edit-profile-pincode" placeholder="Enter pincode" class="ios-input"
+                        maxlength="6">
+                </div>
+
+                <!-- Email Input -->
+                <div class="ios-input-group">
+                    <label>Email ID</label>
+                    <input type="email" id="edit-profile-email" placeholder="Enter email address" class="ios-input">
+                </div>
+
+                <!-- Action Buttons -->
+                <div class="ios-sheet-actions">
+                    <button class="btn-cancel" onclick="closeModal()">Cancel</button>
+                    <button class="btn-save-full" onclick="saveProfile()">
+                        <span class="material-symbols-outlined">check</span>
+                        Save Profile
+                    </button>
                 </div>
             </div>
 
-            <!-- Specific Filter Inputs -->
-            <div id="filter-input-date" class="filter-input-group" style="display:none;">
-                <label>Select Date</label>
-                <input type="date" id="adv-filter-date">
-            </div>
+        </div>
 
-            <div id="filter-input-month" class="filter-input-group" style="display:none;">
-                <label>Select Month</label>
-                <input type="month" id="adv-filter-month">
-            </div>
+        <!-- Advanced Filter Modal -->
+        <div class="modal" id="search-filter-modal">
+            <div class="modal-content">
+                <h3 class="modal-title" style="margin-top:0; margin-bottom:12px; font-size:18px;">Search Filters</h3>
 
-            <div id="filter-input-year" class="filter-input-group" style="display:none;">
-                <label>Select Year</label>
-                <div id="year-chips-container" style="display:flex; gap:8px; flex-wrap:wrap;">
-                    <!-- Years injected by JS -->
+                <!-- Filter Sections -->
+                <div class="filter-section">
+                    <label>Filter By</label>
+                    <div class="chip-group-select">
+                        <button class="filter-chip-option active" data-type="all"
+                            onclick="setFilterType('all')">All</button>
+                        <button class="filter-chip-option" data-type="date"
+                            onclick="setFilterType('date')">Date</button>
+                        <button class="filter-chip-option" data-type="month"
+                            onclick="setFilterType('month')">Month</button>
+                        <button class="filter-chip-option" data-type="year"
+                            onclick="setFilterType('year')">Year</button>
+                    </div>
                 </div>
-            </div>
 
-            <div class="modal-actions" style="margin-top:20px;">
-                <button class="btn-text" onclick="closeModal()"
-                    style="color:var(--md-sys-color-on-surface-variant);">Cancel</button>
-                <button class="btn-text" onclick="clearAllFilters()"
-                    style="color:var(--md-sys-color-error);">Reset</button>
-                <button class="btn-text" onclick="applyAdvancedFilters()"
-                    style="background:var(--md-sys-color-primary-container); color:var(--md-sys-color-on-primary-container);">
-                    Apply
-                </button>
+                <!-- Specific Filter Inputs -->
+                <div id="filter-input-date" class="filter-input-group" style="display:none;">
+                    <label>Select Date</label>
+                    <input type="date" id="adv-filter-date">
+                </div>
+
+                <div id="filter-input-month" class="filter-input-group" style="display:none;">
+                    <label>Select Month</label>
+                    <input type="month" id="adv-filter-month">
+                </div>
+
+                <div id="filter-input-year" class="filter-input-group" style="display:none;">
+                    <label>Select Year</label>
+                    <div id="year-chips-container" style="display:flex; gap:8px; flex-wrap:wrap;">
+                        <!-- Years injected by JS -->
+                    </div>
+                </div>
+
+                <div class="modal-actions" style="margin-top:20px;">
+                    <button class="btn-text" onclick="closeModal()"
+                        style="color:var(--md-sys-color-on-surface-variant);">Cancel</button>
+                    <button class="btn-text" onclick="clearAllFilters()"
+                        style="color:var(--md-sys-color-error);">Reset</button>
+                    <button class="btn-text" onclick="applyAdvancedFilters()"
+                        style="background:var(--md-sys-color-primary-container); color:var(--md-sys-color-on-primary-container);">
+                        Apply
+                    </button>
+                </div>
             </div>
         </div>
-    </div>
 
-    <!-- Fixed Bottom Navigation -->
+        <!-- Fixed Bottom Navigation -->
 
 
     </div> <!-- End app-root -->
