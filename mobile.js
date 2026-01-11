@@ -585,27 +585,23 @@ window.toggleTheme = function () {
 
 function applyDarkTheme() {
     const root = document.documentElement;
-    // Dark Mode - Cyber/Teal Theme (matching your app's current dark look)
-    root.style.setProperty('--md-sys-color-primary', '#00e5ff');
-    root.style.setProperty('--md-sys-color-on-primary', '#000000');
-    root.style.setProperty('--md-sys-color-primary-container', '#004b57');
-    root.style.setProperty('--md-sys-color-on-primary-container', '#9ef0ff');
+    // Dark Mode - iOS Design System
+    root.style.setProperty('--ios-bg', '#000000');
+    root.style.setProperty('--ios-card', '#1C1C1E');
+    root.style.setProperty('--ios-card-alt', '#2C2C2E');
+    root.style.setProperty('--ios-elevated', '#2C2C2E');
+    root.style.setProperty('--ios-text-primary', '#FFFFFF');
+    root.style.setProperty('--ios-text-secondary', '#EBEBF5');
+    root.style.setProperty('--ios-text-tertiary', '#8E8E93');
+    root.style.setProperty('--ios-separator', 'rgba(84, 84, 88, 0.65)');
+    root.style.setProperty('--ios-fill', 'rgba(120, 120, 128, 0.36)');
 
-    root.style.setProperty('--md-sys-color-secondary', '#64ffda');
-    root.style.setProperty('--md-sys-color-secondary-container', '#004d40');
-    root.style.setProperty('--md-sys-color-on-secondary-container', '#a7ffeb');
-
-    root.style.setProperty('--md-sys-color-background', '#121212');
-    root.style.setProperty('--md-sys-color-on-background', '#ffffff');
-    root.style.setProperty('--md-sys-color-surface', '#121212');
-    root.style.setProperty('--md-sys-color-surface-container', '#1e1e1e');
-    root.style.setProperty('--md-sys-color-on-surface', '#ffffff');
-    root.style.setProperty('--md-sys-color-surface-variant', '#2d2d2d');
-    root.style.setProperty('--md-sys-color-on-surface-variant', '#b0b0b0');
-    root.style.setProperty('--md-sys-color-outline', '#444444');
-
-    root.style.setProperty('--gmail-search-bg', '#2b2b2b');
-    root.style.setProperty('--gmail-search-text', '#ffffff');
+    root.style.setProperty('--color-bg', '#000000');
+    root.style.setProperty('--color-card', '#1C1C1E');
+    root.style.setProperty('--color-text', '#FFFFFF');
+    root.style.setProperty('--color-text-secondary', '#EBEBF5');
+    root.style.setProperty('--color-text-tertiary', '#8E8E93');
+    root.style.setProperty('--color-separator', 'rgba(84, 84, 88, 0.65)');
 
     state.theme = 'dark';
     localStorage.setItem('mess_theme_mode', 'dark');
@@ -613,33 +609,30 @@ function applyDarkTheme() {
 
 function applyLightTheme() {
     const root = document.documentElement;
-    // Light Mode - Clean Blue Theme (Gmail-like)
-    root.style.setProperty('--md-sys-color-primary', '#0b57d0');
-    root.style.setProperty('--md-sys-color-on-primary', '#ffffff');
-    root.style.setProperty('--md-sys-color-primary-container', '#d3e3fd');
-    root.style.setProperty('--md-sys-color-on-primary-container', '#041e49');
+    // Light Mode - iOS Design System
+    root.style.setProperty('--ios-bg', '#F2F2F7');
+    root.style.setProperty('--ios-card', '#FFFFFF');
+    root.style.setProperty('--ios-card-alt', '#FFFFFF');
+    root.style.setProperty('--ios-elevated', '#FFFFFF');
+    root.style.setProperty('--ios-text-primary', '#000000');
+    root.style.setProperty('--ios-text-secondary', '#3C3C43');
+    root.style.setProperty('--ios-text-tertiary', '#8E8E93');
+    root.style.setProperty('--ios-separator', 'rgba(60, 60, 67, 0.12)');
+    root.style.setProperty('--ios-fill', 'rgba(120, 120, 128, 0.12)');
 
-    root.style.setProperty('--md-sys-color-secondary', '#00639b');
-    root.style.setProperty('--md-sys-color-secondary-container', '#c2e7ff');
-    root.style.setProperty('--md-sys-color-on-secondary-container', '#001d32');
-
-    root.style.setProperty('--md-sys-color-background', '#ffffff');
-    root.style.setProperty('--md-sys-color-on-background', '#1f1f1f');
-    root.style.setProperty('--md-sys-color-surface', '#f9f9f9');
-    root.style.setProperty('--md-sys-color-surface-container', '#ffffff');
-    root.style.setProperty('--md-sys-color-on-surface', '#1f1f1f');
-    root.style.setProperty('--md-sys-color-surface-variant', '#e1e3e1');
-    root.style.setProperty('--md-sys-color-on-surface-variant', '#444746');
-    root.style.setProperty('--md-sys-color-outline', '#747775');
-
-    root.style.setProperty('--gmail-search-bg', '#eaf1fb');
-    root.style.setProperty('--gmail-search-text', '#1f1f1f');
+    root.style.setProperty('--color-bg', '#F2F2F7');
+    root.style.setProperty('--color-card', '#FFFFFF');
+    root.style.setProperty('--color-text', '#000000');
+    root.style.setProperty('--color-text-secondary', '#3C3C43');
+    root.style.setProperty('--color-text-tertiary', '#8E8E93');
+    root.style.setProperty('--color-separator', 'rgba(60, 60, 67, 0.12)');
 
     state.theme = 'light';
     localStorage.setItem('mess_theme_mode', 'light');
 }
 
 // Restore theme from localStorage on page load
+// If no saved theme, defaults to system preference (handled by CSS @media)
 (function restoreTheme() {
     const savedTheme = localStorage.getItem('mess_theme_mode');
     if (savedTheme === 'dark') {
@@ -647,7 +640,7 @@ function applyLightTheme() {
     } else if (savedTheme === 'light') {
         applyLightTheme();
     }
-    // If no saved theme, use system preference or default (CSS handles this)
+    // If no saved theme, CSS @media (prefers-color-scheme) handles it
 })();
 
 
@@ -1226,6 +1219,7 @@ window.generateBillPreview = async function () {
         // Update Mobile Card UI
         document.getElementById('bill-morning-count').textContent = mTotal;
         document.getElementById('bill-evening-count').textContent = eTotal;
+        document.getElementById('bill-total-tiffins').textContent = mTotal + eTotal;
         document.getElementById('bill-total-amount').textContent = `₹${gTotal}`;
 
         document.getElementById('bill-period-display').textContent = periodLabel;
