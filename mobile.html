@@ -119,6 +119,10 @@
                 <span class="material-symbols-outlined">paid</span>
                 Pricing Rules
             </a>
+            <a href="#" class="drawer-item" onclick="navigate('presenty')" style="color: #34C759;">
+                <span class="material-symbols-outlined">how_to_reg</span>
+                Mess Presenty
+            </a>
 
             <div class="drawer-divider"></div>
 
@@ -420,6 +424,125 @@
                 <div class="section-title">PRICING RULES</div>
                 <div id="pricing-list">
                     <!-- Dynamic Content -->
+                </div>
+            </div>
+
+            <!-- View: Mess Presenty -->
+            <div id="view-presenty" class="view-section">
+                <div class="section-title">MESS ATTENDANCE</div>
+
+                <!-- Date & Category Selector -->
+                <div class="card" style="padding: 16px; margin-bottom: 16px;">
+                    <div style="display: flex; gap: 12px; align-items: center; margin-bottom: 12px;">
+                        <input type="date" id="presenty-date" class="ios-date-input"
+                            style="flex:1; padding: 12px; border-radius: 10px; border: 1px solid var(--md-sys-color-outline-variant); background: var(--md-sys-color-surface); font-size: 16px;"
+                            onchange="loadMessAttendance()">
+                        <button class="icon-btn" onclick="loadMessAttendance()"
+                            style="background: var(--md-sys-color-primary-container); border-radius: 10px; width: 44px; height: 44px;">
+                            <span class="material-symbols-outlined">refresh</span>
+                        </button>
+                    </div>
+
+                    <!-- Category Toggle -->
+                    <div style="display: flex; gap: 8px;">
+                        <button id="btn-mess-day" class="presenty-toggle active" onclick="setMessCategory('Mess Day')">
+                            🌅 Mess Day
+                        </button>
+                        <button id="btn-mess-night" class="presenty-toggle" onclick="setMessCategory('Mess Night')">
+                            🌙 Mess Night
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Mark as Verified Checkbox -->
+                <div
+                    style="margin-bottom: 12px; padding: 14px 16px; background: var(--md-sys-color-surface); border-radius: 12px; border: 1px solid var(--md-sys-color-outline-variant);">
+                    <label style="display: flex; align-items: center; gap: 12px; cursor: pointer;">
+                        <input type="checkbox" id="presenty-verified-checkbox" onchange="toggleMPVerification()"
+                            style="width: 22px; height: 22px; accent-color: #34C759;">
+                        <span style="font-size: 16px; font-weight: 500; color: var(--md-sys-color-on-surface);">
+                            Mark <span id="presenty-category-label">Mess Day</span> as Verified
+                        </span>
+                    </label>
+                </div>
+
+                <!-- Fetch from Database Button (Only for past dates) -->
+                <div id="presenty-fetch-container" style="margin-bottom: 12px; display: none;">
+                    <button onclick="fetchMessFromDatabase()"
+                        style="width:100%; padding: 14px 16px; border: 2px solid var(--md-sys-color-outline-variant); border-radius: 12px; background: var(--md-sys-color-surface); color: #007AFF; font-weight: 600; font-size: 15px; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px;">
+                        <span class="material-symbols-outlined" style="font-size: 20px;">cloud_download</span>
+                        Fetch <span id="presenty-fetch-label">Mess Day</span> from Database
+                    </button>
+                    <div id="presenty-fetch-status"
+                        style="text-align: center; margin-top: 8px; font-size: 13px; color: #34C759; display: none;">
+                        ✓ Data already loaded from database
+                    </div>
+                </div>
+
+                <!-- Stats Pills -->
+                <div style="display: flex; gap: 8px; margin-bottom: 16px;">
+                    <div
+                        style="flex:1; padding: 12px; background: rgba(52, 199, 89, 0.15); border-radius: 10px; text-align: center;">
+                        <span style="font-weight: 600; color: #34C759;">Present </span>
+                        <span style="font-weight: 700; color: #34C759;" id="presenty-present">0</span>
+                    </div>
+                    <div
+                        style="flex:1; padding: 12px; background: rgba(255, 59, 48, 0.15); border-radius: 10px; text-align: center;">
+                        <span style="font-weight: 600; color: #FF3B30;">Absent </span>
+                        <span style="font-weight: 700; color: #FF3B30;" id="presenty-absent">0</span>
+                    </div>
+                    <div
+                        style="flex:1; padding: 12px; background: rgba(255, 149, 0, 0.15); border-radius: 10px; text-align: center;">
+                        <span style="font-weight: 600; color: #FF9500;">Leave </span>
+                        <span style="font-weight: 700; color: #FF9500;" id="presenty-leave">0</span>
+                    </div>
+                </div>
+
+                <!-- Search Bar -->
+                <div style="margin-bottom: 12px;">
+                    <div
+                        style="display: flex; gap: 8px; align-items: center; background: var(--md-sys-color-surface); padding: 10px 14px; border-radius: 12px; border: 1px solid var(--md-sys-color-outline-variant);">
+                        <span class="material-symbols-outlined"
+                            style="color: var(--md-sys-color-on-surface-variant); font-size: 20px;">search</span>
+                        <input type="text" id="presenty-search" placeholder="Search students..."
+                            style="flex:1; border:none; background:transparent; font-size:16px; outline:none; color: var(--md-sys-color-on-surface);"
+                            oninput="filterMPStudents(this.value)">
+                    </div>
+                </div>
+
+                <!-- Mark All Present Button -->
+                <div style="margin-bottom: 12px;">
+                    <button onclick="markAllMPPresent()"
+                        style="width:100%; padding: 12px; border: none; border-radius: 10px; background: rgba(52, 199, 89, 0.15); color: #34C759; font-weight: 600; font-size: 14px; cursor: pointer;">
+                        ✓ Mark All Present
+                    </button>
+                </div>
+
+                <!-- Students Header -->
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+                    <div
+                        style="font-size: 13px; font-weight: 600; color: var(--md-sys-color-on-surface-variant); text-transform: uppercase; letter-spacing: 0.5px;">
+                        STUDENTS</div>
+                    <div style="font-size: 13px; color: var(--md-sys-color-on-surface-variant);"
+                        id="presenty-total-count">0 total</div>
+                </div>
+
+                <!-- Student List -->
+                <div id="presenty-student-list" style="padding-bottom: 100px;">
+                    <div style="text-align:center; padding:40px; color:var(--md-sys-color-on-surface-variant);">
+                        <span class="material-symbols-outlined" style="font-size:48px; opacity:0.5;">how_to_reg</span>
+                        <div style="margin-top:12px;">Select date to load students</div>
+                    </div>
+                </div>
+
+                <!-- Sync Button (Only enabled when verified) -->
+                <div id="presenty-sync-bar"
+                    style="position:fixed; bottom:20px; left:0; right:0; padding:16px; background: linear-gradient(transparent, var(--md-sys-color-background)); z-index:10; display:none;">
+                    <button id="presenty-sync-btn" class="btn-filled" style="width:100%; padding:16px; font-size:16px;"
+                        onclick="syncMessAttendance()" disabled>
+                        <span class="material-symbols-outlined" style="margin-right:8px;">cloud_upload</span>
+                        Sync Attendance
+                    </button>
                 </div>
             </div>
 

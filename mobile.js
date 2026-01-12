@@ -505,6 +505,7 @@ window.navigate = function (viewId) {
         const titles = {
             'bill': 'Generate Bill',
             'pricing': 'Pricing Rules',
+            'presenty': 'Mess Presenty',
             'reports': 'Reports & Analytics',
             'activity': 'Activity Log',
             'settings': 'Data & Settings'
@@ -522,9 +523,41 @@ window.navigate = function (viewId) {
     } else if (viewId === 'bill') {
         // Populate bill month selector if needed
         populateBillMonths();
+    } else if (viewId === 'presenty') {
+        // Reset date to TODAY (local timezone)
+        const presentyDate = document.getElementById('presenty-date');
+        if (presentyDate) {
+            const now = new Date();
+            const localDate = now.getFullYear() + '-' +
+                String(now.getMonth() + 1).padStart(2, '0') + '-' +
+                String(now.getDate()).padStart(2, '0');
+            presentyDate.value = localDate;
+        }
+
+        // Reset checkbox to unchecked
+        const checkbox = document.getElementById('presenty-verified-checkbox');
+        if (checkbox) checkbox.checked = false;
+
+        // Reset verified categories state
+        if (typeof messPresenty !== 'undefined') {
+            messPresenty.verifiedCategories = {};
+        }
+
+        // Load Mess Presenty students
+        loadMessAttendance();
     }
 
-    // 8. Update state
+    // 8. Hide/Show Bottom Nav based on view
+    const bottomNav = document.querySelector('.bottom-nav');
+    if (bottomNav) {
+        if (viewId === 'presenty') {
+            bottomNav.style.display = 'none'; // Hide for Mess Presenty
+        } else {
+            bottomNav.style.display = 'flex'; // Show for other views
+        }
+    }
+
+    // 9. Update state
     state.view = viewId;
 };
 
@@ -2558,4 +2591,583 @@ window.addEventListener('DOMContentLoaded', () => {
             localStorage.setItem(CACHE_PRICING, JSON.stringify(state.pricingRules));
         }).catch(() => { });
     }, 50);
+
+    // Initialize Mess Presenty date with LOCAL timezone (not UTC!)
+    const presentyDate = document.getElementById('presenty-date');
+    if (presentyDate) {
+        const now = new Date();
+        const localDate = now.getFullYear() + '-' +
+            String(now.getMonth() + 1).padStart(2, '0') + '-' +
+            String(now.getDate()).padStart(2, '0');
+        presentyDate.value = localDate;
+    }
 });
+
+// ========================================
+//  MESS PRESENTY - Exact Copy of Hostel Attendance Logic
+// ========================================
+
+// Hostel Attendance App's Google Script URL (SHARED DATABASE)
+const HOSTEL_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyLrD98LEE_PQtqySBKqrZLyKvqzM3nXCAEMyYmejkLqwexp6cUTmDlIljQEazc7_8i/exec';
+
+// Constants
+const MESS_CATEGORIES = ['Mess Day', 'Mess Night'];
+const MESS_STORAGE_KEY = 'mess_presenty_store_v1';
+
+// Mess Presenty State (EXACT copy of Hostel structure)
+const messPresenty = {
+    category: 'Mess Day',
+    students: [],
+    attendanceByCategory: {},      // {category: {studentName: status}}
+    loadedFromSheets: {},          // {date: {category: true}}
+    verifiedCategories: {},        // Verification state per category
+    syncedCategories: {},          // Sync state per date/category
+    searchQuery: ''
+};
+
+// Initialize attendance for all categories (EXACT copy from Hostel)
+function initializeMPAllCategoriesAttendance() {
+    messPresenty.attendanceByCategory = {};
+    messPresenty.loadedFromSheets = {};
+    MESS_CATEGORIES.forEach(c => {
+        messPresenty.attendanceByCategory[c] = {};
+        messPresenty.students.forEach(s => {
+            const name = s.name || s['Student Name'] || 'Unknown';
+            messPresenty.attendanceByCategory[c][name] = 'Present';
+        });
+    });
+}
+
+// Ensure category has attendance for all students
+function ensureMPCategoryAttendance(category) {
+    if (!messPresenty.attendanceByCategory[category]) {
+        messPresenty.attendanceByCategory[category] = {};
+    }
+    messPresenty.students.forEach(s => {
+        const name = s.name || s['Student Name'] || 'Unknown';
+        if (!messPresenty.attendanceByCategory[category][name]) {
+            messPresenty.attendanceByCategory[category][name] = 'Present';
+        }
+    });
+}
+
+// Set Mess Category (EXACT copy from Hostel switchCategory)
+window.setMessCategory = function (category) {
+    messPresenty.category = category;
+
+    // Update toggle buttons
+    document.querySelectorAll('.presenty-toggle').forEach(btn => {
+        btn.classList.remove('active');
+    });
+
+    if (category === 'Mess Day') {
+        document.getElementById('btn-mess-day').classList.add('active');
+    } else {
+        document.getElementById('btn-mess-night').classList.add('active');
+    }
+
+    // Update labels
+    updateMPCategoryLabels();
+
+    // Ensure this category has attendance
+    ensureMPCategoryAttendance(category);
+
+    const date = document.getElementById('presenty-date').value;
+    if (date && messPresenty.students.length > 0) {
+        if (!messPresenty.loadedFromSheets[date]) {
+            messPresenty.loadedFromSheets[date] = {};
+        }
+    }
+
+    renderMPStudentList();
+    updateMPVerificationUI();
+    updateMPFetchButtonVisibility();
+};
+
+// Load Students from Hostel Database
+window.loadMessAttendance = async function () {
+    const date = document.getElementById('presenty-date').value;
+    if (!date) {
+        showToast('Please select a date', 'error');
+        return;
+    }
+
+    // Immediately update Fetch button visibility based on date
+    updateMPFetchButtonVisibility();
+
+
+    const list = document.getElementById('presenty-student-list');
+    list.innerHTML = '<div style="text-align:center; padding:40px;"><div class="spinner"></div><div style="margin-top:12px;">Loading students...</div></div>';
+
+    try {
+        // Fetch students from Hostel database
+        const res = await fetch(HOSTEL_SCRIPT_URL, {
+            method: 'POST',
+            body: JSON.stringify({ action: 'get_students' })
+        });
+
+        const json = await res.json();
+
+        if (json.result === 'success' && json.students) {
+            messPresenty.students = (json.students || []).map(s => ({
+                name: s.name || s['Student Name'],
+                appNumber: s.appNumber || s['Application: Application Number'] || '',
+                appId: s.appId || s['Application: ID'] || 'N/A',
+                hostelId: s.hostelId || s['Hostel Id'] || '',
+                allocation: s.allocation || s['Hostel Allocation'] || ''
+            }));
+
+            if (messPresenty.students.length > 0) {
+                initializeMPAllCategoriesAttendance();
+                loadMPVerificationState(date);
+                ensureMPCategoryAttendance(messPresenty.category);
+                renderMPStudentList();
+                updateMPVerificationUI();
+                updateMPFetchButtonVisibility();
+                showToast(`✓ ${messPresenty.students.length} students ready`, 'success');
+            } else {
+                renderMPStudentList();
+            }
+        } else {
+            list.innerHTML = '<div style="text-align:center; padding:40px; color:#FF3B30;">Failed to load students</div>';
+        }
+    } catch (e) {
+        console.error(e);
+        list.innerHTML = `<div style="text-align:center; padding:40px; color:#FF3B30;">Error: ${e.message}</div>`;
+    }
+};
+
+// Render Student List (EXACT copy from Hostel with Material Icons)
+function renderMPStudentList() {
+    const listDiv = document.getElementById('presenty-student-list');
+    listDiv.innerHTML = '';
+
+    const countEl = document.getElementById('presenty-total-count');
+    if (countEl) countEl.textContent = `${messPresenty.students.length} total`;
+
+    if (messPresenty.students.length === 0) {
+        listDiv.innerHTML = `<div style="text-align:center; padding: 40px; color: var(--md-sys-color-outline);">
+            <span class="material-symbols-outlined" style="font-size: 48px; display:block; margin-bottom:16px;">group</span>
+            No students found.
+        </div>`;
+        updateMPStats();
+        return;
+    }
+
+    ensureMPCategoryAttendance(messPresenty.category);
+    const attendance = messPresenty.attendanceByCategory[messPresenty.category];
+
+    const q = (messPresenty.searchQuery || '').trim().toLowerCase();
+    const filteredStudents = !q ? messPresenty.students : messPresenty.students.filter(s => {
+        return (s.name || '').toLowerCase().includes(q) || (s.appId || '').toLowerCase().includes(q);
+    });
+
+    filteredStudents.forEach(student => {
+        const status = attendance[student.name] || 'Present';
+        const item = document.createElement('div');
+        item.className = 'presenty-student-card';
+
+        // Avatar Color (same as Hostel)
+        const firstChar = (student.name || 'U').charAt(0).toUpperCase();
+        const colors = ['#007AFF', '#5856D6', '#AF52DE', '#FF2D55', '#FF9500', '#FFCC00', '#34C759', '#00C7BE', '#30B0C7', '#5AC8FA'];
+        let colorIndex = 0;
+        if (student.name && student.name.length > 0) {
+            colorIndex = (student.name.charCodeAt(0) + student.name.charCodeAt(Math.min(1, student.name.length - 1))) % colors.length;
+        }
+        const avatarColor = colors[colorIndex];
+
+        // Single status icon based on current status (EXACT from Hostel)
+        let statusIcon, statusColor, statusBg;
+        if (status === 'Present') {
+            statusIcon = 'check_circle';
+            statusColor = '#34C759';
+            statusBg = '#E3F9E8';
+        } else if (status === 'Absent') {
+            statusIcon = 'cancel';
+            statusColor = '#FF3B30';
+            statusBg = '#FFE5E3';
+        } else {
+            statusIcon = 'schedule';
+            statusColor = '#FF9500';
+            statusBg = '#FFF4E5';
+        }
+
+        item.innerHTML = `
+            <div class="presenty-student-avatar" style="background-color: ${avatarColor}; color: white;">${firstChar}</div>
+            <div class="presenty-student-info">
+                <div class="presenty-student-name">${student.name}</div>
+                <div class="presenty-student-id">${student.appId || student.appNumber || ''}</div>
+            </div>
+            <button class="status-icon-btn" onclick="cycleMPStatus('${student.name.replace(/'/g, "\\'")}')" 
+                style="width: 44px; height: 44px; border-radius: 22px; border: none; 
+                background: ${statusBg}; display: flex; align-items: center; justify-content: center; 
+                cursor: pointer; transition: transform 0.15s ease;">
+                <span class="material-symbols-outlined" style="font-size: 28px; color: ${statusColor}; font-variation-settings: 'FILL' 1;">${statusIcon}</span>
+            </button>
+        `;
+        listDiv.appendChild(item);
+    });
+
+    updateMPStats();
+}
+
+// Cycle through Present → Absent → Leave → Present (EXACT from Hostel)
+window.cycleMPStatus = function (studentName) {
+    const date = document.getElementById('presenty-date').value;
+    const category = messPresenty.category;
+
+    // RESTRICTION: Only allow changes for TODAY's date
+    const now = new Date();
+    const today = now.getFullYear() + '-' +
+        String(now.getMonth() + 1).padStart(2, '0') + '-' +
+        String(now.getDate()).padStart(2, '0');
+
+    if (date !== today) {
+        showToast('❌ Past dates are read-only!', 'warning');
+        return;
+    }
+
+    // Don't allow changes if this category is already synced
+    if (isMPSynced(date, category)) {
+        showToast(`${category} is synced. Cannot modify.`, 'warning');
+        return;
+    }
+
+    ensureMPCategoryAttendance(category);
+    const currentStatus = messPresenty.attendanceByCategory[category][studentName] || 'Present';
+    let newStatus;
+    if (currentStatus === 'Present') newStatus = 'Absent';
+    else if (currentStatus === 'Absent') newStatus = 'Leave';
+    else newStatus = 'Present';
+
+    messPresenty.attendanceByCategory[category][studentName] = newStatus;
+    renderMPStudentList();
+
+    // Auto-save after status change
+    autoSaveMPAttendance();
+};
+
+// Update Stats (EXACT from Hostel updateStats)
+function updateMPStats() {
+    const attendance = messPresenty.attendanceByCategory[messPresenty.category] || {};
+    let present = 0, absent = 0, leave = 0;
+
+    messPresenty.students.forEach(s => {
+        const status = attendance[s.name] || 'Present';
+        if (status === 'Present') present++;
+        else if (status === 'Absent') absent++;
+        else if (status === 'Leave') leave++;
+    });
+
+    const presentEl = document.getElementById('presenty-present');
+    const absentEl = document.getElementById('presenty-absent');
+    const leaveEl = document.getElementById('presenty-leave');
+
+    if (presentEl) presentEl.textContent = present;
+    if (absentEl) absentEl.textContent = absent;
+    if (leaveEl) leaveEl.textContent = leave;
+}
+
+// Fetch current section from database (EXACT from Hostel)
+window.fetchMessFromDatabase = async function () {
+    const date = document.getElementById('presenty-date').value;
+    const category = messPresenty.category;
+
+    if (!date) {
+        showToast('Please select a date', 'error');
+        return;
+    }
+
+    showLoader(`Fetching ${category} data...`);
+
+    try {
+        const res = await fetch(HOSTEL_SCRIPT_URL, {
+            method: 'POST',
+            body: JSON.stringify({
+                action: 'fetch_category_data',
+                date: date,
+                category: category
+            })
+        });
+        const json = await res.json();
+        hideLoader();
+
+        if (json.result === 'success' && json.data && json.data.length > 1) {
+            const rows = json.data;
+            const headers = rows[0];
+            const nameIdx = headers.indexOf('Full Name') !== -1 ? headers.indexOf('Full Name') : headers.indexOf('Student Name');
+            const statusIdx = headers.indexOf('Status');
+
+            if (nameIdx !== -1 && statusIdx !== -1) {
+                ensureMPCategoryAttendance(category);
+                let count = 0;
+                for (let i = 1; i < rows.length; i++) {
+                    const name = rows[i][nameIdx];
+                    const status = rows[i][statusIdx];
+                    if (name && ['Present', 'Absent', 'Leave'].includes(status)) {
+                        messPresenty.attendanceByCategory[category][name] = status;
+                        count++;
+                    }
+                }
+
+                if (!messPresenty.loadedFromSheets[date]) messPresenty.loadedFromSheets[date] = {};
+                messPresenty.loadedFromSheets[date][category] = true;
+                markMPAsSynced(date, category);
+
+                renderMPStudentList();
+                updateMPFetchButtonVisibility();
+                showToast(`Fetched ${count} records for ${category}!`, 'success');
+            } else {
+                showToast('Invalid data format from database', 'error');
+            }
+        } else if (json.result === 'success') {
+            showToast(`No ${category} data found for ${date}`, 'warning');
+        } else {
+            showToast(`Fetch Failed: ${json.error || 'Unknown error'}`, 'error');
+        }
+    } catch (e) {
+        hideLoader();
+        showToast(`Network Error: ${e.message}`, 'error');
+    }
+};
+
+// Update Fetch Button Visibility - Only show for PAST dates (not today)
+function updateMPFetchButtonVisibility() {
+    const date = document.getElementById('presenty-date').value;
+    const category = messPresenty.category;
+    const fetchContainer = document.getElementById('presenty-fetch-container');
+    const statusEl = document.getElementById('presenty-fetch-status');
+
+    // Get today's date in LOCAL timezone (YYYY-MM-DD format)
+    // IMPORTANT: Don't use toISOString() as it returns UTC, not local time!
+    const now = new Date();
+    const today = now.getFullYear() + '-' +
+        String(now.getMonth() + 1).padStart(2, '0') + '-' +
+        String(now.getDate()).padStart(2, '0');
+    const isPastDate = date && date < today;
+
+    // Show Fetch button only for past dates
+    if (fetchContainer) {
+        fetchContainer.style.display = isPastDate ? 'block' : 'none';
+    }
+
+    // Show status message if already loaded
+    if (statusEl) {
+        if (messPresenty.loadedFromSheets[date] && messPresenty.loadedFromSheets[date][category]) {
+            statusEl.style.display = 'block';
+            statusEl.innerHTML = '✓ Data already loaded from database';
+        } else {
+            statusEl.style.display = 'none';
+        }
+    }
+}
+
+// Verification Functions (EXACT from Hostel)
+window.toggleMPVerification = function () {
+    if (!messPresenty.verifiedCategories) messPresenty.verifiedCategories = {};
+    messPresenty.verifiedCategories[messPresenty.category] = !messPresenty.verifiedCategories[messPresenty.category];
+    updateMPVerificationUI();
+    saveMPVerificationState();
+
+    // Checkbox only enables Sync button - user must click Sync manually
+    // (Removed auto-sync behavior)
+};
+
+function updateMPVerificationUI() {
+    const checkbox = document.getElementById('presenty-verified-checkbox');
+    const categoryLabel = document.getElementById('presenty-category-label');
+    const syncBtn = document.getElementById('presenty-sync-btn');
+    const syncBar = document.getElementById('presenty-sync-bar');
+
+    if (!checkbox) return;
+
+    const isVerified = messPresenty.verifiedCategories[messPresenty.category];
+    checkbox.checked = isVerified || false;
+
+    if (categoryLabel) {
+        categoryLabel.textContent = messPresenty.category;
+    }
+
+    // Show Sync bar only when students are loaded, enable only when verified
+    if (syncBar && messPresenty.students.length > 0) {
+        syncBar.style.display = 'block';
+    }
+
+    if (syncBtn) {
+        if (isVerified) {
+            syncBtn.disabled = false;
+            syncBtn.style.opacity = '1';
+        } else {
+            syncBtn.disabled = true;
+            syncBtn.style.opacity = '0.5';
+        }
+    }
+}
+
+function saveMPVerificationState() {
+    const date = document.getElementById('presenty-date').value;
+    if (!date) return;
+    const store = getMPSavedStore();
+    store[date] = store[date] || {};
+    store[date].verified = messPresenty.verifiedCategories;
+    setMPSavedStore(store);
+}
+
+function loadMPVerificationState(date) {
+    // Always start with all categories UNCHECKED
+    // (Don't load from localStorage - user must verify fresh each time)
+    messPresenty.verifiedCategories = {};
+    MESS_CATEGORIES.forEach(c => {
+        messPresenty.verifiedCategories[c] = false;
+    });
+    updateMPVerificationUI();
+}
+
+// Sync State Functions
+function isMPSynced(date, category) {
+    return messPresenty.syncedCategories[`${date}_${category}`] === true;
+}
+
+function markMPAsSynced(date, category) {
+    messPresenty.syncedCategories[`${date}_${category}`] = true;
+}
+
+// Persistence
+function getMPSavedStore() {
+    try {
+        const raw = localStorage.getItem(MESS_STORAGE_KEY);
+        const parsed = JSON.parse(raw);
+        return parsed && typeof parsed === 'object' ? parsed : {};
+    } catch (e) { return {}; }
+}
+
+function setMPSavedStore(s) {
+    localStorage.setItem(MESS_STORAGE_KEY, JSON.stringify(s));
+}
+
+// Auto-save attendance locally
+function autoSaveMPAttendance() {
+    const date = document.getElementById('presenty-date').value;
+    if (!date) return;
+
+    const store = getMPSavedStore();
+    store[date] = store[date] || {};
+    store[date][messPresenty.category] = messPresenty.attendanceByCategory[messPresenty.category];
+    setMPSavedStore(store);
+}
+
+// Sync Attendance to Hostel Database
+window.syncMessAttendance = async function () {
+    const date = document.getElementById('presenty-date').value;
+    const category = messPresenty.category;
+
+    // RESTRICTION: Only allow sync for TODAY's date
+    const now = new Date();
+    const today = now.getFullYear() + '-' +
+        String(now.getMonth() + 1).padStart(2, '0') + '-' +
+        String(now.getDate()).padStart(2, '0');
+
+    if (date !== today) {
+        showToast('❌ Cannot update past dates! Only today allowed.', 'error');
+        return;
+    }
+
+    const attendance = messPresenty.attendanceByCategory[category] || {};
+    const entries = Object.entries(attendance);
+
+    if (entries.length === 0) {
+        showToast('No attendance to sync!', 'error');
+        return;
+    }
+
+    // Build rows in EXACT format Hostel App expects:
+    // [Full Name, App Number, App ID, Hostel Id, Hostel Allocation, Time, Status, Reason, Date]
+    // Time is "Morning" or "Night" based on category (EXACT like Hostel App)
+    const timeValueByCategory = {
+        'Mess Day': 'Morning',
+        'Mess Night': 'Night'
+    };
+    const timeValue = timeValueByCategory[category] || 'Morning';
+    const rows = entries.map(([name, status]) => {
+        const student = messPresenty.students.find(s => s.name === name);
+        return [
+            name,                                    // Full Name
+            student?.appNumber || '',                // Application: Application Number
+            student?.appId || '',                    // Application: ID
+            student?.hostelId || '',                 // Hostel Id
+            student?.allocation || '',               // Hostel Allocation
+            timeValue,                               // Time
+            status,                                  // Status
+            '',                                      // Reason
+            date                                     // Date
+        ];
+    });
+
+    showLoader('Syncing to Hostel Database...');
+
+    try {
+        const res = await fetch(HOSTEL_SCRIPT_URL, {
+            method: 'POST',
+            body: JSON.stringify({
+                action: 'sync_batched_multi_sheet',
+                batches: { [category]: rows }  // CORRECT format: { "Mess Day": [[...], [...]] }
+            })
+        });
+
+
+        const json = await res.json();
+        hideLoader();
+
+        if (json.result === 'success') {
+            markMPAsSynced(date, category);
+            if (!messPresenty.loadedFromSheets[date]) messPresenty.loadedFromSheets[date] = {};
+            messPresenty.loadedFromSheets[date][category] = true;
+            updateMPFetchButtonVisibility();
+
+            // Show detailed stats from backend
+            const stats = json.stats || {};
+            const statsMsg = [];
+            if (stats.updated > 0) statsMsg.push(`${stats.updated} updated`);
+            if (stats.inserted > 0) statsMsg.push(`${stats.inserted} inserted`);
+            if (stats.skipped > 0) statsMsg.push(`${stats.skipped} unchanged`);
+
+            const detailMsg = statsMsg.length > 0 ? ` (${statsMsg.join(', ')})` : '';
+            showToast(`✅ Synced to ${category}!${detailMsg}`, 'success');
+        } else {
+            showToast(`Sync failed: ${json.error || 'Unknown error'}`, 'error');
+        }
+    } catch (e) {
+        hideLoader();
+        showToast(`Network error: ${e.message}`, 'error');
+    }
+};
+
+// Search/Filter Students
+window.filterMPStudents = function (query) {
+    messPresenty.searchQuery = query;
+    renderMPStudentList();
+};
+
+// Mark All Present
+window.markAllMPPresent = function () {
+    const category = messPresenty.category;
+    ensureMPCategoryAttendance(category);
+
+    messPresenty.students.forEach(student => {
+        messPresenty.attendanceByCategory[category][student.name] = 'Present';
+    });
+
+    renderMPStudentList();
+    autoSaveMPAttendance();
+    showToast('✅ All marked Present!', 'success');
+};
+
+// Update category labels
+function updateMPCategoryLabels() {
+    const category = messPresenty.category;
+    const categoryLabel = document.getElementById('presenty-category-label');
+    const fetchLabel = document.getElementById('presenty-fetch-label');
+
+    if (categoryLabel) categoryLabel.textContent = category;
+    if (fetchLabel) fetchLabel.textContent = category;
+}
