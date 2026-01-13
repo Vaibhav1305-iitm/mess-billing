@@ -2601,6 +2601,15 @@ window.addEventListener('DOMContentLoaded', () => {
             String(now.getDate()).padStart(2, '0');
         presentyDate.value = localDate;
     }
+
+    // Warn before page refresh if there are unsaved Mess Presenty changes
+    window.addEventListener('beforeunload', function (e) {
+        if (typeof messPresenty !== 'undefined' && messPresenty.hasUnsyncedChanges) {
+            e.preventDefault();
+            e.returnValue = 'You have unsaved attendance changes! Are you sure you want to leave?';
+            return e.returnValue;
+        }
+    });
 });
 
 // ========================================
@@ -2622,7 +2631,8 @@ const messPresenty = {
     loadedFromSheets: {},          // {date: {category: true}}
     verifiedCategories: {},        // Verification state per category
     syncedCategories: {},          // Sync state per date/category
-    searchQuery: ''
+    searchQuery: '',
+    hasUnsyncedChanges: false      // Track if there are unsynced attendance changes
 };
 
 // Initialize attendance for all categories (EXACT copy from Hostel)
@@ -2841,6 +2851,7 @@ window.cycleMPStatus = function (studentName) {
     else newStatus = 'Present';
 
     messPresenty.attendanceByCategory[category][studentName] = newStatus;
+    messPresenty.hasUnsyncedChanges = true; // Mark that we have unsaved changes
     renderMPStudentList();
 
     // Auto-save after status change
@@ -3120,6 +3131,7 @@ window.syncMessAttendance = async function () {
 
         if (json.result === 'success') {
             markMPAsSynced(date, category);
+            messPresenty.hasUnsyncedChanges = false; // Clear warning flag after successful sync
             if (!messPresenty.loadedFromSheets[date]) messPresenty.loadedFromSheets[date] = {};
             messPresenty.loadedFromSheets[date][category] = true;
             updateMPFetchButtonVisibility();
