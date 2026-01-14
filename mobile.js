@@ -11,6 +11,112 @@ const state = {
 // --- LOCAL CACHE FOR INSTANT LOADING ---
 const CACHE_KEYS = { ENTRIES: 'mess_entries_v2', PRICING: 'mess_pricing_v2' };
 
+// --- ENTRY FORM DRAFT SYSTEM ---
+const ENTRY_DRAFT_KEY = 'mess_entry_draft_v1';
+let hasUnsavedDraft = false;
+
+// Save entry form draft to localStorage
+function saveEntryDraft() {
+    try {
+        const dateInput = document.getElementById('new-date');
+        const morningInput = document.getElementById('new-morning');
+        const eveningInput = document.getElementById('new-evening');
+
+        if (!dateInput || !morningInput || !eveningInput) return;
+
+        const morning = parseInt(morningInput.value) || 0;
+        const evening = parseInt(eveningInput.value) || 0;
+
+        // Only save if there's actual data entered
+        if (morning === 0 && evening === 0 && !dateInput.value) return;
+
+        const draft = {
+            date: dateInput.value,
+            morning: morning,
+            evening: evening,
+            timestamp: new Date().toISOString()
+        };
+
+        localStorage.setItem(ENTRY_DRAFT_KEY, JSON.stringify(draft));
+        hasUnsavedDraft = (morning > 0 || evening > 0);
+    } catch (e) {
+        console.error('Draft save failed:', e);
+    }
+}
+
+// Load entry form draft from localStorage
+function loadEntryDraft() {
+    try {
+        const saved = localStorage.getItem(ENTRY_DRAFT_KEY);
+        if (!saved) return false;
+
+        const draft = JSON.parse(saved);
+        if (!draft) return false;
+
+        // Check if draft is from today (only restore today's drafts)
+        const now = new Date();
+        const today = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')}`;
+
+        // If the draft date is not today, clear it
+        if (draft.date && draft.date !== today) {
+            localStorage.removeItem(ENTRY_DRAFT_KEY);
+            return false;
+        }
+
+        // Check if there's actual data to restore
+        if (draft.morning === 0 && draft.evening === 0) {
+            return false;
+        }
+
+        // Restore values to form
+        const dateInput = document.getElementById('new-date');
+        const morningInput = document.getElementById('new-morning');
+        const eveningInput = document.getElementById('new-evening');
+
+        if (dateInput && draft.date) dateInput.value = draft.date;
+        if (morningInput) morningInput.value = draft.morning || 0;
+        if (eveningInput) eveningInput.value = draft.evening || 0;
+
+        hasUnsavedDraft = true;
+
+        // Update total preview
+        if (typeof updateEntryTotalPreview === 'function') {
+            updateEntryTotalPreview();
+        }
+
+        // Show toast notification
+        setTimeout(() => {
+            showToast('📋 Draft restored from earlier session', 'info');
+        }, 500);
+
+        return true;
+    } catch (e) {
+        console.error('Draft load failed:', e);
+        return false;
+    }
+}
+
+// Clear entry form draft after successful save
+function clearEntryDraft() {
+    try {
+        localStorage.removeItem(ENTRY_DRAFT_KEY);
+        hasUnsavedDraft = false;
+    } catch (e) { /* ignore */ }
+}
+
+// Refresh/leave warning when form has unsaved data
+window.addEventListener('beforeunload', function (e) {
+    // Save draft before leaving
+    saveEntryDraft();
+
+    // Warn if there's unsaved data
+    if (hasUnsavedDraft) {
+        e.preventDefault();
+        e.returnValue = 'You have unsaved entry data! Are you sure you want to leave?';
+        return e.returnValue;
+    }
+});
+
 // Save to localStorage cache
 function saveCacheNow() {
     try {
@@ -42,6 +148,9 @@ window.stepValue = function (inputId, delta) {
 
     // Update total preview
     updateEntryTotalPreview();
+
+    // Auto-save draft on every change
+    saveEntryDraft();
 
     // Haptic feedback simulation (visual feedback)
     input.style.transform = 'scale(1.1)';
@@ -564,15 +673,22 @@ window.navigate = function (viewId) {
 // Modal Handling
 window.openAddEntryModal = function () {
     const dateInput = document.getElementById('new-date');
-    if (dateInput) {
-        dateInput.valueAsDate = new Date();
-        dateInput.disabled = false; // Enable for new entry
-    }
-    document.getElementById('new-morning').value = 0;
-    document.getElementById('new-evening').value = 0;
 
-    // Update total preview to show 0 Tiffins
-    updateEntryTotalPreview();
+    // Try to load saved draft first
+    const draftLoaded = loadEntryDraft();
+
+    // If no draft was loaded, set defaults
+    if (!draftLoaded) {
+        if (dateInput) {
+            dateInput.valueAsDate = new Date();
+            dateInput.disabled = false; // Enable for new entry
+        }
+        document.getElementById('new-morning').value = 0;
+        document.getElementById('new-evening').value = 0;
+
+        // Update total preview to show 0 Tiffins
+        updateEntryTotalPreview();
+    }
 
     document.querySelector('#entry-modal h3').textContent = 'New Entry';
     // Hide delete button for new entries
@@ -1051,6 +1167,7 @@ window.saveEntry = async function () {
 
     // Close modal and show success immediately
     closeModal();
+    clearEntryDraft(); // Clear draft after successful save
     showToast('✅ Entry saved!', 'success');
 
     // Update cache immediately
