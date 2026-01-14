@@ -2749,8 +2749,178 @@ const messPresenty = {
     verifiedCategories: {},        // Verification state per category
     syncedCategories: {},          // Sync state per date/category
     searchQuery: '',
-    hasUnsyncedChanges: false      // Track if there are unsynced attendance changes
+    hasUnsyncedChanges: false,     // Track if there are unsynced attendance changes
+    currentSyncStatus: null        // Multi-device sync status
 };
+
+// ============================================
+// MULTI-DEVICE SYNC FOR MESS PRESENTY
+// Check if attendance already submitted from another device
+// ============================================
+
+// Check server for attendance status
+async function checkMPSyncStatus(date, category) {
+    if (!date || !category) return null;
+
+    try {
+        const response = await fetch(HOSTEL_SCRIPT_URL, {
+            method: 'POST',
+            body: JSON.stringify({
+                action: 'check_attendance_status',
+                date: date,
+                category: category,
+                totalStudents: messPresenty.students.length || 45
+            })
+        });
+
+        if (!response.ok) {
+            console.error('MP Sync status check failed');
+            return null;
+        }
+
+        const result = await response.json();
+        if (result.result === 'success') {
+            messPresenty.currentSyncStatus = result;
+            return result;
+        }
+
+        return null;
+    } catch (e) {
+        console.error('MP Sync status check error:', e);
+        return null;
+    }
+}
+
+// Show Mess Presenty sync status banner
+function showMPSyncBanner(status, message, type = 'submitted') {
+    // Create banner if it doesn't exist
+    let banner = document.getElementById('mpSyncBanner');
+    if (!banner) {
+        banner = document.createElement('div');
+        banner.id = 'mpSyncBanner';
+        banner.className = 'mp-sync-banner';
+        banner.innerHTML = `
+            <div class="mp-sync-banner-content">
+                <span class="material-symbols-outlined mp-sync-icon">cloud_done</span>
+                <span class="mp-sync-text"></span>
+            </div>
+            <button class="mp-sync-dismiss" onclick="dismissMPSyncBanner()">
+                <span class="material-symbols-outlined">close</span>
+            </button>
+        `;
+        document.body.appendChild(banner);
+
+        // Add CSS if not already added
+        if (!document.getElementById('mpSyncBannerStyle')) {
+            const style = document.createElement('style');
+            style.id = 'mpSyncBannerStyle';
+            style.textContent = `
+                .mp-sync-banner {
+                    position: fixed;
+                    top: 0;
+                    left: 0;
+                    right: 0;
+                    z-index: 9999;
+                    padding: 14px 16px;
+                    padding-top: calc(env(safe-area-inset-top, 0px) + 14px);
+                    background: rgba(52, 199, 89, 0.95);
+                    backdrop-filter: blur(20px);
+                    -webkit-backdrop-filter: blur(20px);
+                    display: flex;
+                    align-items: center;
+                    justify-content: space-between;
+                    gap: 12px;
+                    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+                    animation: mpBannerSlide 0.4s cubic-bezier(0.32, 0.72, 0, 1);
+                }
+                @keyframes mpBannerSlide {
+                    from { transform: translateY(-100%); opacity: 0; }
+                    to { transform: translateY(0); opacity: 1; }
+                }
+                .mp-sync-banner.warning { background: rgba(255, 204, 0, 0.95); }
+                .mp-sync-banner.warning .mp-sync-icon,
+                .mp-sync-banner.warning .mp-sync-text { color: #1a1a1a; }
+                .mp-sync-banner-content { display: flex; align-items: center; gap: 10px; flex: 1; }
+                .mp-sync-icon { font-size: 22px; color: white; font-variation-settings: 'FILL' 1; }
+                .mp-sync-text { font-size: 14px; font-weight: 600; color: white; line-height: 1.3; }
+                .mp-sync-dismiss {
+                    width: 32px; height: 32px; border-radius: 50%; border: none;
+                    background: rgba(255,255,255,0.2); color: white;
+                    display: flex; align-items: center; justify-content: center; cursor: pointer;
+                }
+                .mp-sync-dismiss .material-symbols-outlined { font-size: 18px; }
+            `;
+            document.head.appendChild(style);
+        }
+    }
+
+    // Set message and type
+    banner.querySelector('.mp-sync-text').textContent = message;
+    banner.classList.remove('warning');
+    const icon = banner.querySelector('.mp-sync-icon');
+
+    if (type === 'warning') {
+        banner.classList.add('warning');
+        icon.textContent = 'warning';
+    } else {
+        icon.textContent = 'cloud_done';
+    }
+
+    banner.style.display = 'flex';
+}
+
+// Dismiss sync banner
+window.dismissMPSyncBanner = function () {
+    const banner = document.getElementById('mpSyncBanner');
+    if (banner) banner.style.display = 'none';
+};
+
+// Apply server attendance data for Mess Presenty
+function applyMPServerAttendance(serverData, category) {
+    if (!serverData || !category) return;
+
+    ensureMPCategoryAttendance(category);
+    messPresenty.attendanceByCategory[category] = {};
+
+    Object.keys(serverData).forEach(name => {
+        messPresenty.attendanceByCategory[category][name] = serverData[name];
+    });
+
+    renderMPStudentList();
+    updateMPStats();
+}
+
+// Handle Mess Presenty sync status check
+async function handleMPSyncStatusCheck() {
+    const date = document.getElementById('presenty-date')?.value;
+    if (!date || !messPresenty.category) return;
+
+    const status = await checkMPSyncStatus(date, messPresenty.category);
+
+    if (!status) return; // API failed, continue normally
+
+    // Hide any existing banner first
+    dismissMPSyncBanner();
+
+    if (status.status === 'submitted') {
+        showMPSyncBanner('submitted',
+            `✓ ${messPresenty.category} attendance already submitted (${status.recordCount}/${status.totalStudents} students)`,
+            'submitted'
+        );
+
+        if (status.attendanceData) {
+            applyMPServerAttendance(status.attendanceData, messPresenty.category);
+        }
+
+        markMPAsSynced(date, messPresenty.category);
+
+    } else if (status.status === 'in_progress') {
+        showMPSyncBanner('in_progress',
+            `⚠ ${messPresenty.category}: ${status.recordCount} students already marked on another device`,
+            'warning'
+        );
+    }
+}
 
 // Initialize attendance for all categories (EXACT copy from Hostel)
 function initializeMPAllCategoriesAttendance() {
@@ -2809,6 +2979,9 @@ window.setMessCategory = function (category) {
     renderMPStudentList();
     updateMPVerificationUI();
     updateMPFetchButtonVisibility();
+
+    // Multi-device sync: Check if this category is already submitted
+    handleMPSyncStatusCheck();
 };
 
 // Load Students from Hostel Database
@@ -2852,6 +3025,9 @@ window.loadMessAttendance = async function () {
                 updateMPVerificationUI();
                 updateMPFetchButtonVisibility();
                 showToast(`✓ ${messPresenty.students.length} students ready`, 'success');
+
+                // Multi-device sync: Check if attendance already submitted
+                handleMPSyncStatusCheck();
             } else {
                 renderMPStudentList();
             }
